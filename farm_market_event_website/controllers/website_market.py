@@ -57,7 +57,7 @@ class WebsiteMarketController(http.Controller):
             .filtered(lambda e: e.is_farm_market)
         )
         if not event:
-            return request.not_found()
+            raise request.not_found()
         return request.render(
             "farm_market_event_website.market_detail_template",
             {"event": event},
@@ -80,12 +80,12 @@ class WebsiteMarketController(http.Controller):
             .filtered(lambda e: e.is_farm_market)
         )
         if not event:
-            return request.not_found()
+            raise request.not_found()
         if event.farm_market_state != "preorder_open":
             return request.redirect(f"/market/{event_id}?error=preorders_closed")
         offering = request.env["farm.market.offering"].sudo().browse(int(offering_id))
         if not offering.exists() or offering.event_id != event:
-            return request.not_found()
+            raise request.not_found()
         try:
             qty = max(1, int(quantity or 1))
         except (TypeError, ValueError):
