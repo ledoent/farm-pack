@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <template id="market_list_template" name="Farm Markets">
+        <t t-call="website.layout">
+            <div id="wrap">
+                <div class="container my-4">
+                    <h1 class="mb-4">Upcoming Farmers Markets</h1>
+                    <p class="text-muted">
+                        Preorder your eggs and produce for pickup at the
+                        next market — easier for everyone, no sold-out
+                        surprises.
+                    </p>
+                    <t t-if="not events">
+                        <div class="alert alert-info">
+                            No upcoming markets right now. Check back soon!
+                        </div>
+                    </t>
+                    <div class="row" t-if="events">
+                        <t t-foreach="events" t-as="event">
+                            <div class="col-md-6 col-lg-4 mb-4">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            <a t-attf-href="/market/{{ event.id }}">
+                                                <t t-esc="event.name" />
+                                            </a>
+                                        </h5>
+                                        <p class="card-text">
+                                            <strong>When:</strong>
+                                            <span t-field="event.date_begin" />
+                                        </p>
+                                        <p
+                                            class="card-text"
+                                            t-if="event.farm_market_state == 'preorder_open'"
+                                        >
+                                            <span class="badge bg-success">
+                                                Preorders Open
+                                            </span>
+                                        </p>
+                                        <a
+                                            t-attf-href="/market/{{ event.id }}"
+                                            class="btn btn-primary"
+                                        >
+                                            View &amp; Preorder
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <template id="market_detail_template" name="Farm Market Detail">
+        <t t-call="website.layout">
+            <div id="wrap">
+                <div class="container my-4">
+                    <p>
+                        <a href="/market">&#8592; All Markets</a>
+                    </p>
+                    <h1 t-esc="event.name" />
+                    <p>
+                        <strong>When:</strong>
+                        <span t-field="event.date_begin" />
+                        <span> to </span>
+                        <span t-field="event.date_end" />
+                    </p>
+                    <p t-if="event.farm_market_state == 'preorder_open'">
+                        <span class="badge bg-success">Preorders Open</span>
+                        <span
+                            t-if="event.preorder_cutoff_datetime"
+                            class="text-muted ms-2"
+                        >
+                            Cutoff:
+                            <span t-field="event.preorder_cutoff_datetime" />
+                        </span>
+                    </p>
+                    <p t-else="">
+                        <span class="badge bg-secondary">
+                            <t
+                                t-esc="dict(event._fields['farm_market_state'].selection).get(event.farm_market_state)"
+                            />
+                        </span>
+                    </p>
+
+                    <h2 class="mt-4">What's Available</h2>
+                    <t t-if="not event.farm_offering_ids">
+                        <div class="alert alert-info">
+                            No offerings posted yet for this market.
+                        </div>
+                    </t>
+                    <div class="row" t-if="event.farm_offering_ids">
+                        <t t-foreach="event.farm_offering_ids" t-as="offering">
+                            <div class="col-md-6 col-lg-4 mb-3">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            <t
+                                                t-esc="offering.product_id.display_name"
+                                            />
+                                        </h5>
+                                        <p class="card-text">
+                                            <span
+                                                t-esc="offering.list_price or offering.product_id.list_price"
+                                                t-options="{'widget': 'monetary', 'display_currency': offering.currency_id}"
+                                            />
+                                        </p>
+                                        <p
+                                            class="card-text text-muted small"
+                                            t-if="offering.max_qty"
+                                        >
+                                            <t t-esc="int(offering.available_qty)" />
+                                            available
+                                        </p>
+                                        <form
+                                            t-if="event.farm_market_state == 'preorder_open'"
+                                            t-attf-action="/market/{{ event.id }}/preorder"
+                                            method="POST"
+                                            class="d-flex gap-2"
+                                        >
+                                            <input
+                                                type="hidden"
+                                                name="csrf_token"
+                                                t-att-value="request.csrf_token()"
+                                            />
+                                            <input
+                                                type="hidden"
+                                                name="offering_id"
+                                                t-att-value="offering.id"
+                                            />
+                                            <input
+                                                type="number"
+                                                name="quantity"
+                                                value="1"
+                                                min="1"
+                                                class="form-control"
+                                                style="width: 80px"
+                                            />
+                                            <button
+                                                type="submit"
+                                                class="btn btn-primary"
+                                            >
+                                                Preorder
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </div>
+            </div>
+        </t>
+    </template>
+</odoo>

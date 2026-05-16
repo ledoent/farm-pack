@@ -14,6 +14,7 @@
         "farm_delivery_routes",
         "farm_delivery_route_orders",
         "farm_market_event",
+        "farm_market_event_website",
         "farm_quickbooks_io",
         # Odoo CE — the four-jobs composition
         "website",
