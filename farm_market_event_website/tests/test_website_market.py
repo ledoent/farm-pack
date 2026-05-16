@@ -65,5 +65,10 @@ class TestWebsiteMarket(HttpCase):
         self.assertIn("Preorder", resp.text)
 
     def test_market_detail_unknown_returns_404(self):
-        resp = self.url_open("/market/999999")
+        # mute_logger because raise request.not_found() logs an info-level
+        # warning that the checklog hook treats as a CI failure otherwise.
+        from odoo.tools import mute_logger
+
+        with mute_logger("odoo.http"):
+            resp = self.url_open("/market/999999")
         self.assertEqual(resp.status_code, 404)
