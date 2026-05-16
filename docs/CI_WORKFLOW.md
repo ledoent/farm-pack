@@ -12,15 +12,21 @@ iteration.** Run the local preflight first.
 
 ## Local preflight (matches CI in under a minute)
 
+Pre-commit lives in this repo. Module install/test runs from the **industry-packs Doodba
+workspace** (see DEVELOPING.md).
+
 ```bash
-make lint          # pre-commit on all files (~30s after first install)
-make smoke         # docker-based --init=farm_pack --stop-after-init (~45s)
-make test          # smoke + --test-enable (runs every test)
-make ci            # lint + smoke + test, the whole gate
+# From the farm-pack repo:
+./scripts/preflight.sh              # pre-commit on all files, auto-restage
+                                    # any auto-fixes
+
+# From /Users/dkendall/projects/ledoent/oca/industry-packs:
+invoke install -m farm_pack         # install/upgrade in the dev container
+invoke test farm_pack               # run the full test suite
 ```
 
-First run will be slower because docker builds the image. Subsequent runs hit Docker's
-layer cache.
+First workspace boot is slower because docker pulls + builds. Subsequent runs hit
+Docker's layer cache.
 
 ## The pre-commit auto-fix gotcha
 
@@ -29,12 +35,12 @@ oca-init-pyproject, oca-gen-addon-readme). When they modify a file, the commit *
 silently** — git's exit code is non-zero but the next `git push` doesn't notice and
 reports "Everything up-to-date."
 
-Workaround: use `make format` (or `./scripts/preflight.sh`) before `git commit`. It runs
-pre-commit, re-stages anything the hooks modified, and re-runs to verify clean. Then
-your commit lands first try.
+Workaround: use `./scripts/preflight.sh` before `git commit`. It runs pre-commit,
+re-stages anything the hooks modified, and re-runs to verify clean. Then your commit
+lands first try.
 
 ```bash
-make format
+./scripts/preflight.sh
 git commit -m "..."
 git push
 ```
