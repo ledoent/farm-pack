@@ -15,7 +15,6 @@
         # Odoo CE — the four-jobs composition
         "website",
         "website_sale",
-        "website_sale_delivery",
         "sale_management",
         "stock_picking_batch",
         "delivery",
