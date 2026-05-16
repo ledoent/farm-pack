@@ -1,0 +1,28 @@
+{
+    "name": "Farm Market Event",
+    "summary": "Farmers markets as events with preorder-for-pickup-at-event",
+    "version": "19.0.1.0.0",
+    "license": "AGPL-3",
+    "author": "Ledo Enterprises, Odoo Community Association (OCA)",
+    "website": "https://github.com/ledoent/farm-pack",
+    "category": "Vertical/Agriculture",
+    "depends": [
+        "farm_base",
+        "event",
+        "sale_management",
+    ],
+    "data": [
+        "security/ir.model.access.csv",
+        "views/event_event_views.xml",
+        "views/farm_market_offering_views.xml",
+        "views/sale_order_views.xml",
+        "wizards/farm_market_picklist_wizard_views.xml",
+        "reports/farm_market_picklist_report.xml",
+        "views/farm_market_menu.xml",
+    ],
+    "demo": [],
+    "installable": True,
+    "application": False,
+    "development_status": "Alpha",
+    "maintainers": ["dkendall"],
+}

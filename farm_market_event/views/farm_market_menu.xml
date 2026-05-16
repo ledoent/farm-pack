@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <menuitem
+        id="menu_farm_markets"
+        name="Markets"
+        parent="farm_base.menu_farm_root"
+        sequence="25"
+        groups="farm_base.group_farm_user"
+    />
+
+    <menuitem
+        id="menu_farm_market_events"
+        name="Farmers Markets"
+        parent="menu_farm_markets"
+        action="farm_market_event_action"
+        sequence="10"
+    />
+</odoo>

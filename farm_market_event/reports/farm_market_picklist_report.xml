@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="action_farm_market_picklist_report" model="ir.actions.report">
+        <field name="name">Farm Market Pick List</field>
+        <field name="model">event.event</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">farm_market_event.picklist_template</field>
+        <field name="report_file">farm_market_event.picklist_template</field>
+        <field name="binding_model_id" ref="event.model_event_event" />
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="picklist_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="event">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2>
+                            Pick List — <t t-esc="event.name" />
+                        </h2>
+                        <p>
+                            <strong>Date:</strong>
+                            <t t-esc="event.date_begin" />
+                            <br />
+                            <strong>Location:</strong>
+                            <t t-esc="event.address_id.name or '—'" />
+                        </p>
+                        <p>
+                            <strong>Preorders:</strong>
+                            <t t-esc="event.farm_preorder_count" />
+                            <span> · </span>
+                            <strong>Committed Revenue:</strong>
+                            <span
+                                t-field="event.farm_preorder_revenue"
+                                t-options="{'widget': 'monetary', 'display_currency': event.currency_id}"
+                            />
+                        </p>
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th class="text-end">Preorders</th>
+                                    <th class="text-end">Planned Max</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="event.farm_offering_ids" t-as="o">
+                                    <td>
+                                        <t t-esc="o.product_id.display_name" />
+                                    </td>
+                                    <td class="text-end">
+                                        <t t-esc="o.preorder_qty" />
+                                    </td>
+                                    <td class="text-end">
+                                        <t t-esc="o.max_qty" />
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

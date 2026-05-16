@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_farm_market_offering_user,farm.market.offering user read,model_farm_market_offering,farm_base.group_farm_user,1,0,0,0
+access_farm_market_offering_manager,farm.market.offering manager full,model_farm_market_offering,farm_base.group_farm_manager,1,1,1,1
+access_farm_market_picklist_wizard_manager,farm.market.picklist.wizard manager full,model_farm_market_picklist_wizard,farm_base.group_farm_manager,1,1,1,1
+access_farm_market_picklist_wizard_line_manager,farm.market.picklist.wizard.line manager full,model_farm_market_picklist_wizard_line,farm_base.group_farm_manager,1,1,1,1
