@@ -5,9 +5,11 @@ class SaleOrder(models.Model):
     _inherit = "sale.order"
 
     farm_delivery_date = fields.Date(
-        string="Delivery Date",
+        string="Route Delivery Date",
         help="Target date for the customer to receive their order. Used by "
-        "the weekly route wizard to group orders into a batch picking.",
+        "the weekly route wizard to group orders into a batch picking. "
+        "Distinct from sale.order.commitment_date which already has the "
+        "'Delivery Date' label.",
         tracking=True,
     )
     farm_delivery_zone_id = fields.Many2one(

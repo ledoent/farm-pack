@@ -34,9 +34,15 @@ class EventEvent(models.Model):
         "sale.order", "farm_market_event_id", string="Preorders"
     )
     farm_preorder_count = fields.Integer(compute="_compute_farm_preorder_count")
+    farm_market_currency_id = fields.Many2one(
+        "res.currency",
+        related="company_id.currency_id",
+        store=True,
+        help="Company currency, used for monetary rollups on this event.",
+    )
     farm_preorder_revenue = fields.Monetary(
         compute="_compute_farm_preorder_revenue",
-        currency_field="currency_id",
+        currency_field="farm_market_currency_id",
         help="Total committed-money from confirmed preorders for this market.",
     )
 

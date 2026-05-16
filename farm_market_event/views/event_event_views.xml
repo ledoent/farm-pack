@@ -63,9 +63,11 @@
                             <field name="farm_preorder_count" readonly="1" />
                         </group>
                         <group>
+                            <field name="farm_market_currency_id" invisible="1" />
                             <field
                                 name="farm_preorder_revenue"
                                 widget="monetary"
+                                options="{'currency_field': 'farm_market_currency_id'}"
                                 readonly="1"
                             />
                         </group>

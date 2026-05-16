@@ -32,7 +32,7 @@
                             <strong>Committed Revenue:</strong>
                             <span
                                 t-field="event.farm_preorder_revenue"
-                                t-options="{'widget': 'monetary', 'display_currency': event.currency_id}"
+                                t-options="{'widget': 'monetary', 'display_currency': event.farm_market_currency_id}"
                             />
                         </p>
                         <table class="table table-bordered">
