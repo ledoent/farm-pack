@@ -9,6 +9,7 @@
     "depends": [
         "farm_base",
         "sale_management",
+        "sale_stock",
         "stock",
         "stock_picking_batch",
     ],
