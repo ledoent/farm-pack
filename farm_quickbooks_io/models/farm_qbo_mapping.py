@@ -38,7 +38,7 @@ class FarmQboMapping(models.Model):
     proposed_schedule_f_line = fields.Char(
         help="Mapped Schedule F line (for account mappings only).",
     )
-    confidence = fields.Float(default=0.0, group_operator="avg")
+    confidence = fields.Float(default=0.0, aggregator="avg")
     source = fields.Selection(
         [
             ("rule", "Rule Layer"),
