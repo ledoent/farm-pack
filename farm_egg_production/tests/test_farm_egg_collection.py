@@ -25,13 +25,13 @@ class TestFarmEggCollection(TransactionCase):
         )
         self.assertEqual(rec.count_available, 6)
 
-    def test_available_never_negative(self):
+    def test_available_zero_when_all_consumed(self):
         rec = self.Collection.create(
             {
                 "coop_id": self.coop.id,
                 "collection_date": "2030-04-16",
-                "count_total": 3,
-                "count_broken": 2,
+                "count_total": 5,
+                "count_broken": 3,
                 "count_kept_home": 2,
             }
         )

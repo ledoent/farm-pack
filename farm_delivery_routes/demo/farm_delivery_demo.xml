@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="dropoff_pantry" model="farm.dropoff.point">
+        <field name="name">Boyd's Wellness Pantry</field>
+        <field name="kind">pantry</field>
+        <field name="address">123 Main St, Ligonier PA</field>
+        <field
+            name="instructions"
+        >Drop at front counter Tue/Fri before 10am — ask for Sarah.</field>
+    </record>
+
+    <record id="dropoff_alice_porch" model="farm.dropoff.point">
+        <field name="name">Alice's Front Porch</field>
+        <field name="kind">home</field>
+        <field name="address">42 Oak Ln</field>
+        <field
+            name="instructions"
+        >Leave on porch in cooler. Gate code 1234. Dog is friendly.</field>
+    </record>
+
+    <record id="dropoff_market" model="farm.dropoff.point">
+        <field name="name">Saturday Farmers Market — Booth 12</field>
+        <field name="kind">market</field>
+        <field name="address">Town Square 8am-12pm Saturdays</field>
+    </record>
+
+    <record id="route_tuesday" model="farm.delivery.route">
+        <field name="name">Tuesday North-Side Drop</field>
+        <field name="scheduled_date" eval="DateTime.today().date()" />
+        <field name="state">planned</field>
+        <field
+            name="stop_ids"
+            eval="[
+            (0, 0, {'sequence': 10, 'dropoff_point_id': ref('dropoff_pantry'), 'package_count': 6}),
+            (0, 0, {'sequence': 20, 'dropoff_point_id': ref('dropoff_alice_porch'), 'package_count': 1}),
+        ]"
+        />
+    </record>
+</odoo>

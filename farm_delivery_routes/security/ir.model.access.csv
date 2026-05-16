@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_farm_dropoff_point_user,farm.dropoff.point user full,model_farm_dropoff_point,farm_base.group_farm_user,1,1,1,0
+access_farm_dropoff_point_manager,farm.dropoff.point manager full,model_farm_dropoff_point,farm_base.group_farm_manager,1,1,1,1
+access_farm_delivery_route_user,farm.delivery.route user full,model_farm_delivery_route,farm_base.group_farm_user,1,1,1,0
+access_farm_delivery_route_manager,farm.delivery.route manager full,model_farm_delivery_route,farm_base.group_farm_manager,1,1,1,1
+access_farm_route_stop_user,farm.route.stop user full,model_farm_route_stop,farm_base.group_farm_user,1,1,1,1
+access_farm_route_stop_manager,farm.route.stop manager full,model_farm_route_stop,farm_base.group_farm_manager,1,1,1,1
