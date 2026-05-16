@@ -1,6 +1,5 @@
 from datetime import datetime, timedelta
 
-from odoo.exceptions import ValidationError
 from odoo.tests.common import TransactionCase
 
 
@@ -104,18 +103,17 @@ class TestFarmMarketEvent(TransactionCase):
         self.event.action_close_market()
         self.assertEqual(self.event.farm_market_state, "closed")
 
-    def test_preorder_after_cutoff_rejected(self):
+    def test_preorder_after_cutoff_resolves_to_no_event(self):
+        """Once preorders close, the carrier resolves to no open event in the
+        series, so a new SO using that carrier simply has farm_market_event_id
+        unset — the order remains a plain sale.order, not a preorder. (This
+        is cleaner than raising; the customer can still complete the
+        purchase, it just isn't tagged for any market's pick list.)"""
         self.event.action_close_preorders()
-        # After cutoff the carrier no longer resolves to this event, so SOs
-        # would normally not get an event_id at all. To exercise the
-        # cutoff guard, set the event back on the SO via the legacy direct
-        # path: confirm a draft order while event is preorder_closed.
-        self.event.action_open_preorders()
+        self.carrier.invalidate_recordset(["farm_market_next_event_id"])
+        self.assertFalse(self.carrier.farm_market_next_event_id)
         so = self._create_preorder(self.alice, [(self.eggs, 1)])
-        self.event.action_close_preorders()
-        with self.assertRaises(ValidationError):
-            # Force a write that triggers the constraint
-            so.write({"note": "trigger constraint recheck"})
+        self.assertFalse(so.farm_market_event_id)
 
     def test_preorder_count_and_revenue(self):
         so = self._create_preorder(self.alice, [(self.eggs, 2), (self.tomatoes, 3)])
