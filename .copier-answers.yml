@@ -1,0 +1,27 @@
+# Do NOT update manually; changes here will be overwritten by Copier
+_commit: v1.42
+_src_path: gh:OCA/oca-addons-repo-template
+additional_ruff_rules: []
+convert_readme_fragments_to_markdown: true
+enable_checklog_odoo: true
+generate_requirements_txt: true
+github_check_license: true
+github_ci_extra_env: {}
+github_enable_codecov: true
+github_enable_makepot: true
+github_enable_stale_action: true
+github_enforce_dev_status_compatibility: true
+include_wkhtmltopdf: false
+odoo_test_flavor: Both
+odoo_version: 19.0
+org_name: Ledo Enterprises
+org_slug: ledoent
+rebel_module_groups: []
+repo_description: Odoo industry pack for US small farms (crops, livestock, Schedule
+    F)
+repo_name: Farm Pack
+repo_slug: farm-pack
+repo_website: https://github.com/ledoent/farm-pack
+use_pyproject_toml: true
+use_ruff: true
+
