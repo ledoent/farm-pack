@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="farm_csa_subscription_view_form_inherit_contract" model="ir.ui.view">
+        <field name="name">farm.csa.subscription.form.contract</field>
+        <field name="model">farm.csa.subscription</field>
+        <field name="inherit_id" ref="farm_csa.farm_csa_subscription_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button
+                    name="action_create_contract"
+                    type="object"
+                    string="Create Contract"
+                    invisible="has_contract or state == 'cancelled'"
+                />
+                <button
+                    name="action_open_contract"
+                    type="object"
+                    string="Open Contract"
+                    invisible="not has_contract"
+                />
+            </xpath>
+            <xpath expr="//field[@name='payment_status']" position="after">
+                <field name="contract_id" readonly="1" />
+                <field name="has_contract" invisible="1" />
+            </xpath>
+        </field>
+    </record>
+</odoo>

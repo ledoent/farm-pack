@@ -11,6 +11,7 @@
         "farm_base",
         "farm_egg_production",
         "farm_csa",
+        "farm_csa_contract_glue",
         "farm_delivery_routes",
         "farm_delivery_route_orders",
         "farm_market_event",
