@@ -10,9 +10,11 @@
         "farm_base",
         "event",
         "sale_management",
+        "delivery",
     ],
     "data": [
         "security/ir.model.access.csv",
+        "views/delivery_carrier_views.xml",
         "views/event_event_views.xml",
         "views/farm_market_offering_views.xml",
         "views/sale_order_views.xml",

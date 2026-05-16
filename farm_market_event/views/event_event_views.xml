@@ -48,6 +48,7 @@
             </xpath>
             <xpath expr="//field[@name='event_type_id']" position="after">
                 <field name="is_farm_market" />
+                <field name="farm_market_carrier_id" invisible="not is_farm_market" />
                 <field name="preorder_cutoff_datetime" invisible="not is_farm_market" />
             </xpath>
             <xpath expr="//notebook" position="inside">

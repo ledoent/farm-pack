@@ -1,11 +1,32 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <!--
-        Two farmers market events:
-        - One this Saturday, preorder_open — actionable for the demo
-        - One last Saturday, closed — provides history + revenue rollup
+        Farm market modeled as: carrier (stable series) + events (weekly).
+        - A "Saturday Farmers Market" delivery.carrier represents the series
+        - Each Saturday is one event.event linked to that carrier
+        - Customer preorders pick the carrier; sale.order.farm_market_event_id
+          is COMPUTED from the carrier's next upcoming open event
+        - Carrier persists across weeks; event IDs churn
     -->
 
+    <!-- Shipping product for the carrier (Odoo CE requires this) -->
+    <record id="product_market_pickup_service" model="product.product">
+        <field name="name">Farmers Market Pickup</field>
+        <field name="type">service</field>
+        <field name="sale_ok" eval="False" />
+        <field name="purchase_ok" eval="False" />
+    </record>
+
+    <!-- The stable shipping method: the Saturday market series -->
+    <record id="carrier_saturday_market" model="delivery.carrier">
+        <field name="name">Saturday Farmers Market Pickup</field>
+        <field name="delivery_type">fixed</field>
+        <field name="product_id" ref="product_market_pickup_service" />
+        <field name="is_farm_market_pickup" eval="True" />
+        <field name="fixed_price">0.0</field>
+    </record>
+
+    <!-- This Saturday's event, linked to the series carrier -->
     <record id="market_event_saturday_this_week" model="event.event">
         <field name="name">Saturday Farmers Market</field>
         <field
@@ -17,6 +38,7 @@
             eval="(DateTime.now() + timedelta(days=(5 - DateTime.now().weekday()) % 7 or 7)).replace(hour=16, minute=0, second=0)"
         />
         <field name="is_farm_market" eval="True" />
+        <field name="farm_market_carrier_id" ref="carrier_saturday_market" />
         <field
             name="preorder_cutoff_datetime"
             eval="(DateTime.now() + timedelta(days=(5 - DateTime.now().weekday()) % 7 or 7)).replace(hour=8, minute=0, second=0)"
@@ -24,6 +46,7 @@
         <field name="farm_market_state">preorder_open</field>
     </record>
 
+    <!-- Last Saturday's event, also in the series, now closed -->
     <record id="market_event_saturday_last_week" model="event.event">
         <field name="name">Saturday Farmers Market — Last Week</field>
         <field
@@ -35,6 +58,7 @@
             eval="(DateTime.now() - timedelta(days=DateTime.now().weekday() + 2)).replace(hour=16, minute=0, second=0)"
         />
         <field name="is_farm_market" eval="True" />
+        <field name="farm_market_carrier_id" ref="carrier_saturday_market" />
         <field name="farm_market_state">closed</field>
     </record>
 
@@ -79,10 +103,10 @@
         <field name="sequence">50</field>
     </record>
 
-    <!-- Two preorders for this Saturday -->
+    <!-- Two preorders: pick the carrier; event_id auto-computes -->
     <record id="market_preorder_alice" model="sale.order">
         <field name="partner_id" ref="partner_demo_alice" />
-        <field name="farm_market_event_id" ref="market_event_saturday_this_week" />
+        <field name="carrier_id" ref="carrier_saturday_market" />
         <field
             name="order_line"
             eval="[
@@ -95,7 +119,7 @@
 
     <record id="market_preorder_carla" model="sale.order">
         <field name="partner_id" ref="partner_demo_carla" />
-        <field name="farm_market_event_id" ref="market_event_saturday_this_week" />
+        <field name="carrier_id" ref="carrier_saturday_market" />
         <field
             name="order_line"
             eval="[
@@ -105,7 +129,7 @@
         />
     </record>
 
-    <!-- Last week's history (matches state=closed) -->
+    <!-- Last week's history -->
     <record id="market_offering_last_eggs" model="farm.market.offering">
         <field name="event_id" ref="market_event_saturday_last_week" />
         <field name="product_id" ref="product_eggs_dozen" />

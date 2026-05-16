@@ -8,14 +8,26 @@ class SaleOrder(models.Model):
     farm_market_event_id = fields.Many2one(
         "event.event",
         string="Farm Market (pickup at)",
-        domain="[('is_farm_market', '=', True)]",
+        compute="_compute_farm_market_event_id",
+        store=True,
+        index=True,
         tracking=True,
-        help="If set, this order is a preorder for pickup at this farmers "
-        "market event. Aggregated into the day-of pick list.",
+        help="The specific market event this preorder is routed to. Computed "
+        "from the chosen carrier's next upcoming open event — never set "
+        "directly, because event IDs change every week as new events are "
+        "created. The carrier is the stable concept.",
     )
     farm_market_state = fields.Selection(
         related="farm_market_event_id.farm_market_state", store=True
     )
+
+    @api.depends("carrier_id", "carrier_id.farm_market_next_event_id")
+    def _compute_farm_market_event_id(self):
+        for order in self:
+            if order.carrier_id.is_farm_market_pickup:
+                order.farm_market_event_id = order.carrier_id.farm_market_next_event_id
+            else:
+                order.farm_market_event_id = False
 
     @api.constrains("farm_market_event_id", "state")
     def _check_preorder_cutoff(self):

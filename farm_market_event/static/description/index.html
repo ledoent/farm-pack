@@ -382,19 +382,34 @@ is not a storefront, it’s an event. It has a start window, a location, a
 capacity (booth size + how much a vehicle can haul), and an in-season /
 sold-out cycle that plays out across the morning. Eventbrite, Luma, and
 Manage My Market all model this well; CSA-space tools don’t.</p>
-<p><strong>Composition:</strong> sits on top of Odoo CE <tt class="docutils literal">event</tt> + <tt class="docutils literal">sale_management</tt>.
-Adds the farm-market overlay; no new event engine.</p>
+<p><strong>Composition:</strong> sits on top of Odoo CE <tt class="docutils literal">event</tt> + <tt class="docutils literal">sale_management</tt>
++ <tt class="docutils literal">delivery</tt>. Adds the farm-market overlay; no new event engine.</p>
+<p><strong>Key insight on data model:</strong> the recurring market is the stable
+concept; each weekly instance has a fresh <tt class="docutils literal">event.event</tt> ID. To avoid
+customer preferences pointing at stale event IDs:</p>
+<ul class="simple">
+<li>The <strong>``delivery.carrier``</strong> (Saturday Market Pickup) is the <em>series</em>
+— stable across weeks, picked once and forgotten by the customer</li>
+<li>The <strong>``event.event``</strong> is one <em>instance</em> of that series, churning
+weekly</li>
+<li><tt class="docutils literal">sale.order.farm_market_event_id</tt> is <strong>computed</strong>, not directly set
+— derives from the carrier’s next-upcoming-open event</li>
+</ul>
 <p><strong>Key models:</strong></p>
 <ul class="simple">
+<li>Extends <tt class="docutils literal">delivery.carrier</tt> with <tt class="docutils literal">is_farm_market_pickup</tt> flag and a
+computed <tt class="docutils literal">farm_market_next_event_id</tt> (next upcoming preorder-open
+event in this series)</li>
 <li>Extends <tt class="docutils literal">event.event</tt> with <tt class="docutils literal">is_farm_market</tt>,
+<tt class="docutils literal">farm_market_carrier_id</tt> (back-link to the series),
 <tt class="docutils literal">preorder_cutoff_datetime</tt>, and a 5-state machine
 (<tt class="docutils literal">planning → preorder_open → preorder_closed → live → closed</tt>)</li>
 <li><tt class="docutils literal">farm.market.offering</tt> — one row per (event, product) with
 <tt class="docutils literal">max_qty</tt> (how many you can bring), <tt class="docutils literal">list_price</tt> (per-event
 override), and computed <tt class="docutils literal">preorder_qty</tt> / <tt class="docutils literal">available_qty</tt></li>
-<li>Extends <tt class="docutils literal">sale.order</tt> with <tt class="docutils literal">farm_market_event_id</tt> so a preorder is
-just a sale order linked to the event. Constraint rejects new
-preorders once state ≥ <tt class="docutils literal">preorder_closed</tt>.</li>
+<li>Extends <tt class="docutils literal">sale.order</tt> with <tt class="docutils literal">farm_market_event_id</tt> <strong>computed</strong> from
+the chosen carrier. Constraint rejects new preorders once the resolved
+event’s state ≥ <tt class="docutils literal">preorder_closed</tt>.</li>
 </ul>
 <p><strong>The pick-list workflow:</strong></p>
 <ol class="arabic simple">
