@@ -29,7 +29,7 @@ class TestFarmMarketEvent(TransactionCase):
 
         cls.carrier = cls.Carrier.create(
             {
-                "name": "Saturday Farmers Market Pickup",
+                "name": "Market Pickup",
                 "delivery_type": "fixed",
                 "product_id": cls.delivery_product.id,
                 "is_farm_market_pickup": True,
