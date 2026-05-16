@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <menuitem
+        id="menu_farm_csa"
+        name="CSA"
+        parent="farm_base.menu_farm_root"
+        sequence="20"
+        groups="farm_base.group_farm_user"
+    />
+
+    <menuitem
+        id="menu_farm_csa_subscriptions"
+        name="Subscriptions"
+        parent="menu_farm_csa"
+        action="farm_csa_subscription_action"
+        sequence="10"
+    />
+
+    <menuitem
+        id="menu_farm_csa_boxes"
+        name="Boxes"
+        parent="menu_farm_csa"
+        action="farm_csa_box_action"
+        sequence="20"
+    />
+
+    <menuitem
+        id="menu_farm_csa_tiers"
+        name="Tiers"
+        parent="farm_base.menu_farm_configuration"
+        action="farm_csa_tier_action"
+        sequence="20"
+    />
+</odoo>

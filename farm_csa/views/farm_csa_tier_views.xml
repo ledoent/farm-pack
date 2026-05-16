@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="farm_csa_tier_view_list" model="ir.ui.view">
+        <field name="name">farm.csa.tier.list</field>
+        <field name="model">farm.csa.tier</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="sequence" widget="handle" />
+                <field name="name" />
+                <field name="cadence" />
+                <field name="price_per_period" widget="monetary" />
+                <field name="currency_id" optional="hide" />
+                <field name="subscription_count" />
+            </list>
+        </field>
+    </record>
+
+    <record id="farm_csa_tier_view_form" model="ir.ui.view">
+        <field name="name">farm.csa.tier.form</field>
+        <field name="model">farm.csa.tier</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" />
+                        <h1>
+                            <field name="name" placeholder="e.g. Small Weekly Share" />
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="product_id" />
+                            <field name="cadence" />
+                        </group>
+                        <group>
+                            <field name="price_per_period" />
+                            <field name="currency_id" />
+                            <field name="active" invisible="1" />
+                        </group>
+                    </group>
+                    <group>
+                        <field name="description" />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="farm_csa_tier_action" model="ir.actions.act_window">
+        <field name="name">CSA Tiers</field>
+        <field name="res_model">farm.csa.tier</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

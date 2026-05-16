@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="farm_csa_subscription_view_list" model="ir.ui.view">
+        <field name="name">farm.csa.subscription.list</field>
+        <field name="model">farm.csa.subscription</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="partner_id" />
+                <field name="tier_id" />
+                <field name="date_start" />
+                <field name="date_end" optional="show" />
+                <field name="delivery_method" />
+                <field
+                    name="payment_status"
+                    widget="badge"
+                    decoration-success="payment_status == 'paid_ahead'"
+                    decoration-info="payment_status == 'current'"
+                    decoration-warning="payment_status == 'owes'"
+                />
+                <field
+                    name="state"
+                    widget="badge"
+                    decoration-info="state == 'draft'"
+                    decoration-success="state == 'active'"
+                    decoration-muted="state in ('cancelled', 'expired')"
+                />
+            </list>
+        </field>
+    </record>
+
+    <record id="farm_csa_subscription_view_form" model="ir.ui.view">
+        <field name="name">farm.csa.subscription.form</field>
+        <field name="model">farm.csa.subscription</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button
+                        name="action_activate"
+                        type="object"
+                        string="Activate"
+                        invisible="state != 'draft'"
+                        class="oe_highlight"
+                    />
+                    <button
+                        name="action_pause"
+                        type="object"
+                        string="Pause"
+                        invisible="state != 'active'"
+                    />
+                    <button
+                        name="action_cancel"
+                        type="object"
+                        string="Cancel"
+                        invisible="state in ('cancelled', 'expired')"
+                    />
+                    <field
+                        name="state"
+                        widget="statusbar"
+                        statusbar_visible="draft,active,paused,expired"
+                    />
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="partner_id" />
+                            <field name="tier_id" />
+                            <field name="payment_status" />
+                        </group>
+                        <group>
+                            <field name="date_start" />
+                            <field name="date_end" />
+                            <field name="delivery_method" />
+                            <field name="delivery_notes" />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Boxes" name="boxes">
+                            <field name="box_ids" readonly="1">
+                                <list>
+                                    <field name="delivery_date" />
+                                    <field name="state" widget="badge" />
+                                    <field name="line_count" />
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter />
+            </form>
+        </field>
+    </record>
+
+    <record id="farm_csa_subscription_view_search" model="ir.ui.view">
+        <field name="name">farm.csa.subscription.search</field>
+        <field name="model">farm.csa.subscription</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="partner_id" />
+                <field name="tier_id" />
+                <filter
+                    string="Active"
+                    name="active_subs"
+                    domain="[('state', '=', 'active')]"
+                />
+                <filter
+                    string="Owes"
+                    name="owes"
+                    domain="[('payment_status', '=', 'owes')]"
+                />
+                <group string="Group By">
+                    <filter
+                        string="Tier"
+                        name="group_tier"
+                        context="{'group_by': 'tier_id'}"
+                    />
+                    <filter
+                        string="Delivery Method"
+                        name="group_delivery"
+                        context="{'group_by': 'delivery_method'}"
+                    />
+                    <filter
+                        string="State"
+                        name="group_state"
+                        context="{'group_by': 'state'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="farm_csa_subscription_action" model="ir.actions.act_window">
+        <field name="name">CSA Subscriptions</field>
+        <field name="res_model">farm.csa.subscription</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_active_subs': 1}</field>
+    </record>
+</odoo>

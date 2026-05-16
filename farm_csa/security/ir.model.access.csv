@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_farm_csa_tier_user,farm.csa.tier user read,model_farm_csa_tier,farm_base.group_farm_user,1,0,0,0
+access_farm_csa_tier_manager,farm.csa.tier manager full,model_farm_csa_tier,farm_base.group_farm_manager,1,1,1,1
+access_farm_csa_subscription_user,farm.csa.subscription user full,model_farm_csa_subscription,farm_base.group_farm_user,1,1,1,0
+access_farm_csa_subscription_manager,farm.csa.subscription manager full,model_farm_csa_subscription,farm_base.group_farm_manager,1,1,1,1
+access_farm_csa_box_user,farm.csa.box user full,model_farm_csa_box,farm_base.group_farm_user,1,1,1,1
+access_farm_csa_box_manager,farm.csa.box manager full,model_farm_csa_box,farm_base.group_farm_manager,1,1,1,1
+access_farm_csa_box_line_user,farm.csa.box.line user full,model_farm_csa_box_line,farm_base.group_farm_user,1,1,1,1
+access_farm_csa_box_line_manager,farm.csa.box.line manager full,model_farm_csa_box_line,farm_base.group_farm_manager,1,1,1,1
