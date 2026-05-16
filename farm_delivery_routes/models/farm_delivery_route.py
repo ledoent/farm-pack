@@ -79,7 +79,6 @@ class FarmRouteStop(models.Model):
     dropoff_point_id = fields.Many2one(
         "farm.dropoff.point",
         required=True,
-        tracking=True,
     )
     partner_id = fields.Many2one(related="dropoff_point_id.partner_id", store=True)
     address = fields.Char(related="dropoff_point_id.address", readonly=True)
