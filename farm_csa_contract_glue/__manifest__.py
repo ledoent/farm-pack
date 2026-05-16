@@ -14,7 +14,7 @@
         "views/farm_csa_subscription_views.xml",
     ],
     "demo": [],
-    "installable": True,
+    "installable": False,
     "application": False,
     "development_status": "Alpha",
     "maintainers": ["dkendall"],

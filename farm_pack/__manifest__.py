@@ -11,7 +11,9 @@
         "farm_base",
         "farm_egg_production",
         "farm_csa",
-        "farm_csa_contract_glue",
+        # farm_csa_contract_glue is held back: odoo-addon-contract has no
+        # 19.0 wheel on the OCA wheelhouse yet (versions stop at 18.0.x).
+        # Re-enable when OCA publishes the 19.0 release.
         "farm_delivery_routes",
         "farm_delivery_route_orders",
         "farm_market_event",
