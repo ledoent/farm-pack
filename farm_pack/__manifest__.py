@@ -1,0 +1,32 @@
+{
+    "name": "Farm Pack",
+    "summary": "Umbrella: website + ordering + delivery + accounting for small farms",
+    "version": "19.0.1.0.0",
+    "license": "AGPL-3",
+    "author": "Ledo Enterprises, Odoo Community Association (OCA)",
+    "website": "https://github.com/ledoent/farm-pack",
+    "category": "Vertical/Agriculture",
+    "depends": [
+        # ledoent — internal modules
+        "farm_base",
+        "farm_egg_production",
+        "farm_csa",
+        "farm_delivery_routes",
+        # Odoo CE — the four-jobs composition
+        "website",
+        "website_sale",
+        "website_sale_delivery",
+        "sale_management",
+        "stock_picking_batch",
+        "delivery",
+        "account",
+        "mass_mailing",
+        "crm",
+    ],
+    "data": [],
+    "demo": [],
+    "installable": True,
+    "application": True,
+    "development_status": "Alpha",
+    "maintainers": ["dkendall"],
+}
