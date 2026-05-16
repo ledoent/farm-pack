@@ -36,6 +36,12 @@
                         class="oe_highlight"
                     />
                     <button
+                        name="action_refresh_token"
+                        type="object"
+                        string="Refresh Token"
+                        invisible="state not in ('connected', 'expired')"
+                    />
+                    <button
                         name="action_disconnect"
                         type="object"
                         string="Disconnect"

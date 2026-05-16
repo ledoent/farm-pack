@@ -19,6 +19,7 @@
         "data/qbo_account_dictionary.xml",
         "views/farm_qbo_connection_views.xml",
         "views/farm_qbo_import_views.xml",
+        "views/res_config_settings_views.xml",
         "wizards/qbo_import_wizard_views.xml",
         "views/farm_qbo_menu.xml",
     ],

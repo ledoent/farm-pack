@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="res_config_settings_view_form_inherit_qbo" model="ir.ui.view">
+        <field name="name">res.config.settings.qbo</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="inside">
+                <app string="QuickBooks (Farm Pack)" name="farm_qbo" notApp="1">
+                    <block title="Intuit Developer App" name="farm_qbo_intuit_app">
+                        <setting
+                            string="Client ID"
+                            help="From your Intuit Developer app's Keys tab."
+                        >
+                            <field name="farm_qbo_client_id" />
+                        </setting>
+                        <setting
+                            string="Client Secret"
+                            help="Keep this private — Intuit uses it to mint tokens."
+                        >
+                            <field name="farm_qbo_client_secret" password="True" />
+                        </setting>
+                        <setting
+                            string="OAuth Redirect URI"
+                            help="Must match Intuit's app config exactly."
+                        >
+                            <field name="farm_qbo_redirect_uri" />
+                        </setting>
+                    </block>
+                </app>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_farm_qbo_settings" model="ir.actions.act_window">
+        <field name="name">QuickBooks Settings</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+        <field name="context">{'module': 'farm_quickbooks_io'}</field>
+    </record>
+</odoo>
