@@ -1,5 +1,8 @@
+from psycopg2.errors import CheckViolation, UniqueViolation
+
 from odoo.exceptions import ValidationError
 from odoo.tests.common import TransactionCase
+from odoo.tools.misc import mute_logger
 
 
 class TestFarmSeason(TransactionCase):
@@ -23,14 +26,15 @@ class TestFarmSeason(TransactionCase):
         self.assertEqual(s.state, "closed")
 
     def test_end_before_start_rejected(self):
-        with self.assertRaises(Exception):
-            self.Season.create(
-                {
-                    "name": "Backwards 2030",
-                    "date_start": "2030-08-31",
-                    "date_end": "2030-03-01",
-                }
-            )
+        with mute_logger("odoo.sql_db"), self.assertRaises(CheckViolation):
+            with self.env.cr.savepoint():
+                self.Season.create(
+                    {
+                        "name": "Backwards 2030",
+                        "date_start": "2030-08-31",
+                        "date_end": "2030-03-01",
+                    }
+                )
 
     def test_overlapping_seasons_rejected(self):
         self.Season.create(
@@ -57,11 +61,12 @@ class TestFarmSeason(TransactionCase):
                 "date_end": "2031-08-31",
             }
         )
-        with self.assertRaises(Exception):
-            self.Season.create(
-                {
-                    "name": "Duplicate Season",
-                    "date_start": "2032-03-01",
-                    "date_end": "2032-08-31",
-                }
-            )
+        with mute_logger("odoo.sql_db"), self.assertRaises(UniqueViolation):
+            with self.env.cr.savepoint():
+                self.Season.create(
+                    {
+                        "name": "Duplicate Season",
+                        "date_start": "2032-03-01",
+                        "date_end": "2032-08-31",
+                    }
+                )

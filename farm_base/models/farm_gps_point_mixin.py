@@ -28,7 +28,9 @@ class FarmGpsPointMixin(models.AbstractModel):
     def _check_gps_bounds(self):
         for rec in self:
             if rec.gps_latitude and not -90.0 <= rec.gps_latitude <= 90.0:
-                raise ValidationError(self.env._("Latitude must be between -90 and 90."))
+                raise ValidationError(
+                    self.env._("Latitude must be between -90 and 90.")
+                )
             if rec.gps_longitude and not -180.0 <= rec.gps_longitude <= 180.0:
                 raise ValidationError(
                     self.env._("Longitude must be between -180 and 180.")

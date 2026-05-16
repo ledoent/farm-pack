@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo noupdate="1">
     <!--
         Agricultural UoMs commonly used on US small farms.
@@ -14,7 +14,7 @@
 
     <record id="product_uom_bushel_corn" model="uom.uom">
         <field name="name">Bushel (corn, 56 lb)</field>
-        <field name="category_id" ref="uom_categ_crop_volume"/>
+        <field name="category_id" ref="uom_categ_crop_volume" />
         <field name="uom_type">bigger</field>
         <field name="factor_inv">1.0</field>
         <field name="rounding">0.01</field>
@@ -22,7 +22,7 @@
 
     <record id="product_uom_bushel_soybean" model="uom.uom">
         <field name="name">Bushel (soybean, 60 lb)</field>
-        <field name="category_id" ref="uom_categ_crop_volume"/>
+        <field name="category_id" ref="uom_categ_crop_volume" />
         <field name="uom_type">bigger</field>
         <field name="factor_inv">1.071429</field>
         <field name="rounding">0.01</field>
@@ -30,7 +30,7 @@
 
     <record id="product_uom_bushel_wheat" model="uom.uom">
         <field name="name">Bushel (wheat, 60 lb)</field>
-        <field name="category_id" ref="uom_categ_crop_volume"/>
+        <field name="category_id" ref="uom_categ_crop_volume" />
         <field name="uom_type">bigger</field>
         <field name="factor_inv">1.071429</field>
         <field name="rounding">0.01</field>
@@ -38,7 +38,7 @@
 
     <record id="product_uom_hundredweight" model="uom.uom">
         <field name="name">Hundredweight (cwt)</field>
-        <field name="category_id" ref="uom.product_uom_categ_kgm"/>
+        <field name="category_id" ref="uom.product_uom_categ_kgm" />
         <field name="uom_type">bigger</field>
         <field name="factor_inv">45.3592</field>
         <field name="rounding">0.01</field>
@@ -46,7 +46,7 @@
 
     <record id="product_uom_us_ton" model="uom.uom">
         <field name="name">US Ton (2000 lb)</field>
-        <field name="category_id" ref="uom.product_uom_categ_kgm"/>
+        <field name="category_id" ref="uom.product_uom_categ_kgm" />
         <field name="uom_type">bigger</field>
         <field name="factor_inv">907.18474</field>
         <field name="rounding">0.001</field>
@@ -58,7 +58,7 @@
 
     <record id="product_uom_acre" model="uom.uom">
         <field name="name">Acre</field>
-        <field name="category_id" ref="uom_categ_land"/>
+        <field name="category_id" ref="uom_categ_land" />
         <field name="uom_type">reference</field>
         <field name="factor">1.0</field>
         <field name="rounding">0.001</field>
@@ -66,7 +66,7 @@
 
     <record id="product_uom_hectare" model="uom.uom">
         <field name="name">Hectare</field>
-        <field name="category_id" ref="uom_categ_land"/>
+        <field name="category_id" ref="uom_categ_land" />
         <field name="uom_type">bigger</field>
         <field name="factor_inv">2.47105</field>
         <field name="rounding">0.001</field>
@@ -78,7 +78,7 @@
 
     <record id="product_uom_head" model="uom.uom">
         <field name="name">Head</field>
-        <field name="category_id" ref="uom_categ_livestock"/>
+        <field name="category_id" ref="uom_categ_livestock" />
         <field name="uom_type">reference</field>
         <field name="factor">1.0</field>
         <field name="rounding">1.0</field>

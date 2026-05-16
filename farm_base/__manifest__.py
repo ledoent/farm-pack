@@ -1,6 +1,6 @@
 {
     "name": "Farm Base",
-    "summary": "Shared atoms for the farm pack: seasons, measurement and GPS mixins, ag units of measure",
+    "summary": "Shared atoms for the farm pack: seasons, mixins, ag units",
     "version": "19.0.1.0.0",
     "license": "AGPL-3",
     "author": "Ledo Enterprises, Odoo Community Association (OCA)",

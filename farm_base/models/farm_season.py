@@ -1,4 +1,4 @@
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import ValidationError
 
 
@@ -34,18 +34,14 @@ class FarmSeason(models.Model):
     active = fields.Boolean(default=True)
     note = fields.Html()
 
-    _sql_constraints = [
-        (
-            "season_dates_order",
-            "CHECK (date_end >= date_start)",
-            "A season's end date must be on or after its start date.",
-        ),
-        (
-            "season_name_company_unique",
-            "UNIQUE (name, company_id)",
-            "A season name must be unique within a company.",
-        ),
-    ]
+    _season_dates_order = models.Constraint(
+        "CHECK (date_end >= date_start)",
+        "A season's end date must be on or after its start date.",
+    )
+    _season_name_company_unique = models.Constraint(
+        "UNIQUE (name, company_id)",
+        "A season name must be unique within a company.",
+    )
 
     @api.constrains("date_start", "date_end", "company_id")
     def _check_no_overlap(self):
@@ -61,8 +57,11 @@ class FarmSeason(models.Model):
             )
             if overlap:
                 raise ValidationError(
-                    _("Season %(this)s overlaps with %(other)s.")
-                    % {"this": season.display_name, "other": overlap.display_name}
+                    self.env._(
+                        "Season %(this)s overlaps with %(other)s.",
+                        this=season.display_name,
+                        other=overlap.display_name,
+                    )
                 )
 
     def action_activate(self):
