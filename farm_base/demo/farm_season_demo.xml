@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="farm_season_spring_2026" model="farm.season">
+        <field name="name">Spring 2026</field>
+        <field name="code">S26</field>
+        <field name="date_start">2026-03-01</field>
+        <field name="date_end">2026-08-31</field>
+        <field name="state">active</field>
+    </record>
+
+    <record id="farm_season_fall_2026" model="farm.season">
+        <field name="name">Fall 2026</field>
+        <field name="code">F26</field>
+        <field name="date_start">2026-09-01</field>
+        <field name="date_end">2027-02-28</field>
+        <field name="state">planning</field>
+    </record>
+</odoo>

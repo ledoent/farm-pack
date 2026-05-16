@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_farm_root"
+              name="Farm"
+              sequence="55"
+              web_icon="farm_base,static/description/icon.png"
+              groups="group_farm_user"/>
+
+    <menuitem id="menu_farm_configuration"
+              name="Configuration"
+              parent="menu_farm_root"
+              sequence="100"
+              groups="group_farm_manager"/>
+
+    <menuitem id="menu_farm_season"
+              name="Seasons"
+              parent="menu_farm_configuration"
+              action="farm_season_action"
+              sequence="10"/>
+</odoo>
