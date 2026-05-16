@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="farm_egg_collection_view_list" model="ir.ui.view">
+        <field name="name">farm.egg.collection.list</field>
+        <field name="model">farm.egg.collection</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="collection_date" />
+                <field name="coop_id" />
+                <field name="count_total" sum="Total" />
+                <field name="count_broken" sum="Broken" optional="show" />
+                <field name="count_kept_home" sum="Kept" optional="show" />
+                <field name="count_available" sum="For Sale" />
+                <field name="note" optional="hide" />
+            </list>
+        </field>
+    </record>
+
+    <record id="farm_egg_collection_view_form" model="ir.ui.view">
+        <field name="name">farm.egg.collection.form</field>
+        <field name="model">farm.egg.collection</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="collection_date" />
+                            <field name="coop_id" />
+                        </group>
+                        <group>
+                            <field name="count_total" />
+                            <field name="count_broken" />
+                            <field name="count_kept_home" />
+                            <field name="count_available" readonly="1" />
+                        </group>
+                    </group>
+                    <group>
+                        <field name="note" placeholder="One-liner for the day" />
+                    </group>
+                </sheet>
+                <chatter />
+            </form>
+        </field>
+    </record>
+
+    <record id="farm_egg_collection_view_search" model="ir.ui.view">
+        <field name="name">farm.egg.collection.search</field>
+        <field name="model">farm.egg.collection</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="coop_id" />
+                <field name="collection_date" />
+                <filter
+                    string="Last 7 Days"
+                    name="last_7"
+                    domain="[('collection_date', '&gt;=', (context_today() - relativedelta(days=7)).strftime('%Y-%m-%d'))]"
+                />
+                <filter
+                    string="This Month"
+                    name="this_month"
+                    domain="[('collection_date', '&gt;=', (context_today().replace(day=1)).strftime('%Y-%m-%d'))]"
+                />
+                <group string="Group By">
+                    <filter
+                        string="Coop"
+                        name="group_coop"
+                        context="{'group_by': 'coop_id'}"
+                    />
+                    <filter
+                        string="Date"
+                        name="group_date"
+                        context="{'group_by': 'collection_date:day'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="farm_egg_collection_view_graph" model="ir.ui.view">
+        <field name="name">farm.egg.collection.graph</field>
+        <field name="model">farm.egg.collection</field>
+        <field name="arch" type="xml">
+            <graph type="line">
+                <field name="collection_date" interval="day" />
+                <field name="count_total" type="measure" />
+            </graph>
+        </field>
+    </record>
+
+    <record id="farm_egg_collection_action" model="ir.actions.act_window">
+        <field name="name">Egg Collections</field>
+        <field name="res_model">farm.egg.collection</field>
+        <field name="view_mode">list,graph,form</field>
+        <field name="context">{'search_default_last_7': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Log your first egg collection</p>
+            <p>One row per coop per day. Click into the row to record broken eggs,
+            eggs kept for home, and any notes about hen health or weather.</p>
+        </field>
+    </record>
+</odoo>

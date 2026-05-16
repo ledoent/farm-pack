@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="farm_coop_back" model="farm.coop">
+        <field name="name">Back Coop</field>
+        <field name="capacity">15</field>
+        <field name="active_bird_count">12</field>
+    </record>
+
+    <record id="farm_coop_garden" model="farm.coop">
+        <field name="name">Garden Coop</field>
+        <field name="capacity">8</field>
+        <field name="active_bird_count">6</field>
+    </record>
+
+    <record id="egg_demo_1" model="farm.egg.collection">
+        <field name="coop_id" ref="farm_coop_back" />
+        <field
+            name="collection_date"
+            eval="(DateTime.today() - timedelta(days=2)).date()"
+        />
+        <field name="count_total">9</field>
+        <field name="count_broken">1</field>
+        <field name="count_kept_home">2</field>
+    </record>
+
+    <record id="egg_demo_2" model="farm.egg.collection">
+        <field name="coop_id" ref="farm_coop_back" />
+        <field
+            name="collection_date"
+            eval="(DateTime.today() - timedelta(days=1)).date()"
+        />
+        <field name="count_total">11</field>
+        <field name="count_kept_home">2</field>
+    </record>
+
+    <record id="egg_demo_3" model="farm.egg.collection">
+        <field name="coop_id" ref="farm_coop_back" />
+        <field name="collection_date" eval="DateTime.today().date()" />
+        <field name="count_total">10</field>
+        <field name="count_kept_home">2</field>
+    </record>
+
+    <record id="egg_demo_garden_1" model="farm.egg.collection">
+        <field name="coop_id" ref="farm_coop_garden" />
+        <field
+            name="collection_date"
+            eval="(DateTime.today() - timedelta(days=1)).date()"
+        />
+        <field name="count_total">4</field>
+    </record>
+
+    <record id="egg_demo_garden_2" model="farm.egg.collection">
+        <field name="coop_id" ref="farm_coop_garden" />
+        <field name="collection_date" eval="DateTime.today().date()" />
+        <field name="count_total">5</field>
+        <field name="count_broken">1</field>
+    </record>
+</odoo>

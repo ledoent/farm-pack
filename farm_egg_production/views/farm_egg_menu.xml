@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <menuitem
+        id="menu_farm_eggs"
+        name="Eggs"
+        parent="farm_base.menu_farm_root"
+        sequence="10"
+        groups="farm_base.group_farm_user"
+    />
+
+    <menuitem
+        id="menu_farm_egg_collection"
+        name="Collections"
+        parent="menu_farm_eggs"
+        action="farm_egg_collection_action"
+        sequence="10"
+    />
+
+    <menuitem
+        id="menu_farm_coops"
+        name="Coops"
+        parent="menu_farm_eggs"
+        action="farm_coop_action"
+        sequence="20"
+    />
+</odoo>

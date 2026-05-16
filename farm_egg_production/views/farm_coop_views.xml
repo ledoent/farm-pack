@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="farm_coop_view_list" model="ir.ui.view">
+        <field name="name">farm.coop.list</field>
+        <field name="model">farm.coop</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" />
+                <field name="active_bird_count" />
+                <field name="capacity" optional="show" />
+                <field name="eggs_last_7_days" />
+            </list>
+        </field>
+    </record>
+
+    <record id="farm_coop_view_form" model="ir.ui.view">
+        <field name="name">farm.coop.form</field>
+        <field name="model">farm.coop</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" />
+                        <h1>
+                            <field name="name" placeholder="e.g. Back Coop" />
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="active_bird_count" />
+                            <field name="capacity" />
+                            <field name="eggs_last_7_days" readonly="1" />
+                        </group>
+                        <group>
+                            <field
+                                name="company_id"
+                                groups="base.group_multi_company"
+                            />
+                            <field name="active" invisible="1" />
+                            <field name="gps_latitude" />
+                            <field name="gps_longitude" />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Notes" name="notes">
+                            <field name="note" />
+                        </page>
+                        <page string="Collections" name="collections">
+                            <field name="collection_ids" readonly="1">
+                                <list>
+                                    <field name="collection_date" />
+                                    <field name="count_total" />
+                                    <field name="count_broken" />
+                                    <field name="count_kept_home" />
+                                    <field name="count_available" />
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter />
+            </form>
+        </field>
+    </record>
+
+    <record id="farm_coop_view_kanban" model="ir.ui.view">
+        <field name="name">farm.coop.kanban</field>
+        <field name="model">farm.coop</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <templates>
+                    <t t-name="card">
+                        <div class="o_kanban_record_top">
+                            <strong>
+                                <field name="name" />
+                            </strong>
+                        </div>
+                        <div>
+                            <field name="active_bird_count" /> birds
+                        </div>
+                        <div>
+                            <field name="eggs_last_7_days" /> eggs · last 7 days
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="farm_coop_action" model="ir.actions.act_window">
+        <field name="name">Coops</field>
+        <field name="res_model">farm.coop</field>
+        <field name="view_mode">kanban,list,form</field>
+    </record>
+</odoo>

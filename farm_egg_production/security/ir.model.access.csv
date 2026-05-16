@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_farm_coop_user,farm.coop user full,model_farm_coop,farm_base.group_farm_user,1,1,1,0
+access_farm_coop_manager,farm.coop manager full,model_farm_coop,farm_base.group_farm_manager,1,1,1,1
+access_farm_egg_collection_user,farm.egg.collection user full,model_farm_egg_collection,farm_base.group_farm_user,1,1,1,0
+access_farm_egg_collection_manager,farm.egg.collection manager full,model_farm_egg_collection,farm_base.group_farm_manager,1,1,1,1
