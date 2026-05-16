@@ -18,6 +18,7 @@
         "demo/farm_egg_collection_demo.xml",
         "demo/farm_csa_demo.xml",
         "demo/farm_delivery_demo.xml",
+        "demo/farm_market_demo.xml",
         "demo/farm_qbo_demo.xml",
     ],
     "installable": True,

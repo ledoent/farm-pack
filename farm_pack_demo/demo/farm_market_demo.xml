@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!--
+        Two farmers market events:
+        - One this Saturday, preorder_open — actionable for the demo
+        - One last Saturday, closed — provides history + revenue rollup
+    -->
+
+    <record id="market_event_saturday_this_week" model="event.event">
+        <field name="name">Saturday Farmers Market</field>
+        <field
+            name="date_begin"
+            eval="(DateTime.now() + timedelta(days=(5 - DateTime.now().weekday()) % 7 or 7)).replace(hour=12, minute=0, second=0)"
+        />
+        <field
+            name="date_end"
+            eval="(DateTime.now() + timedelta(days=(5 - DateTime.now().weekday()) % 7 or 7)).replace(hour=16, minute=0, second=0)"
+        />
+        <field name="is_farm_market" eval="True" />
+        <field
+            name="preorder_cutoff_datetime"
+            eval="(DateTime.now() + timedelta(days=(5 - DateTime.now().weekday()) % 7 or 7)).replace(hour=8, minute=0, second=0)"
+        />
+        <field name="farm_market_state">preorder_open</field>
+    </record>
+
+    <record id="market_event_saturday_last_week" model="event.event">
+        <field name="name">Saturday Farmers Market — Last Week</field>
+        <field
+            name="date_begin"
+            eval="(DateTime.now() - timedelta(days=DateTime.now().weekday() + 2)).replace(hour=12, minute=0, second=0)"
+        />
+        <field
+            name="date_end"
+            eval="(DateTime.now() - timedelta(days=DateTime.now().weekday() + 2)).replace(hour=16, minute=0, second=0)"
+        />
+        <field name="is_farm_market" eval="True" />
+        <field name="farm_market_state">closed</field>
+    </record>
+
+    <!-- This week's offerings -->
+    <record id="market_offering_this_eggs" model="farm.market.offering">
+        <field name="event_id" ref="market_event_saturday_this_week" />
+        <field name="product_id" ref="product_eggs_dozen" />
+        <field name="max_qty">30</field>
+        <field name="list_price">6.00</field>
+        <field name="sequence">10</field>
+    </record>
+
+    <record id="market_offering_this_half_eggs" model="farm.market.offering">
+        <field name="event_id" ref="market_event_saturday_this_week" />
+        <field name="product_id" ref="product_eggs_half_dozen" />
+        <field name="max_qty">15</field>
+        <field name="list_price">3.50</field>
+        <field name="sequence">20</field>
+    </record>
+
+    <record id="market_offering_this_tomatoes" model="farm.market.offering">
+        <field name="event_id" ref="market_event_saturday_this_week" />
+        <field name="product_id" ref="product_tomatoes" />
+        <field name="max_qty">20</field>
+        <field name="list_price">5.00</field>
+        <field name="sequence">30</field>
+    </record>
+
+    <record id="market_offering_this_herbs" model="farm.market.offering">
+        <field name="event_id" ref="market_event_saturday_this_week" />
+        <field name="product_id" ref="product_herbs" />
+        <field name="max_qty">25</field>
+        <field name="list_price">3.00</field>
+        <field name="sequence">40</field>
+    </record>
+
+    <record id="market_offering_this_jam" model="farm.market.offering">
+        <field name="event_id" ref="market_event_saturday_this_week" />
+        <field name="product_id" ref="product_jam" />
+        <field name="max_qty">12</field>
+        <field name="list_price">8.00</field>
+        <field name="sequence">50</field>
+    </record>
+
+    <!-- Two preorders for this Saturday -->
+    <record id="market_preorder_alice" model="sale.order">
+        <field name="partner_id" ref="partner_demo_alice" />
+        <field name="farm_market_event_id" ref="market_event_saturday_this_week" />
+        <field
+            name="order_line"
+            eval="[
+            (0, 0, {'product_id': ref('product_eggs_dozen'), 'product_uom_qty': 2, 'price_unit': 6.0}),
+            (0, 0, {'product_id': ref('product_tomatoes'), 'product_uom_qty': 1, 'price_unit': 5.0}),
+            (0, 0, {'product_id': ref('product_herbs'), 'product_uom_qty': 2, 'price_unit': 3.0}),
+        ]"
+        />
+    </record>
+
+    <record id="market_preorder_carla" model="sale.order">
+        <field name="partner_id" ref="partner_demo_carla" />
+        <field name="farm_market_event_id" ref="market_event_saturday_this_week" />
+        <field
+            name="order_line"
+            eval="[
+            (0, 0, {'product_id': ref('product_eggs_dozen'), 'product_uom_qty': 1, 'price_unit': 6.0}),
+            (0, 0, {'product_id': ref('product_jam'), 'product_uom_qty': 2, 'price_unit': 8.0}),
+        ]"
+        />
+    </record>
+
+    <!-- Last week's history (matches state=closed) -->
+    <record id="market_offering_last_eggs" model="farm.market.offering">
+        <field name="event_id" ref="market_event_saturday_last_week" />
+        <field name="product_id" ref="product_eggs_dozen" />
+        <field name="max_qty">30</field>
+        <field name="list_price">6.00</field>
+    </record>
+
+    <record id="market_offering_last_tomatoes" model="farm.market.offering">
+        <field name="event_id" ref="market_event_saturday_last_week" />
+        <field name="product_id" ref="product_tomatoes" />
+        <field name="max_qty">15</field>
+        <field name="list_price">5.00</field>
+    </record>
+</odoo>
