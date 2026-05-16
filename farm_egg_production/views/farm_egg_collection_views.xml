@@ -60,7 +60,7 @@
                     name="this_month"
                     domain="[('collection_date', '&gt;=', (context_today().replace(day=1)).strftime('%Y-%m-%d'))]"
                 />
-                <group string="Group By">
+                <group>
                     <filter
                         string="Coop"
                         name="group_coop"

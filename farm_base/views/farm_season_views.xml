@@ -89,7 +89,6 @@
             <search>
                 <field name="name" />
                 <field name="code" />
-                <separator />
                 <filter
                     string="Planning"
                     name="planning"
@@ -110,7 +109,7 @@
                     name="archived"
                     domain="[('active', '=', False)]"
                 />
-                <group string="Group By">
+                <group>
                     <filter
                         string="State"
                         name="group_state"

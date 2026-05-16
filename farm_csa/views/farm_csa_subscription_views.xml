@@ -107,7 +107,7 @@
                     name="owes"
                     domain="[('payment_status', '=', 'owes')]"
                 />
-                <group string="Group By">
+                <group>
                     <filter
                         string="Tier"
                         name="group_tier"
