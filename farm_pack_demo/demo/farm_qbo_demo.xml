@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!--
+        Demo QBO connection in sandbox + stub mode. The stub puller returns
+        fixture data so the import flow is demo-able end-to-end without real
+        Intuit credentials.
+    -->
+    <record id="qbo_demo_connection" model="farm.qbo.connection">
+        <field name="environment">sandbox</field>
+        <field name="realm_id">DEMO_REALM_42</field>
+    </record>
+</odoo>

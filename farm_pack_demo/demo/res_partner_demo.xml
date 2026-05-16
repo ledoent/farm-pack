@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Customers -->
+    <record id="partner_demo_alice" model="res.partner">
+        <field name="name">Alice Neighbour</field>
+        <field name="email">alice@example.com</field>
+        <field name="phone">555-0101</field>
+        <field name="customer_rank">1</field>
+        <field name="street">42 Oak Lane</field>
+        <field name="city">Ligonier</field>
+        <field name="zip">15658</field>
+    </record>
+    <record id="partner_demo_bob" model="res.partner">
+        <field name="name">Bob Friend</field>
+        <field name="email">bob@example.com</field>
+        <field name="phone">555-0102</field>
+        <field name="customer_rank">1</field>
+        <field name="city">Ligonier</field>
+    </record>
+    <record id="partner_demo_carla" model="res.partner">
+        <field name="name">Carla Martinez</field>
+        <field name="email">carla@example.com</field>
+        <field name="phone">555-0103</field>
+        <field name="customer_rank">1</field>
+        <field name="city">Ligonier</field>
+    </record>
+    <record id="partner_demo_david" model="res.partner">
+        <field name="name">David Park</field>
+        <field name="email">david@example.com</field>
+        <field name="customer_rank">1</field>
+        <field name="city">Ligonier</field>
+    </record>
+    <record id="partner_demo_emma" model="res.partner">
+        <field name="name">Emma Wilson</field>
+        <field name="email">emma@example.com</field>
+        <field name="customer_rank">1</field>
+    </record>
+    <record id="partner_demo_fiona" model="res.partner">
+        <field name="name">Fiona O'Sullivan</field>
+        <field name="email">fiona@example.com</field>
+        <field name="customer_rank">1</field>
+    </record>
+
+    <!-- Wholesale / drop-off accounts -->
+    <record id="partner_demo_boyds_pantry" model="res.partner">
+        <field name="name">Boyd's Wellness Pantry</field>
+        <field name="email">buyer@boyds.example</field>
+        <field name="is_company" eval="True" />
+        <field name="customer_rank">1</field>
+        <field name="street">123 Main Street</field>
+        <field name="city">Ligonier</field>
+        <field name="zip">15658</field>
+    </record>
+    <record id="partner_demo_market" model="res.partner">
+        <field name="name">Saturday Farmers Market — Town Square</field>
+        <field name="is_company" eval="True" />
+        <field name="customer_rank">1</field>
+    </record>
+    <record id="partner_demo_corner_store" model="res.partner">
+        <field name="name">Corner Store Co-Op</field>
+        <field name="email">manager@cornercoop.example</field>
+        <field name="is_company" eval="True" />
+        <field name="customer_rank">1</field>
+    </record>
+
+    <!-- Vendors -->
+    <record id="partner_demo_feed_coop" model="res.partner">
+        <field name="name">Local Feed Co-Op</field>
+        <field name="email">orders@feedcoop.example</field>
+        <field name="is_company" eval="True" />
+        <field name="supplier_rank">1</field>
+    </record>
+    <record id="partner_demo_tractor_supply" model="res.partner">
+        <field name="name">Tractor Supply</field>
+        <field name="email">billing@tractor.example</field>
+        <field name="is_company" eval="True" />
+        <field name="supplier_rank">1</field>
+    </record>
+    <record id="partner_demo_seed_co" model="res.partner">
+        <field name="name">Heritage Seed Co.</field>
+        <field name="is_company" eval="True" />
+        <field name="supplier_rank">1</field>
+    </record>
+</odoo>

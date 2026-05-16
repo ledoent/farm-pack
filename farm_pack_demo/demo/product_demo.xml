@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Eggs -->
+    <record id="product_eggs_dozen" model="product.product">
+        <field name="name">Pasture-Raised Eggs - Dozen</field>
+        <field name="type">consu</field>
+        <field name="list_price">6.00</field>
+        <field name="sale_ok" eval="True" />
+        <field name="is_published" eval="True" />
+        <field
+            name="website_description"
+        >A dozen pastel-rainbow eggs from happy hens.</field>
+    </record>
+    <record id="product_eggs_half_dozen" model="product.product">
+        <field name="name">Pasture-Raised Eggs - Half Dozen</field>
+        <field name="type">consu</field>
+        <field name="list_price">3.50</field>
+        <field name="sale_ok" eval="True" />
+        <field name="is_published" eval="True" />
+    </record>
+
+    <!-- Produce -->
+    <record id="product_salad_greens" model="product.product">
+        <field name="name">Salad Greens (8oz bag)</field>
+        <field name="type">consu</field>
+        <field name="list_price">4.50</field>
+        <field name="sale_ok" eval="True" />
+        <field name="is_published" eval="True" />
+    </record>
+    <record id="product_tomatoes" model="product.product">
+        <field name="name">Heirloom Tomatoes (lb)</field>
+        <field name="type">consu</field>
+        <field name="list_price">5.00</field>
+        <field name="sale_ok" eval="True" />
+        <field name="is_published" eval="True" />
+    </record>
+    <record id="product_herbs" model="product.product">
+        <field name="name">Fresh Herb Bunch</field>
+        <field name="type">consu</field>
+        <field name="list_price">3.00</field>
+        <field name="sale_ok" eval="True" />
+        <field name="is_published" eval="True" />
+    </record>
+
+    <!-- CSA shares (service-type products tied to CSA tiers) -->
+    <record id="product_csa_small_weekly" model="product.product">
+        <field name="name">CSA Share - Small Weekly</field>
+        <field name="type">service</field>
+        <field name="list_price">25.00</field>
+        <field name="sale_ok" eval="True" />
+        <field name="is_published" eval="True" />
+        <field
+            name="website_description"
+        >Weekly box with eggs (1 dozen), greens, herbs of the week.</field>
+    </record>
+    <record id="product_csa_family_weekly" model="product.product">
+        <field name="name">CSA Share - Family Weekly</field>
+        <field name="type">service</field>
+        <field name="list_price">42.00</field>
+        <field name="sale_ok" eval="True" />
+        <field name="is_published" eval="True" />
+        <field
+            name="website_description"
+        >Weekly box: eggs (2 dozen), 4-5 vegetables, herb bunch, fruit.</field>
+    </record>
+
+    <!-- Value-added -->
+    <record id="product_jam" model="product.product">
+        <field name="name">Homestead Berry Jam (8oz jar)</field>
+        <field name="type">consu</field>
+        <field name="list_price">8.00</field>
+        <field name="sale_ok" eval="True" />
+        <field name="is_published" eval="True" />
+    </record>
+</odoo>

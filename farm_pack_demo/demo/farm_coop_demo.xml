@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="farm_coop_demo_back" model="farm.coop">
+        <field name="name">Back Coop</field>
+        <field name="capacity">15</field>
+        <field name="active_bird_count">12</field>
+        <field name="note">Buff Orpingtons + Easter Eggers. Pastel mix.</field>
+    </record>
+
+    <record id="farm_coop_demo_garden" model="farm.coop">
+        <field name="name">Garden Coop</field>
+        <field name="capacity">8</field>
+        <field name="active_bird_count">6</field>
+        <field name="note">Rhode Island Reds. Heavy brown layers.</field>
+    </record>
+</odoo>

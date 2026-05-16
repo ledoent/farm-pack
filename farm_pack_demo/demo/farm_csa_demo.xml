@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Tiers -->
+    <record id="csa_tier_demo_small" model="farm.csa.tier">
+        <field name="name">Small Weekly</field>
+        <field name="product_id" ref="product_csa_small_weekly" />
+        <field name="cadence">weekly</field>
+        <field name="price_per_period">25.00</field>
+        <field
+            name="description"
+        >Eggs (1 dozen), salad greens, herbs of the week.</field>
+    </record>
+
+    <record id="csa_tier_demo_family" model="farm.csa.tier">
+        <field name="name">Family Weekly</field>
+        <field name="product_id" ref="product_csa_family_weekly" />
+        <field name="cadence">weekly</field>
+        <field name="price_per_period">42.00</field>
+        <field
+            name="description"
+        >Eggs (2 dozen), 4-5 vegetables, herb bunch, weekly fruit.</field>
+    </record>
+
+    <!-- Subscriptions -->
+    <record id="csa_sub_demo_alice" model="farm.csa.subscription">
+        <field name="partner_id" ref="partner_demo_alice" />
+        <field name="tier_id" ref="csa_tier_demo_small" />
+        <field
+            name="date_start"
+            eval="(DateTime.today() - timedelta(days=30)).date()"
+        />
+        <field name="state">active</field>
+        <field name="payment_status">current</field>
+        <field name="delivery_method">dropoff</field>
+        <field
+            name="delivery_notes"
+        >Front porch, gate code 1234. Dog is friendly.</field>
+    </record>
+
+    <record id="csa_sub_demo_bob" model="farm.csa.subscription">
+        <field name="partner_id" ref="partner_demo_bob" />
+        <field name="tier_id" ref="csa_tier_demo_family" />
+        <field
+            name="date_start"
+            eval="(DateTime.today() - timedelta(days=60)).date()"
+        />
+        <field name="state">active</field>
+        <field name="payment_status">paid_ahead</field>
+        <field name="delivery_method">pickup_market</field>
+    </record>
+
+    <record id="csa_sub_demo_carla" model="farm.csa.subscription">
+        <field name="partner_id" ref="partner_demo_carla" />
+        <field name="tier_id" ref="csa_tier_demo_small" />
+        <field
+            name="date_start"
+            eval="(DateTime.today() - timedelta(days=14)).date()"
+        />
+        <field name="state">active</field>
+        <field name="payment_status">owes</field>
+        <field name="delivery_method">delivery</field>
+        <field name="delivery_notes">Leave at side door, doorbell broken.</field>
+    </record>
+
+    <!-- Last week's boxes -->
+    <record id="csa_box_demo_alice_w1" model="farm.csa.box">
+        <field name="subscription_id" ref="csa_sub_demo_alice" />
+        <field
+            name="delivery_date"
+            eval="(DateTime.today() - timedelta(days=7)).date()"
+        />
+        <field name="state">delivered</field>
+        <field
+            name="line_ids"
+            eval="[
+            (0, 0, {'product_id': ref('product_eggs_dozen'), 'quantity': 1}),
+            (0, 0, {'product_id': ref('product_salad_greens'), 'quantity': 1}),
+            (0, 0, {'product_id': ref('product_herbs'), 'quantity': 1}),
+        ]"
+        />
+    </record>
+
+    <record id="csa_box_demo_bob_w1" model="farm.csa.box">
+        <field name="subscription_id" ref="csa_sub_demo_bob" />
+        <field
+            name="delivery_date"
+            eval="(DateTime.today() - timedelta(days=7)).date()"
+        />
+        <field name="state">delivered</field>
+        <field
+            name="line_ids"
+            eval="[
+            (0, 0, {'product_id': ref('product_eggs_dozen'), 'quantity': 2}),
+            (0, 0, {'product_id': ref('product_salad_greens'), 'quantity': 2}),
+            (0, 0, {'product_id': ref('product_tomatoes'), 'quantity': 3}),
+            (0, 0, {'product_id': ref('product_herbs'), 'quantity': 1}),
+        ]"
+        />
+    </record>
+
+    <!-- This week's boxes (in draft, to be packed) -->
+    <record id="csa_box_demo_alice_w2" model="farm.csa.box">
+        <field name="subscription_id" ref="csa_sub_demo_alice" />
+        <field name="delivery_date" eval="DateTime.today().date()" />
+        <field name="state">draft</field>
+    </record>
+
+    <record id="csa_box_demo_bob_w2" model="farm.csa.box">
+        <field name="subscription_id" ref="csa_sub_demo_bob" />
+        <field name="delivery_date" eval="DateTime.today().date()" />
+        <field name="state">draft</field>
+    </record>
+
+    <record id="csa_box_demo_carla_w2" model="farm.csa.box">
+        <field name="subscription_id" ref="csa_sub_demo_carla" />
+        <field name="delivery_date" eval="DateTime.today().date()" />
+        <field name="state">draft</field>
+    </record>
+</odoo>

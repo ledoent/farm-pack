@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Drop-off points -->
+    <record id="dropoff_demo_alice" model="farm.dropoff.point">
+        <field name="name">Alice's Front Porch</field>
+        <field name="kind">home</field>
+        <field name="partner_id" ref="partner_demo_alice" />
+        <field name="address">42 Oak Lane, Ligonier PA</field>
+        <field
+            name="instructions"
+        >Leave on porch in cooler. Gate code 1234. Dog is friendly.</field>
+    </record>
+
+    <record id="dropoff_demo_carla" model="farm.dropoff.point">
+        <field name="name">Carla's Side Door</field>
+        <field name="kind">home</field>
+        <field name="partner_id" ref="partner_demo_carla" />
+        <field
+            name="instructions"
+        >Side door, doorbell broken. Slip box behind the bench if no answer.</field>
+    </record>
+
+    <record id="dropoff_demo_pantry" model="farm.dropoff.point">
+        <field name="name">Boyd's Wellness Pantry</field>
+        <field name="kind">pantry</field>
+        <field name="partner_id" ref="partner_demo_boyds_pantry" />
+        <field name="address">123 Main Street, Ligonier PA</field>
+        <field
+            name="instructions"
+        >Drop at front counter Tue/Fri before 10am — ask for Sarah.</field>
+    </record>
+
+    <record id="dropoff_demo_market" model="farm.dropoff.point">
+        <field name="name">Saturday Farmers Market — Booth 12</field>
+        <field name="kind">market</field>
+        <field name="partner_id" ref="partner_demo_market" />
+        <field name="address">Town Square 8am-12pm Saturdays</field>
+    </record>
+
+    <record id="dropoff_demo_corner" model="farm.dropoff.point">
+        <field name="name">Corner Store Co-Op</field>
+        <field name="kind">pantry</field>
+        <field name="partner_id" ref="partner_demo_corner_store" />
+        <field
+            name="instructions"
+        >Back loading dock between 7-9am. Slip pricing card under egg cartons.</field>
+    </record>
+
+    <!-- Today's Tuesday route -->
+    <record id="route_demo_tuesday" model="farm.delivery.route">
+        <field name="name">Tuesday North-Side Drop</field>
+        <field name="scheduled_date" eval="DateTime.today().date()" />
+        <field name="state">planned</field>
+        <field
+            name="stop_ids"
+            eval="[
+            (0, 0, {'sequence': 10, 'dropoff_point_id': ref('dropoff_demo_pantry'), 'package_count': 6}),
+            (0, 0, {'sequence': 20, 'dropoff_point_id': ref('dropoff_demo_corner'), 'package_count': 4}),
+            (0, 0, {'sequence': 30, 'dropoff_point_id': ref('dropoff_demo_alice'), 'package_count': 1}),
+            (0, 0, {'sequence': 40, 'dropoff_point_id': ref('dropoff_demo_carla'), 'package_count': 1}),
+        ]"
+        />
+    </record>
+</odoo>

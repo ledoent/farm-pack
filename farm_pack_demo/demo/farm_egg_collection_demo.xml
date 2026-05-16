@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Seven days of egg collection across two coops -->
+    <record id="egg_demo_back_d0" model="farm.egg.collection">
+        <field name="coop_id" ref="farm_coop_demo_back" />
+        <field name="collection_date" eval="DateTime.today().date()" />
+        <field name="count_total">10</field>
+        <field name="count_kept_home">2</field>
+    </record>
+    <record id="egg_demo_back_d1" model="farm.egg.collection">
+        <field name="coop_id" ref="farm_coop_demo_back" />
+        <field
+            name="collection_date"
+            eval="(DateTime.today() - timedelta(days=1)).date()"
+        />
+        <field name="count_total">11</field>
+        <field name="count_kept_home">2</field>
+    </record>
+    <record id="egg_demo_back_d2" model="farm.egg.collection">
+        <field name="coop_id" ref="farm_coop_demo_back" />
+        <field
+            name="collection_date"
+            eval="(DateTime.today() - timedelta(days=2)).date()"
+        />
+        <field name="count_total">9</field>
+        <field name="count_broken">1</field>
+        <field name="count_kept_home">2</field>
+    </record>
+    <record id="egg_demo_back_d3" model="farm.egg.collection">
+        <field name="coop_id" ref="farm_coop_demo_back" />
+        <field
+            name="collection_date"
+            eval="(DateTime.today() - timedelta(days=3)).date()"
+        />
+        <field name="count_total">12</field>
+        <field name="count_kept_home">2</field>
+    </record>
+    <record id="egg_demo_back_d4" model="farm.egg.collection">
+        <field name="coop_id" ref="farm_coop_demo_back" />
+        <field
+            name="collection_date"
+            eval="(DateTime.today() - timedelta(days=4)).date()"
+        />
+        <field name="count_total">10</field>
+        <field name="count_kept_home">2</field>
+    </record>
+
+    <record id="egg_demo_garden_d0" model="farm.egg.collection">
+        <field name="coop_id" ref="farm_coop_demo_garden" />
+        <field name="collection_date" eval="DateTime.today().date()" />
+        <field name="count_total">5</field>
+        <field name="count_broken">1</field>
+    </record>
+    <record id="egg_demo_garden_d1" model="farm.egg.collection">
+        <field name="coop_id" ref="farm_coop_demo_garden" />
+        <field
+            name="collection_date"
+            eval="(DateTime.today() - timedelta(days=1)).date()"
+        />
+        <field name="count_total">4</field>
+    </record>
+    <record id="egg_demo_garden_d2" model="farm.egg.collection">
+        <field name="coop_id" ref="farm_coop_demo_garden" />
+        <field
+            name="collection_date"
+            eval="(DateTime.today() - timedelta(days=2)).date()"
+        />
+        <field name="count_total">5</field>
+    </record>
+</odoo>
