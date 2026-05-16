@@ -19,7 +19,7 @@
 
     <!-- The stable shipping method: the Saturday market series -->
     <record id="carrier_saturday_market" model="delivery.carrier">
-        <field name="name">Saturday Farmers Market Pickup</field>
+        <field name="name">Market Pickup</field>
         <field name="delivery_type">fixed</field>
         <field name="product_id" ref="product_market_pickup_service" />
         <field name="is_farm_market_pickup" eval="True" />
