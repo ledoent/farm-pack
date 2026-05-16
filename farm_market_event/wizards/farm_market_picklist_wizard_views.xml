@@ -19,13 +19,6 @@
                     </field>
                 </group>
                 <footer>
-                    <button
-                        string="Print Pick List"
-                        type="object"
-                        name="_void_helper"
-                        class="oe_highlight"
-                        invisible="1"
-                    />
                     <button string="Close" class="btn-secondary" special="cancel" />
                 </footer>
             </form>
