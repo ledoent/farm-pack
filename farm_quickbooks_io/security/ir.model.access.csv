@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_farm_qbo_connection_manager,farm.qbo.connection manager full,model_farm_qbo_connection,farm_base.group_farm_manager,1,1,1,1
+access_farm_qbo_import_user,farm.qbo.import user read,model_farm_qbo_import,farm_base.group_farm_user,1,0,0,0
+access_farm_qbo_import_manager,farm.qbo.import manager full,model_farm_qbo_import,farm_base.group_farm_manager,1,1,1,1
+access_farm_qbo_mapping_user,farm.qbo.mapping user read,model_farm_qbo_mapping,farm_base.group_farm_user,1,0,0,0
+access_farm_qbo_mapping_manager,farm.qbo.mapping manager full,model_farm_qbo_mapping,farm_base.group_farm_manager,1,1,1,1
+access_farm_qbo_import_wizard_manager,farm.qbo.import.wizard manager full,model_farm_qbo_import_wizard,farm_base.group_farm_manager,1,1,1,1

@@ -12,6 +12,7 @@
         "farm_egg_production",
         "farm_csa",
         "farm_delivery_routes",
+        "farm_quickbooks_io",
         # Odoo CE — the four-jobs composition
         "website",
         "website_sale",

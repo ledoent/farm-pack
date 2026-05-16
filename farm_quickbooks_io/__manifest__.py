@@ -1,0 +1,30 @@
+{
+    "name": "Farm QuickBooks I/O",
+    "summary": "Import from QuickBooks Online; export Odoo journals as QBO IIF/CSV",
+    "version": "19.0.1.0.0",
+    "license": "AGPL-3",
+    "author": "Ledo Enterprises, Odoo Community Association (OCA)",
+    "website": "https://github.com/ledoent/farm-pack",
+    "category": "Vertical/Agriculture",
+    "depends": [
+        "farm_base",
+        "account",
+        "product",
+    ],
+    "external_dependencies": {
+        "python": ["intuit-oauth", "python-quickbooks"],
+    },
+    "data": [
+        "security/ir.model.access.csv",
+        "data/qbo_account_dictionary.xml",
+        "views/farm_qbo_connection_views.xml",
+        "views/farm_qbo_import_views.xml",
+        "wizards/qbo_import_wizard_views.xml",
+        "views/farm_qbo_menu.xml",
+    ],
+    "demo": [],
+    "installable": True,
+    "application": False,
+    "development_status": "Alpha",
+    "maintainers": ["dkendall"],
+}

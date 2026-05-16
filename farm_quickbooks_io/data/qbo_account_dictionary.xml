@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+    <!--
+        Rule-layer dictionary mapping common QBO AccountSubType + name patterns
+        to IRS Schedule F lines. Source of ground truth for the deterministic
+        portion of the import mapper. Extended over time as we see real
+        farmer-of-record QBO files.
+
+        The AI layer (proprietary ledoent_farm_ai module) consults this dict
+        as part of its system prompt and only fires on items we don't already
+        cover here.
+
+        MVP ships a starter set; the 200-entry dictionary lands incrementally.
+    -->
+
+    <record id="rule_feed_purchased" model="ir.config_parameter">
+        <field name="key">farm_qbo.rule.feed_purchased</field>
+        <field
+            name="value"
+        >{"qbo_subtype": "SuppliesMaterialsCogs", "qbo_name_pattern": "feed|hay|silage|grain", "schedule_f_line": "23"}</field>
+    </record>
+
+    <record id="rule_fertilizer" model="ir.config_parameter">
+        <field name="key">farm_qbo.rule.fertilizer</field>
+        <field
+            name="value"
+        >{"qbo_name_pattern": "fertilizer|lime|nutrient", "schedule_f_line": "20"}</field>
+    </record>
+
+    <record id="rule_chemicals" model="ir.config_parameter">
+        <field name="key">farm_qbo.rule.chemicals</field>
+        <field
+            name="value"
+        >{"qbo_name_pattern": "pesticide|herbicide|insecticide|chemical|spray", "schedule_f_line": "21"}</field>
+    </record>
+
+    <record id="rule_fuel" model="ir.config_parameter">
+        <field name="key">farm_qbo.rule.fuel</field>
+        <field
+            name="value"
+        >{"qbo_subtype": "Auto", "qbo_name_pattern": "fuel|gasoline|diesel|oil|lube", "schedule_f_line": "14a"}</field>
+    </record>
+
+    <record id="rule_seeds_plants" model="ir.config_parameter">
+        <field name="key">farm_qbo.rule.seeds_plants</field>
+        <field
+            name="value"
+        >{"qbo_name_pattern": "seed|plant|sapling|seedling|nursery", "schedule_f_line": "16"}</field>
+    </record>
+
+    <record id="rule_vet" model="ir.config_parameter">
+        <field name="key">farm_qbo.rule.vet</field>
+        <field
+            name="value"
+        >{"qbo_name_pattern": "vet|veterinar|medicine|breeding", "schedule_f_line": "19"}</field>
+    </record>
+
+    <record id="rule_supplies" model="ir.config_parameter">
+        <field name="key">farm_qbo.rule.supplies</field>
+        <field
+            name="value"
+        >{"qbo_name_pattern": "supplies|materials", "schedule_f_line": "15"}</field>
+    </record>
+
+    <record id="rule_labor_hired" model="ir.config_parameter">
+        <field name="key">farm_qbo.rule.labor_hired</field>
+        <field
+            name="value"
+        >{"qbo_name_pattern": "wages|labor|payroll|hired help", "schedule_f_line": "8"}</field>
+    </record>
+
+    <record id="rule_repairs" model="ir.config_parameter">
+        <field name="key">farm_qbo.rule.repairs</field>
+        <field
+            name="value"
+        >{"qbo_name_pattern": "repair|maintenance|maint\\.", "schedule_f_line": "9"}</field>
+    </record>
+
+    <record id="rule_utilities" model="ir.config_parameter">
+        <field name="key">farm_qbo.rule.utilities</field>
+        <field
+            name="value"
+        >{"qbo_name_pattern": "utilit|electric|propane|natural gas", "schedule_f_line": "14b"}</field>
+    </record>
+
+    <record id="rule_sales_livestock" model="ir.config_parameter">
+        <field name="key">farm_qbo.rule.sales_livestock</field>
+        <field
+            name="value"
+        >{"qbo_name_pattern": "livestock sales|cattle sales|hog sales|sheep sales|cull cows", "schedule_f_line": "1"}</field>
+    </record>
+
+    <record id="rule_sales_crops" model="ir.config_parameter">
+        <field name="key">farm_qbo.rule.sales_crops</field>
+        <field
+            name="value"
+        >{"qbo_name_pattern": "crop sales|grain sales|hay sales|produce sales|egg sales|csa", "schedule_f_line": "2"}</field>
+    </record>
+</odoo>

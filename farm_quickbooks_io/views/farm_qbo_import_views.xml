@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="farm_qbo_import_view_list" model="ir.ui.view">
+        <field name="name">farm.qbo.import.list</field>
+        <field name="model">farm.qbo.import</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" />
+                <field name="connection_id" />
+                <field name="lookback_months" />
+                <field name="mapping_count" />
+                <field
+                    name="state"
+                    widget="badge"
+                    decoration-info="state == 'draft'"
+                    decoration-warning="state in ('pulling', 'mapping', 'review', 'committing')"
+                    decoration-success="state == 'committed'"
+                    decoration-danger="state in ('failed', 'rolled_back')"
+                />
+                <field name="pulled_at" />
+                <field name="committed_at" />
+            </list>
+        </field>
+    </record>
+
+    <record id="farm_qbo_import_view_form" model="ir.ui.view">
+        <field name="name">farm.qbo.import.form</field>
+        <field name="model">farm.qbo.import</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button
+                        name="action_run_pull"
+                        type="object"
+                        string="Pull from QuickBooks"
+                        invisible="state not in ('draft', 'failed')"
+                        class="oe_highlight"
+                    />
+                    <button
+                        name="action_commit"
+                        type="object"
+                        string="Commit"
+                        invisible="state != 'review'"
+                        class="oe_highlight"
+                    />
+                    <button
+                        name="action_rollback"
+                        type="object"
+                        string="Rollback"
+                        invisible="state != 'committed'"
+                    />
+                    <button
+                        name="action_reset_to_draft"
+                        type="object"
+                        string="Reset to Draft"
+                        invisible="state not in ('failed', 'rolled_back')"
+                    />
+                    <field
+                        name="state"
+                        widget="statusbar"
+                        statusbar_visible="draft,pulling,mapping,review,committing,committed"
+                    />
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="connection_id" />
+                            <field name="lookback_months" />
+                            <field name="pulled_at" readonly="1" />
+                            <field name="committed_at" readonly="1" />
+                        </group>
+                        <group>
+                            <field name="include_coa" />
+                            <field name="include_partners" />
+                            <field name="include_products" />
+                            <field name="include_transactions" />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Mappings" name="mappings">
+                            <field name="mapping_ids">
+                                <list editable="bottom">
+                                    <field name="qbo_type" />
+                                    <field name="qbo_label" />
+                                    <field name="proposed_target_model" />
+                                    <field
+                                        name="proposed_schedule_f_line"
+                                        optional="show"
+                                    />
+                                    <field name="confidence" widget="percentage" />
+                                    <field name="source" />
+                                    <field name="user_decision" />
+                                    <field
+                                        name="committed_target_ref"
+                                        readonly="1"
+                                        optional="hide"
+                                    />
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Audit Log" name="audit">
+                            <field name="audit_log" readonly="1" />
+                        </page>
+                        <page string="Error" name="error" invisible="not error_message">
+                            <field name="error_message" readonly="1" />
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter />
+            </form>
+        </field>
+    </record>
+
+    <record id="farm_qbo_import_action" model="ir.actions.act_window">
+        <field name="name">QuickBooks Imports</field>
+        <field name="res_model">farm.qbo.import</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

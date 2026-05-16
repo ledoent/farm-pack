@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="farm_qbo_import_wizard_view_form" model="ir.ui.view">
+        <field name="name">farm.qbo.import.wizard.form</field>
+        <field name="model">farm.qbo.import.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Start QuickBooks Import">
+                <group>
+                    <field name="connection_id" />
+                    <field name="lookback_months" />
+                </group>
+                <group string="What to pull">
+                    <field name="include_coa" />
+                    <field name="include_partners" />
+                    <field name="include_products" />
+                    <field name="include_transactions" />
+                </group>
+                <footer>
+                    <button
+                        name="action_start"
+                        type="object"
+                        string="Start Import"
+                        class="oe_highlight"
+                    />
+                    <button string="Cancel" class="btn-secondary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="farm_qbo_import_wizard_action" model="ir.actions.act_window">
+        <field name="name">Start QuickBooks Import</field>
+        <field name="res_model">farm.qbo.import.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

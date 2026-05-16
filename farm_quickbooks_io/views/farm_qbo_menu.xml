@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <menuitem
+        id="menu_farm_quickbooks"
+        name="QuickBooks"
+        parent="farm_base.menu_farm_root"
+        sequence="60"
+        groups="farm_base.group_farm_manager"
+    />
+
+    <menuitem
+        id="menu_farm_qbo_connections"
+        name="Connections"
+        parent="menu_farm_quickbooks"
+        action="farm_qbo_connection_action"
+        sequence="10"
+    />
+
+    <menuitem
+        id="menu_farm_qbo_imports"
+        name="Imports"
+        parent="menu_farm_quickbooks"
+        action="farm_qbo_import_action"
+        sequence="20"
+    />
+
+    <menuitem
+        id="menu_farm_qbo_start_import"
+        name="Start New Import"
+        parent="menu_farm_quickbooks"
+        action="farm_qbo_import_wizard_action"
+        sequence="30"
+    />
+</odoo>
