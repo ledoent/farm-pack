@@ -383,9 +383,11 @@ movements roll up into</li>
 <li><tt class="docutils literal">farm.measurement.mixin</tt> — abstract mixin for any model carrying a
 value + unit pair</li>
 <li><tt class="docutils literal">farm.gps.point.mixin</tt> — abstract mixin for optional WGS84 lat/lon</li>
-<li>Agricultural units of measure: bushels (corn / soybean / wheat),
-hundredweight, US ton, acre, hectare, head</li>
 </ul>
+<p>Agricultural UoMs (bushels, hundredweight, US ton, acre, head) will
+arrive in a follow-up <tt class="docutils literal">farm_uom</tt> module — Odoo 19 rearchitected
+<tt class="docutils literal">uom.uom</tt> and we want to land the new pattern cleanly rather than port
+the 18.0 idiom.</p>
 <p>This module holds no business logic and is never installed standalone —
 it exists so the leaf farm modules can share types without diamond
 dependencies.</p>

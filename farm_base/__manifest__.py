@@ -14,7 +14,6 @@
     "data": [
         "security/farm_security.xml",
         "security/ir.model.access.csv",
-        "data/farm_uom_data.xml",
         "views/farm_season_views.xml",
         "views/farm_menu.xml",
     ],
