@@ -9,6 +9,14 @@ class EventEvent(models.Model):
         help="Treat this event as a farmers market: enables product offerings, "
         "preorders for pickup, and the 'what to bring' pick list.",
     )
+    farm_market_carrier_id = fields.Many2one(
+        "delivery.carrier",
+        string="Market Series (shipping method)",
+        domain="[('is_farm_market_pickup', '=', True)]",
+        help="Stable handle for this recurring market — e.g. 'Saturday Farmers "
+        "Market'. Customers pick this carrier on their order; the system "
+        "routes the preorder to the next upcoming event in the series.",
+    )
     preorder_cutoff_datetime = fields.Datetime(
         string="Preorder Cutoff",
         help="When preorders close. After this moment new preorders are rejected, "
