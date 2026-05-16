@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="farm_onboarding_session_view_form" model="ir.ui.view">
+        <field name="name">farm.onboarding.session.form</field>
+        <field name="model">farm.onboarding.session</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field
+                        name="state"
+                        widget="statusbar"
+                        statusbar_visible="welcome,farm_profile,enterprises,books,done"
+                    />
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            Set up your farm
+                            <small class="text-muted">
+                                · <field
+                            name="progress_pct"
+                            readonly="1"
+                            nolabel="1"
+                        />% complete
+                            </small>
+                        </h1>
+                    </div>
+
+                    <!-- Screen 1: Welcome -->
+                    <group invisible="state != 'welcome'">
+                        <div colspan="2" class="alert alert-info" role="alert">
+                            <h3>Welcome to your farm pack 🌾</h3>
+                            <p>
+                                Four minutes to get oriented. We'll ask about your
+                                farm, what you grow, and how you keep books today —
+                                so the pack can pre-configure the right pieces.
+                            </p>
+                            <p class="text-muted small">
+                                You can skip any step or come back later. Your
+                                progress saves automatically.
+                            </p>
+                        </div>
+                    </group>
+
+                    <!-- Screen 2: Your farm -->
+                    <group invisible="state != 'farm_profile'" string="Your farm">
+                        <field name="farm_name" placeholder="e.g. Twin Springs Farm" />
+                        <field name="acreage" placeholder="0" />
+                        <field name="zip_code" placeholder="e.g. 15658" />
+                    </group>
+
+                    <!-- Screen 3: Enterprises -->
+                    <group
+                        invisible="state != 'enterprises'"
+                        string="What do you grow or raise?"
+                    >
+                        <field
+                            name="enterprise_ids"
+                            widget="many2many_tags"
+                            nolabel="1"
+                        />
+                        <p class="text-muted small" colspan="2">
+                            Pick all that apply. We'll pre-enable the right products
+                            and reports based on your selections.
+                        </p>
+                    </group>
+
+                    <!-- Screen 4: Books today -->
+                    <group
+                        invisible="state != 'books'"
+                        string="How are you keeping books today?"
+                    >
+                        <field name="bookkeeping_method" widget="radio" nolabel="1" />
+                        <p class="text-muted small" colspan="2">
+                            If you say QuickBooks, we can import your chart of
+                            accounts, vendors, and last 12 months of transactions
+                            in a single step (Farm → QuickBooks → Imports).
+                        </p>
+                    </group>
+
+                    <!-- Screen 5: Done -->
+                    <group invisible="state != 'done'">
+                        <div colspan="2" class="alert alert-success" role="alert">
+                            <h3>You're set 🎉</h3>
+                            <p>
+                                Head to the Farm menu to log your first egg
+                                collection, set up a CSA tier, post a market
+                                event, or import your QuickBooks data.
+                            </p>
+                            <p class="text-muted small">
+                                Finished
+                                <field name="finished_at" readonly="1" nolabel="1" />.
+                            </p>
+                        </div>
+                    </group>
+
+                    <footer>
+                        <button
+                            string="Back"
+                            type="object"
+                            name="action_back"
+                            invisible="state == 'welcome' or state == 'done'"
+                        />
+                        <button
+                            string="Next"
+                            type="object"
+                            name="action_next"
+                            class="oe_highlight"
+                            invisible="state == 'done'"
+                        />
+                        <button
+                            string="Skip Setup"
+                            type="object"
+                            name="action_skip"
+                            invisible="state == 'done' or state == 'welcome'"
+                        />
+                        <button
+                            string="Restart"
+                            type="object"
+                            name="action_restart"
+                            invisible="state != 'done'"
+                        />
+                    </footer>
+                </sheet>
+                <chatter />
+            </form>
+        </field>
+    </record>
+
+    <record id="farm_onboarding_session_view_list" model="ir.ui.view">
+        <field name="name">farm.onboarding.session.list</field>
+        <field name="model">farm.onboarding.session</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" />
+                <field name="user_id" />
+                <field name="state" widget="badge" />
+                <field name="progress_pct" widget="progressbar" />
+                <field name="finished_at" optional="show" />
+            </list>
+        </field>
+    </record>
+
+    <record id="farm_onboarding_session_action_user" model="ir.actions.server">
+        <field name="name">Open My Onboarding</field>
+        <field name="model_id" ref="model_farm_onboarding_session" />
+        <field name="state">code</field>
+        <field
+            name="code"
+        >action = env["farm.onboarding.session"].action_open_for_current_user()</field>
+    </record>
+
+    <record id="farm_onboarding_session_action_admin" model="ir.actions.act_window">
+        <field name="name">Onboarding Sessions</field>
+        <field name="res_model">farm.onboarding.session</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

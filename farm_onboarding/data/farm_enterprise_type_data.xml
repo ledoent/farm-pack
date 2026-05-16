@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+    <record id="enterprise_eggs" model="farm.enterprise.type">
+        <field name="name">Eggs</field>
+        <field name="sequence">10</field>
+        <field name="icon">🥚</field>
+        <field name="is_animal" eval="True" />
+        <field name="description">Laying hens / duck / quail eggs</field>
+    </record>
+    <record id="enterprise_vegetables" model="farm.enterprise.type">
+        <field name="name">Vegetables</field>
+        <field name="sequence">20</field>
+        <field name="icon">🥬</field>
+    </record>
+    <record id="enterprise_fruit" model="farm.enterprise.type">
+        <field name="name">Fruit</field>
+        <field name="sequence">25</field>
+        <field name="icon">🍓</field>
+    </record>
+    <record id="enterprise_herbs" model="farm.enterprise.type">
+        <field name="name">Herbs</field>
+        <field name="sequence">30</field>
+        <field name="icon">🌿</field>
+    </record>
+    <record id="enterprise_orchard" model="farm.enterprise.type">
+        <field name="name">Orchard</field>
+        <field name="sequence">35</field>
+        <field name="icon">🍎</field>
+    </record>
+    <record id="enterprise_cattle" model="farm.enterprise.type">
+        <field name="name">Cattle (beef)</field>
+        <field name="sequence">40</field>
+        <field name="icon">🐄</field>
+        <field name="is_animal" eval="True" />
+    </record>
+    <record id="enterprise_dairy" model="farm.enterprise.type">
+        <field name="name">Dairy</field>
+        <field name="sequence">45</field>
+        <field name="icon">🥛</field>
+        <field name="is_animal" eval="True" />
+    </record>
+    <record id="enterprise_poultry" model="farm.enterprise.type">
+        <field name="name">Poultry (meat)</field>
+        <field name="sequence">50</field>
+        <field name="icon">🐔</field>
+        <field name="is_animal" eval="True" />
+    </record>
+    <record id="enterprise_hogs" model="farm.enterprise.type">
+        <field name="name">Hogs</field>
+        <field name="sequence">55</field>
+        <field name="icon">🐖</field>
+        <field name="is_animal" eval="True" />
+    </record>
+    <record id="enterprise_sheep" model="farm.enterprise.type">
+        <field name="name">Sheep / Goats</field>
+        <field name="sequence">60</field>
+        <field name="icon">🐑</field>
+        <field name="is_animal" eval="True" />
+    </record>
+    <record id="enterprise_value_added" model="farm.enterprise.type">
+        <field name="name">Value-Added (jam, soap, etc.)</field>
+        <field name="sequence">70</field>
+        <field name="icon">🍯</field>
+    </record>
+    <record id="enterprise_workshops" model="farm.enterprise.type">
+        <field name="name">Workshops / Farm Stays</field>
+        <field name="sequence">80</field>
+        <field name="icon">🎓</field>
+    </record>
+</odoo>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <menuitem
+        id="menu_farm_onboarding_start"
+        name="Setup Wizard"
+        parent="farm_base.menu_farm_root"
+        action="farm_onboarding_session_action_user"
+        sequence="5"
+        groups="farm_base.group_farm_user"
+    />
+
+    <menuitem
+        id="menu_farm_onboarding_sessions_admin"
+        name="Onboarding Sessions"
+        parent="farm_base.menu_farm_configuration"
+        action="farm_onboarding_session_action_admin"
+        sequence="50"
+        groups="farm_base.group_farm_manager"
+    />
+
+    <menuitem
+        id="menu_farm_enterprise_types"
+        name="Enterprise Types"
+        parent="farm_base.menu_farm_configuration"
+        action="farm_enterprise_type_action"
+        sequence="60"
+        groups="farm_base.group_farm_manager"
+    />
+</odoo>

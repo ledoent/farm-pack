@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_farm_enterprise_type_user,farm.enterprise.type user read,model_farm_enterprise_type,farm_base.group_farm_user,1,0,0,0
+access_farm_enterprise_type_manager,farm.enterprise.type manager full,model_farm_enterprise_type,farm_base.group_farm_manager,1,1,1,1
+access_farm_onboarding_session_user,farm.onboarding.session user own,model_farm_onboarding_session,farm_base.group_farm_user,1,1,1,1
+access_farm_onboarding_session_manager,farm.onboarding.session manager full,model_farm_onboarding_session,farm_base.group_farm_manager,1,1,1,1
