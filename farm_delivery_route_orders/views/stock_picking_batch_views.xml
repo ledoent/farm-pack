@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="stock_picking_batch_form_inherit_farm" model="ir.ui.view">
+        <field name="name">stock.picking.batch.form.farm</field>
+        <field name="model">stock.picking.batch</field>
+        <field name="inherit_id" ref="stock_picking_batch.stock_picking_batch_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='user_id']" position="after">
+                <field name="farm_delivery_date" />
+                <field name="farm_delivery_zone_id" />
+                <field name="farm_stop_count" readonly="1" />
+            </xpath>
+        </field>
+    </record>
+</odoo>

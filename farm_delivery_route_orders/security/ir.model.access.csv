@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_farm_delivery_zone_user,farm.delivery.zone user read,model_farm_delivery_zone,farm_base.group_farm_user,1,0,0,0
+access_farm_delivery_zone_manager,farm.delivery.zone manager full,model_farm_delivery_zone,farm_base.group_farm_manager,1,1,1,1
+access_farm_weekly_route_wizard_manager,farm.weekly.route.wizard manager full,model_farm_weekly_route_wizard,farm_base.group_farm_manager,1,1,1,1

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="sale_order_form_inherit_farm" model="ir.ui.view">
+        <field name="name">sale.order.form.farm.delivery</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='date_order']" position="after">
+                <field name="farm_delivery_date" />
+                <field name="farm_delivery_zone_id" />
+            </xpath>
+        </field>
+    </record>
+
+    <record id="sale_order_view_search_inherit_farm" model="ir.ui.view">
+        <field name="name">sale.order.search.farm.delivery</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_sales_order_filter" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="farm_delivery_zone_id" />
+            </xpath>
+            <xpath expr="//filter[@name='my_sale_orders_filter']" position="after">
+                <separator />
+                <filter
+                    string="Delivery Today"
+                    name="delivery_today"
+                    domain="[('farm_delivery_date', '=', context_today().strftime('%Y-%m-%d'))]"
+                />
+                <filter
+                    string="Delivery This Week"
+                    name="delivery_this_week"
+                    domain="[
+                        ('farm_delivery_date', '&gt;=',
+                            (context_today() - relativedelta(days=context_today().weekday())).strftime('%Y-%m-%d')),
+                        ('farm_delivery_date', '&lt;=',
+                            (context_today() + relativedelta(days=6 - context_today().weekday())).strftime('%Y-%m-%d')),
+                    ]"
+                />
+            </xpath>
+        </field>
+    </record>
+</odoo>

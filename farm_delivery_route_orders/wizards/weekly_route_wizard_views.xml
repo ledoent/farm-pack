@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="farm_weekly_route_wizard_view_form" model="ir.ui.view">
+        <field name="name">farm.weekly.route.wizard.form</field>
+        <field name="model">farm.weekly.route.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Build Weekly Route">
+                <group>
+                    <field name="delivery_date" />
+                    <field name="delivery_zone_id" />
+                    <field name="driver_id" />
+                </group>
+                <group string="Matching pickings (preview)">
+                    <field name="picking_ids" nolabel="1" readonly="1">
+                        <list>
+                            <field name="name" />
+                            <field name="partner_id" />
+                            <field name="farm_delivery_zone_id" />
+                            <field name="scheduled_date" />
+                            <field name="state" />
+                        </list>
+                    </field>
+                </group>
+                <footer>
+                    <button
+                        name="action_build_route"
+                        type="object"
+                        string="Build Route"
+                        class="oe_highlight"
+                    />
+                    <button string="Cancel" class="btn-secondary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="farm_weekly_route_wizard_action" model="ir.actions.act_window">
+        <field name="name">Build Weekly Route</field>
+        <field name="res_model">farm.weekly.route.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>
