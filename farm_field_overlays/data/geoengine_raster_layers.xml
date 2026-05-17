@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Public-domain WMS overlays for the farm.field map view. All sources are
+    US government services (USDA, NRCS) and require no API key. URLs are
+    stored as plain field data so an admin can edit them via Settings →
+    Technical → Geoengine → Raster Layers without touching code.
+
+    `noupdate="1"`: module upgrades won't overwrite admin tweaks (URL changes,
+    opacity, sequence).
+
+    Note on stability: USDA and NRCS WMS endpoints occasionally move. CDL
+    layer names are year-specific (`cdl_YYYY`) — bump the LAYERS param in
+    the CDL record once a year as USDA publishes the new year's raster
+    (typically Feb/Mar of the following year).
+-->
+<odoo noupdate="1">
+    <record id="farm_field_overlay_cdl" model="geoengine.raster.layer">
+        <field name="name">USDA Cropland (CDL 2024)</field>
+        <field name="raster_type">d_wms</field>
+        <field name="url">https://nassgeodata.gmu.edu/CropScape/wms</field>
+        <field
+            name="params_wms"
+        >{"LAYERS": "cdl_2024", "FORMAT": "image/png", "TRANSPARENT": "TRUE"}</field>
+        <field name="server_type">mapserver</field>
+        <field name="overlay" eval="True" />
+        <field name="opacity">0.5</field>
+        <field name="sequence">10</field>
+        <field name="view_id" ref="farm_field_geo.farm_field_view_geoengine" />
+    </record>
+
+    <record id="farm_field_overlay_ssurgo" model="geoengine.raster.layer">
+        <field name="name">NRCS Soil (SSURGO)</field>
+        <field name="raster_type">d_wms</field>
+        <field
+            name="url"
+        >https://sdmdataaccess.nrcs.usda.gov/Spatial/SDMWGS84Geographic.wms</field>
+        <field
+            name="params_wms"
+        >{"LAYERS": "MapunitPoly", "FORMAT": "image/png", "TRANSPARENT": "TRUE"}</field>
+        <field name="server_type">geoserver</field>
+        <field name="overlay" eval="True" />
+        <field name="opacity">0.4</field>
+        <field name="sequence">20</field>
+        <field name="view_id" ref="farm_field_geo.farm_field_view_geoengine" />
+    </record>
+
+    <!--
+        OpenStreetMap basemap so users see roads + parcel context behind
+        their fields. sequence=99 keeps it at the bottom of the stack.
+    -->
+    <record id="farm_field_overlay_osm" model="geoengine.raster.layer">
+        <field name="name">OpenStreetMap</field>
+        <field name="raster_type">osm</field>
+        <field name="overlay" eval="False" />
+        <field name="sequence">99</field>
+        <field name="view_id" ref="farm_field_geo.farm_field_view_geoengine" />
+    </record>
+</odoo>
