@@ -18,24 +18,24 @@
         <field name="name">farm.crop.kanban</field>
         <field name="model">farm.crop</field>
         <field name="arch" type="xml">
-            <kanban highlight_color="color">
+            <kanban>
                 <templates>
                     <t t-name="card">
-                        <div class="o_kanban_image_fill_left o_kanban_image_full">
-                            <field name="image_128" widget="image" />
-                        </div>
-                        <div class="oe_kanban_details">
+                        <div class="o_kanban_record_top">
                             <strong>
                                 <field name="name" />
                             </strong>
-                            <div t-if="record.latin_name.raw_value">
-                                <i>
-                                    <field name="latin_name" />
-                                </i>
-                            </div>
-                            <div t-if="record.days_to_maturity.raw_value">
-                                <field name="days_to_maturity" /> days to maturity
-                            </div>
+                        </div>
+                        <div>
+                            <field name="category" />
+                        </div>
+                        <div>
+                            <i>
+                                <field name="latin_name" />
+                            </i>
+                        </div>
+                        <div>
+                            <field name="days_to_maturity" /> days to maturity
                         </div>
                     </t>
                 </templates>

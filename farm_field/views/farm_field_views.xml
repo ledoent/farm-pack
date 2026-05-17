@@ -25,29 +25,26 @@
         <field name="name">farm.field.kanban</field>
         <field name="model">farm.field</field>
         <field name="arch" type="xml">
-            <kanban highlight_color="color">
+            <kanban>
                 <templates>
                     <t t-name="card">
-                        <div class="oe_kanban_details">
+                        <div class="o_kanban_record_top">
                             <strong>
                                 <field name="name" />
                             </strong>
-                            <div t-if="record.code.raw_value">
-                                <span class="text-muted">
-                                    <field name="code" />
-                                </span>
-                            </div>
-                            <div>
-                                <field name="acres" /> acres
-                                <span
-                                t-if="record.organic_certified.raw_value"
-                                class="badge text-bg-success ms-1"
-                            >Organic</span>
-                            </div>
-                            <div t-if="record.crop_id.raw_value" class="text-muted">
-                                <i class="fa fa-leaf" />
-                                <field name="crop_id" />
-                            </div>
+                        </div>
+                        <div class="text-muted">
+                            <field name="code" />
+                        </div>
+                        <div>
+                            <field name="acres" /> acres
+                        </div>
+                        <div>
+                            <field name="crop_id" />
+                        </div>
+                        <div>
+                            <field name="organic_certified" widget="boolean_toggle" />
+                            Organic
                         </div>
                     </t>
                 </templates>

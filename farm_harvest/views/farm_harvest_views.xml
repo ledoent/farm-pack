@@ -21,25 +21,24 @@
         <field name="name">farm.harvest.kanban</field>
         <field name="model">farm.harvest</field>
         <field name="arch" type="xml">
-            <kanban default_group_by="crop_id" highlight_color="color">
+            <kanban>
                 <templates>
                     <t t-name="card">
-                        <div class="oe_kanban_details">
+                        <div class="o_kanban_record_top">
                             <strong>
                                 <field name="qty_harvested" />
                                 <field name="qty_uom_id" />
                                 <field name="crop_id" />
                             </strong>
-                            <div>
-                                <i class="fa fa-map-marker" />
-                                <field name="field_id" />
-                            </div>
-                            <div class="text-muted">
-                                <field name="harvest_date" />
-                            </div>
-                            <div t-if="record.grade.raw_value">
-                                <field name="grade" widget="badge" />
-                            </div>
+                        </div>
+                        <div>
+                            <field name="field_id" />
+                        </div>
+                        <div class="text-muted">
+                            <field name="harvest_date" />
+                        </div>
+                        <div>
+                            <field name="grade" widget="badge" />
                         </div>
                     </t>
                 </templates>

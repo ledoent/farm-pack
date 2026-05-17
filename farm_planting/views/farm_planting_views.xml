@@ -24,27 +24,22 @@
         <field name="name">farm.planting.kanban</field>
         <field name="model">farm.planting</field>
         <field name="arch" type="xml">
-            <kanban default_group_by="state" highlight_color="color">
+            <kanban default_group_by="state">
                 <templates>
                     <t t-name="card">
-                        <div class="oe_kanban_details">
+                        <div class="o_kanban_record_top">
                             <strong>
                                 <field name="crop_id" />
                             </strong>
-                            <div>
-                                <i class="fa fa-map-marker" />
-                                <field name="field_id" />
-                            </div>
-                            <div>
-                                <i class="fa fa-calendar" />
-                                <field name="plant_date" />
-                            </div>
-                            <div
-                                t-if="record.expected_harvest_date.raw_value"
-                                class="text-muted"
-                            >
-                                exp. harvest: <field name="expected_harvest_date" />
-                            </div>
+                        </div>
+                        <div>
+                            <field name="field_id" />
+                        </div>
+                        <div>
+                            <field name="plant_date" />
+                        </div>
+                        <div class="text-muted">
+                            exp. harvest <field name="expected_harvest_date" />
                         </div>
                     </t>
                 </templates>
