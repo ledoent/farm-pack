@@ -1,23 +1,33 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
-    <!-- Add the boundary widget to the existing farm.field form. -->
+    <!--
+        Add a Boundary notebook tab to the existing farm.field form. The map
+        widget needs full width; placing it inside the 2-column group above
+        would crush it.
+    -->
     <record id="farm_field_view_form_geo" model="ir.ui.view">
         <field name="name">farm.field.form.geo</field>
         <field name="model">farm.field</field>
         <field name="inherit_id" ref="farm_field.farm_field_view_form" />
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='acres']" position="after">
-                <field name="geom" widget="geo_edit_map" />
+            <xpath expr="//notebook" position="inside">
+                <page string="Boundary" name="boundary">
+                    <field name="geom" widget="geo_edit_map" nolabel="1" />
+                </page>
             </xpath>
         </field>
     </record>
 
-    <!-- Geoengine map view: all fields rendered on one map. -->
+    <!--
+        Geoengine map view: all fields rendered on one map. `geom_field`
+        tells base_geoengine which column to plot when a model has more
+        than one geometry — explicit even though we only have one today.
+    -->
     <record id="farm_field_view_geoengine" model="ir.ui.view">
         <field name="name">farm.field.geoengine</field>
         <field name="model">farm.field</field>
         <field name="arch" type="xml">
-            <geoengine>
+            <geoengine geom_field="geom">
                 <field name="name" />
                 <field name="crop_id" />
                 <field name="acres" />

@@ -30,12 +30,28 @@ Adds PostGIS polygon boundaries to ``farm.field`` and auto-computes
 acreage from the geometry.
 
 Without this module, ``farm.field.acres`` is a manual decimal entry.
-With it, draw a polygon on a Leaflet map and the acreage updates from
-the polygon area (reprojected to EPSG:5070 Albers Equal Area, the
-projection NRCS and NASS use for the lower 48).
+With it, set a WGS84 polygon as the field's boundary and the acreage
+updates from the polygon area, reprojected to EPSG:5070 (Conus Albers
+Equal Area) — the projection NRCS and NASS use for lower-48 area
+calculations, so the number matches what soil-survey and yield tooling
+would report for the same parcel.
 
-The base ``farm_field`` module remains usable without PostGIS — install
-this extension only when your deployment has a PostGIS-enabled Postgres.
+``acres`` remains editable as a fallback: fields without a digitized
+boundary keep working with a manual estimate, and the compute only fires
+once a polygon is set.
+
+**Scope.** This module ships a single ``GeoPolygon`` per field —
+non-contiguous plots (two disconnected polygons that are
+administratively one "field") should be recorded as separate
+``farm.field`` records for now. A future ``farm_field_multi_polygon``
+extension can promote the column to ``GeoMultiPolygon`` if the demand
+materializes.
+
+**Install requirement.** The Postgres instance must have PostGIS
+enabled. ``base_geoengine`` declares the extension; install will fail
+cleanly if the extension is missing. The base ``farm_field`` module
+stays usable without PostGIS — install this extension only when geometry
+support is wanted.
 
 **Table of contents**
 
@@ -46,12 +62,24 @@ Usage
 =====
 
 1. Open Farm → Fields → Fields and pick a field.
-2. On the form, the **Boundary** field renders a Leaflet map.
-3. Draw the field perimeter as a polygon (read-only viewer for now;
-   in-form drawing arrives once ``web_leaflet_draw_lib`` is migrated to
-   Odoo 19).
-4. Save. The **Acres** field auto-recomputes from the polygon area.
-5. Switch the action's view to **Map** to see every field on one canvas.
+2. The **Boundary** notebook tab renders a Leaflet map of the field's
+   polygon.
+3. Set the polygon via the geoengine map view (vertex drag works there)
+   or by importing a WKT string. In-form vertex editing through the
+   boundary tab arrives once ``web_leaflet_draw_lib`` is migrated to
+   Odoo 19.
+4. Save. The **Acres** field auto-recomputes from the polygon area,
+   reprojected to EPSG:5070 Albers Equal Area.
+5. Switch the action's view to **Map** (geoengine) to see every field at
+   once.
+
+The ``acres`` field stays editable as a fallback: fields without a
+digitized boundary can carry a manual estimate. Once a polygon is set,
+the compute overrides the manual value.
+
+Multi-plot fields (a "north 40" that is two non-contiguous polygons)
+need ``GeoMultiPolygon`` rather than ``GeoPolygon`` — out of scope for
+the MVP; record each plot as its own ``farm.field`` for now.
 
 Bug Tracker
 ===========
