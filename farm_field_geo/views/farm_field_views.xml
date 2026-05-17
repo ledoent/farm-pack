@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <!-- Add the boundary widget to the existing farm.field form. -->
+    <record id="farm_field_view_form_geo" model="ir.ui.view">
+        <field name="name">farm.field.form.geo</field>
+        <field name="model">farm.field</field>
+        <field name="inherit_id" ref="farm_field.farm_field_view_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='acres']" position="after">
+                <field name="geom" widget="geo_edit_map" />
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Geoengine map view: all fields rendered on one map. -->
+    <record id="farm_field_view_geoengine" model="ir.ui.view">
+        <field name="name">farm.field.geoengine</field>
+        <field name="model">farm.field</field>
+        <field name="arch" type="xml">
+            <geoengine>
+                <field name="name" />
+                <field name="crop_id" />
+                <field name="acres" />
+                <field name="organic_certified" />
+            </geoengine>
+        </field>
+    </record>
+
+    <!-- Add the geoengine map as a view mode on the existing field action. -->
+    <record id="farm_field_action_view_geoengine" model="ir.actions.act_window.view">
+        <field name="sequence" eval="10" />
+        <field name="view_mode">geoengine</field>
+        <field name="view_id" ref="farm_field_view_geoengine" />
+        <field name="act_window_id" ref="farm_field.farm_field_action" />
+    </record>
+</odoo>
