@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="farm_crop_view_list" model="ir.ui.view">
+        <field name="name">farm.crop.list</field>
+        <field name="model">farm.crop</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" />
+                <field name="category" />
+                <field name="family" />
+                <field name="days_to_maturity" />
+                <field name="latin_name" optional="hide" />
+            </list>
+        </field>
+    </record>
+
+    <record id="farm_crop_view_kanban" model="ir.ui.view">
+        <field name="name">farm.crop.kanban</field>
+        <field name="model">farm.crop</field>
+        <field name="arch" type="xml">
+            <kanban highlight_color="color">
+                <templates>
+                    <t t-name="card">
+                        <div class="o_kanban_image_fill_left o_kanban_image_full">
+                            <field name="image_128" widget="image" />
+                        </div>
+                        <div class="oe_kanban_details">
+                            <strong>
+                                <field name="name" />
+                            </strong>
+                            <div t-if="record.latin_name.raw_value">
+                                <i>
+                                    <field name="latin_name" />
+                                </i>
+                            </div>
+                            <div t-if="record.days_to_maturity.raw_value">
+                                <field name="days_to_maturity" /> days to maturity
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="farm_crop_view_form" model="ir.ui.view">
+        <field name="name">farm.crop.form</field>
+        <field name="model">farm.crop</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <field name="image_1920" widget="image" class="oe_avatar" />
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Crop name (e.g. Tomato)" />
+                        </h1>
+                        <field
+                            name="latin_name"
+                            placeholder="Scientific name (e.g. Solanum lycopersicum)"
+                        />
+                    </div>
+                    <group>
+                        <group>
+                            <field name="category" />
+                            <field name="family" />
+                        </group>
+                        <group>
+                            <field name="days_to_maturity" />
+                            <field name="active" />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Notes" name="notes">
+                            <field name="notes" />
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter />
+            </form>
+        </field>
+    </record>
+
+    <record id="farm_crop_view_search" model="ir.ui.view">
+        <field name="name">farm.crop.search</field>
+        <field name="model">farm.crop</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" />
+                <field name="latin_name" />
+                <field name="family" />
+                <separator />
+                <filter string="Active" name="active" domain="[('active','=',True)]" />
+                <filter
+                    string="Archived"
+                    name="archived"
+                    domain="[('active','=',False)]"
+                />
+                <group name="groupby">
+                    <filter
+                        string="Category"
+                        name="groupby_category"
+                        context="{'group_by':'category'}"
+                    />
+                    <filter
+                        string="Family"
+                        name="groupby_family"
+                        context="{'group_by':'family'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="farm_crop_action" model="ir.actions.act_window">
+        <field name="name">Crops</field>
+        <field name="res_model">farm.crop</field>
+        <field name="view_mode">kanban,list,form</field>
+    </record>
+</odoo>

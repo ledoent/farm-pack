@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="1">
+    <!-- Seed catalog of common US small-farm crops. noupdate=1 so farmers can edit
+         freely without their changes being clobbered on module update. -->
+
+    <record id="crop_tomato" model="farm.crop">
+        <field name="name">Tomato</field>
+        <field name="latin_name">Solanum lycopersicum</field>
+        <field name="category">vegetable</field>
+        <field name="family">Solanaceae</field>
+        <field name="days_to_maturity">75</field>
+    </record>
+
+    <record id="crop_lettuce" model="farm.crop">
+        <field name="name">Lettuce</field>
+        <field name="latin_name">Lactuca sativa</field>
+        <field name="category">vegetable</field>
+        <field name="family">Asteraceae</field>
+        <field name="days_to_maturity">55</field>
+    </record>
+
+    <record id="crop_carrot" model="farm.crop">
+        <field name="name">Carrot</field>
+        <field name="latin_name">Daucus carota</field>
+        <field name="category">vegetable</field>
+        <field name="family">Apiaceae</field>
+        <field name="days_to_maturity">70</field>
+    </record>
+
+    <record id="crop_kale" model="farm.crop">
+        <field name="name">Kale</field>
+        <field name="latin_name">Brassica oleracea</field>
+        <field name="category">vegetable</field>
+        <field name="family">Brassicaceae</field>
+        <field name="days_to_maturity">55</field>
+    </record>
+
+    <record id="crop_corn" model="farm.crop">
+        <field name="name">Sweet Corn</field>
+        <field name="latin_name">Zea mays</field>
+        <field name="category">grain</field>
+        <field name="family">Poaceae</field>
+        <field name="days_to_maturity">80</field>
+    </record>
+
+    <record id="crop_potato" model="farm.crop">
+        <field name="name">Potato</field>
+        <field name="latin_name">Solanum tuberosum</field>
+        <field name="category">vegetable</field>
+        <field name="family">Solanaceae</field>
+        <field name="days_to_maturity">90</field>
+    </record>
+
+    <record id="crop_garlic" model="farm.crop">
+        <field name="name">Garlic</field>
+        <field name="latin_name">Allium sativum</field>
+        <field name="category">vegetable</field>
+        <field name="family">Amaryllidaceae</field>
+        <field name="days_to_maturity">240</field>
+    </record>
+
+    <record id="crop_strawberry" model="farm.crop">
+        <field name="name">Strawberry</field>
+        <field name="latin_name">Fragaria x ananassa</field>
+        <field name="category">fruit</field>
+        <field name="family">Rosaceae</field>
+        <field name="days_to_maturity">90</field>
+    </record>
+
+    <record id="crop_blueberry" model="farm.crop">
+        <field name="name">Blueberry</field>
+        <field name="latin_name">Vaccinium corymbosum</field>
+        <field name="category">fruit</field>
+        <field name="family">Ericaceae</field>
+        <field name="days_to_maturity">730</field>
+    </record>
+
+    <record id="crop_basil" model="farm.crop">
+        <field name="name">Basil</field>
+        <field name="latin_name">Ocimum basilicum</field>
+        <field name="category">herb</field>
+        <field name="family">Lamiaceae</field>
+        <field name="days_to_maturity">60</field>
+    </record>
+
+    <record id="crop_squash_summer" model="farm.crop">
+        <field name="name">Summer Squash</field>
+        <field name="latin_name">Cucurbita pepo</field>
+        <field name="category">vegetable</field>
+        <field name="family">Cucurbitaceae</field>
+        <field name="days_to_maturity">50</field>
+    </record>
+
+    <record id="crop_squash_winter" model="farm.crop">
+        <field name="name">Winter Squash</field>
+        <field name="latin_name">Cucurbita maxima</field>
+        <field name="category">vegetable</field>
+        <field name="family">Cucurbitaceae</field>
+        <field name="days_to_maturity">100</field>
+    </record>
+
+    <record id="crop_pepper" model="farm.crop">
+        <field name="name">Pepper</field>
+        <field name="latin_name">Capsicum annuum</field>
+        <field name="category">vegetable</field>
+        <field name="family">Solanaceae</field>
+        <field name="days_to_maturity">75</field>
+    </record>
+
+    <record id="crop_bean_bush" model="farm.crop">
+        <field name="name">Bush Bean</field>
+        <field name="latin_name">Phaseolus vulgaris</field>
+        <field name="category">legume</field>
+        <field name="family">Fabaceae</field>
+        <field name="days_to_maturity">55</field>
+    </record>
+
+    <record id="crop_pea" model="farm.crop">
+        <field name="name">Pea</field>
+        <field name="latin_name">Pisum sativum</field>
+        <field name="category">legume</field>
+        <field name="family">Fabaceae</field>
+        <field name="days_to_maturity">60</field>
+    </record>
+
+    <record id="crop_cover_rye" model="farm.crop">
+        <field name="name">Winter Rye (Cover)</field>
+        <field name="latin_name">Secale cereale</field>
+        <field name="category">cover</field>
+        <field name="family">Poaceae</field>
+        <field name="days_to_maturity">0</field>
+    </record>
+
+    <record id="crop_cover_clover" model="farm.crop">
+        <field name="name">Crimson Clover (Cover)</field>
+        <field name="latin_name">Trifolium incarnatum</field>
+        <field name="category">cover</field>
+        <field name="family">Fabaceae</field>
+        <field name="days_to_maturity">0</field>
+    </record>
+
+    <record id="crop_alfalfa" model="farm.crop">
+        <field name="name">Alfalfa</field>
+        <field name="latin_name">Medicago sativa</field>
+        <field name="category">forage</field>
+        <field name="family">Fabaceae</field>
+        <field name="days_to_maturity">60</field>
+    </record>
+</odoo>
