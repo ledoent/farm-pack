@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="0">
+    <record id="planting_north12_corn" model="farm.planting">
+        <field name="field_id" ref="farm_field.field_north_12" />
+        <field name="crop_id" ref="farm_crop.crop_corn" />
+        <field
+            name="plant_date"
+            eval="(DateTime.today() - relativedelta(days=30)).strftime('%Y-%m-%d')"
+        />
+        <field name="qty_seeded">50.0</field>
+        <field name="state">growing</field>
+    </record>
+    <record id="planting_south_tomato" model="farm.planting">
+        <field name="field_id" ref="farm_field.field_south_back" />
+        <field name="crop_id" ref="farm_crop.crop_tomato" />
+        <field
+            name="plant_date"
+            eval="(DateTime.today() - relativedelta(days=21)).strftime('%Y-%m-%d')"
+        />
+        <field name="qty_seeded">200.0</field>
+        <field name="state">growing</field>
+    </record>
+    <record id="planting_hoop_lettuce" model="farm.planting">
+        <field name="field_id" ref="farm_field.field_hoophouse_a" />
+        <field name="crop_id" ref="farm_crop.crop_lettuce" />
+        <field
+            name="plant_date"
+            eval="(DateTime.today() - relativedelta(days=7)).strftime('%Y-%m-%d')"
+        />
+        <field name="qty_seeded">120.0</field>
+        <field name="state">planted</field>
+    </record>
+</odoo>
