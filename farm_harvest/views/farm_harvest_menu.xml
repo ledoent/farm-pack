@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <menuitem
+        id="menu_farm_harvest"
+        name="Harvests"
+        parent="farm_base.menu_farm_root"
+        action="farm_harvest_action"
+        sequence="25"
+    />
+</odoo>

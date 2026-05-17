@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="0">
+    <record id="harvest_hoop_lettuce_1" model="farm.harvest">
+        <field name="planting_id" ref="farm_planting.planting_hoop_lettuce" />
+        <field
+            name="harvest_date"
+            eval="(DateTime.today() - relativedelta(days=2)).strftime('%Y-%m-%d')"
+        />
+        <field name="qty_harvested">35.0</field>
+        <field name="qty_uom_id" ref="uom.product_uom_lb" />
+        <field name="grade">a</field>
+    </record>
+    <record id="harvest_south_tomato_1" model="farm.harvest">
+        <field name="planting_id" ref="farm_planting.planting_south_tomato" />
+        <field
+            name="harvest_date"
+            eval="(DateTime.today() - relativedelta(days=1)).strftime('%Y-%m-%d')"
+        />
+        <field name="qty_harvested">120.0</field>
+        <field name="qty_uom_id" ref="uom.product_uom_lb" />
+        <field name="grade">a</field>
+    </record>
+</odoo>
