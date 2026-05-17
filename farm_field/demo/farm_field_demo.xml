@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo noupdate="0">
+    <record id="field_north_12" model="farm.field">
+        <field name="name">North 12-acre</field>
+        <field name="code">N-12</field>
+        <field name="acres">12.0</field>
+        <field name="crop_id" ref="farm_crop.crop_corn" />
+        <field name="organic_certified" eval="True" />
+    </record>
+    <record id="field_south_back" model="farm.field">
+        <field name="name">South Back</field>
+        <field name="code">S-BK</field>
+        <field name="acres">3.5</field>
+        <field name="crop_id" ref="farm_crop.crop_tomato" />
+        <field name="organic_certified" eval="True" />
+    </record>
+    <record id="field_hoophouse_a" model="farm.field">
+        <field name="name">Hoophouse A</field>
+        <field name="code">HH-A</field>
+        <field name="acres">0.1</field>
+        <field name="crop_id" ref="farm_crop.crop_lettuce" />
+    </record>
+    <record id="field_orchard" model="farm.field">
+        <field name="name">East Orchard</field>
+        <field name="code">E-ORC</field>
+        <field name="acres">4.0</field>
+        <field name="crop_id" ref="farm_crop.crop_blueberry" />
+    </record>
+</odoo>
