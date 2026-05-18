@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="farm_fence_view_list" model="ir.ui.view">
+        <field name="name">farm.fence.list</field>
+        <field name="model">farm.fence</field>
+        <field name="arch" type="xml">
+            <list
+                decoration-danger="condition == 'repair'"
+                decoration-warning="condition == 'fair'"
+            >
+                <field name="name" />
+                <field name="field_id" />
+                <field name="fence_type" />
+                <field name="length_feet" sum="Total Feet" />
+                <field name="condition" />
+                <field name="last_checked_date" />
+            </list>
+        </field>
+    </record>
+
+    <record id="farm_fence_view_form" model="ir.ui.view">
+        <field name="name">farm.fence.form</field>
+        <field name="model">farm.fence</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Fence name" />
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="field_id" />
+                            <field name="fence_type" />
+                            <field name="height_inches" />
+                            <field name="length_feet" />
+                        </group>
+                        <group>
+                            <field name="condition" />
+                            <field name="last_checked_date" />
+                            <field
+                                name="company_id"
+                                groups="base.group_multi_company"
+                            />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Notes" name="notes">
+                            <field name="notes" />
+                        </page>
+                        <page string="Fence Line" name="fence_line">
+                            <field name="geom" widget="geo_edit_map" nolabel="1" />
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter />
+            </form>
+        </field>
+    </record>
+
+    <record id="farm_fence_view_search" model="ir.ui.view">
+        <field name="name">farm.fence.search</field>
+        <field name="model">farm.fence</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" />
+                <field name="field_id" />
+                <field name="fence_type" />
+                <filter
+                    name="needs_repair"
+                    string="Needs Repair"
+                    domain="[('condition', '=', 'repair')]"
+                />
+                <filter
+                    name="not_recently_checked"
+                    string="Not Checked in 6 Months"
+                    domain="[('last_checked_date', '&lt;', (context_today() - relativedelta(months=6)).strftime('%Y-%m-%d'))]"
+                />
+                <group expand="0" string="Group By">
+                    <filter
+                        name="group_field"
+                        string="Field"
+                        context="{'group_by': 'field_id'}"
+                    />
+                    <filter
+                        name="group_type"
+                        string="Type"
+                        context="{'group_by': 'fence_type'}"
+                    />
+                    <filter
+                        name="group_condition"
+                        string="Condition"
+                        context="{'group_by': 'condition'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="farm_fence_view_geoengine" model="ir.ui.view">
+        <field name="name">farm.fence.geoengine</field>
+        <field name="model">farm.fence</field>
+        <field name="arch" type="xml">
+            <geoengine geom_field="geom">
+                <field name="name" />
+                <field name="fence_type" />
+                <field name="condition" />
+                <field name="length_feet" />
+            </geoengine>
+        </field>
+    </record>
+
+    <record id="farm_fence_action" model="ir.actions.act_window">
+        <field name="name">Fences</field>
+        <field name="res_model">farm.fence</field>
+        <field name="view_mode">list,form,geoengine</field>
+    </record>
+</odoo>
