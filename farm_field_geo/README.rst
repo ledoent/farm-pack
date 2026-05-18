@@ -14,9 +14,9 @@ Farm Field — Geospatial
    !! source digest: sha256:156d6ff91db3f7522e9501d6a413cbc2a2e29881632c0f19543ed5de002262fc
    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-.. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
+.. |badge1| image:: https://img.shields.io/badge/maturity-Alpha-red.png
     :target: https://odoo-community.org/page/development-status
-    :alt: Beta
+    :alt: Alpha
 .. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
@@ -52,6 +52,11 @@ enabled. ``base_geoengine`` declares the extension; install will fail
 cleanly if the extension is missing. The base ``farm_field`` module
 stays usable without PostGIS — install this extension only when geometry
 support is wanted.
+
+.. IMPORTANT::
+   This is an alpha version, the data model and design can change at any time without warning.
+   Only for development or testing purpose, do not use in production.
+   `More details on development status <https://odoo-community.org/page/development-status>`_
 
 **Table of contents**
 

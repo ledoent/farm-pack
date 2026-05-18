@@ -7,6 +7,9 @@
     "website": "https://github.com/ledoent/farm-pack",
     "license": "AGPL-3",
     "category": "Vertical/Agriculture",
+    # Alpha matches farm_field; OCA's check-dev-status job rejects higher
+    # dev-status modules depending on lower-status ones.
+    "development_status": "Alpha",
     "depends": [
         "farm_field",
         "base_geoengine",
