@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="farm_water_source_view_list" model="ir.ui.view">
+        <field name="name">farm.water.source.list</field>
+        <field name="model">farm.water.source</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" />
+                <field name="source_type" />
+                <field name="capacity_gallons" sum="Total Capacity" />
+                <field name="last_tested_date" />
+                <field name="active" widget="boolean_toggle" />
+            </list>
+        </field>
+    </record>
+
+    <record id="farm_water_source_view_form" model="ir.ui.view">
+        <field name="name">farm.water.source.form</field>
+        <field name="model">farm.water.source</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" placeholder="Source name" />
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="source_type" />
+                            <field name="capacity_gallons" />
+                            <field name="last_tested_date" />
+                        </group>
+                        <group>
+                            <field name="field_ids" widget="many2many_tags" />
+                            <field name="active" widget="boolean_toggle" />
+                            <field
+                                name="company_id"
+                                groups="base.group_multi_company"
+                            />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Quality Notes" name="quality_notes">
+                            <field name="quality_notes" />
+                        </page>
+                        <page string="Location" name="location">
+                            <field name="geom" widget="geo_edit_map" nolabel="1" />
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="farm_water_source_view_search" model="ir.ui.view">
+        <field name="name">farm.water.source.search</field>
+        <field name="model">farm.water.source</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" />
+                <field name="source_type" />
+                <field name="field_ids" />
+                <filter
+                    name="not_recently_tested"
+                    string="Not Tested in 1 Year"
+                    domain="[('last_tested_date', '&lt;', (context_today() - relativedelta(years=1)).strftime('%Y-%m-%d'))]"
+                />
+                <separator />
+                <filter
+                    name="archived"
+                    string="Archived"
+                    domain="[('active', '=', False)]"
+                />
+                <group expand="0" string="Group By">
+                    <filter
+                        name="group_type"
+                        string="Type"
+                        context="{'group_by': 'source_type'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="farm_water_source_view_geoengine" model="ir.ui.view">
+        <field name="name">farm.water.source.geoengine</field>
+        <field name="model">farm.water.source</field>
+        <field name="arch" type="xml">
+            <geoengine geom_field="geom">
+                <field name="name" />
+                <field name="source_type" />
+                <field name="capacity_gallons" />
+            </geoengine>
+        </field>
+    </record>
+
+    <record id="farm_water_source_action" model="ir.actions.act_window">
+        <field name="name">Water Sources</field>
+        <field name="res_model">farm.water.source</field>
+        <field name="view_mode">list,form,geoengine</field>
+    </record>
+</odoo>

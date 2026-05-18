@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <menuitem
+        id="farm_water_source_menu"
+        name="Water Sources"
+        parent="farm_base.menu_farm_root"
+        action="farm_water_source_action"
+        sequence="40"
+    />
+</odoo>
