@@ -52,11 +52,12 @@ class FarmFence(models.Model):
         ondelete="set null",
         check_company=True,
     )
-    geom = fields.GeoLineString(
+    geom = fields.GeoLine(
         string="Fence Line",
         srid=4326,
         help="Polyline tracing the fence. Length and the map view come from "
-        "this geometry.",
+        "this geometry. base_geoengine 19.0 names the type GeoLine (no "
+        "'String' suffix).",
     )
     length_feet = fields.Float(
         compute="_compute_length_feet",
