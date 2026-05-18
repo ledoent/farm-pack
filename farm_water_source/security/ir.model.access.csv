@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_farm_water_source_user,farm.water.source user,model_farm_water_source,base.group_user,1,1,1,1
