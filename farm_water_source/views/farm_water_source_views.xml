@@ -72,13 +72,17 @@
                     string="Archived"
                     domain="[('active', '=', False)]"
                 />
-                <group expand="0" string="Group By">
-                    <filter
-                        name="group_type"
-                        string="Type"
-                        context="{'group_by': 'source_type'}"
-                    />
-                </group>
+                <!--
+                    Odoo 19 dropped the <group string="Group By" expand="0">
+                    wrapper inside <search>; flat <filter> siblings carrying
+                    a group_by context drive the UI's Group By panel directly.
+                -->
+                <separator />
+                <filter
+                    name="group_type"
+                    string="Type"
+                    context="{'group_by': 'source_type'}"
+                />
             </search>
         </field>
     </record>

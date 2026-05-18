@@ -374,7 +374,7 @@ ul.auto-toc {
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !! source digest: sha256:9d5ee627395550f366a82fe33508898dd73e25e55d39a5ce9a86027ddb10409c
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/license-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/ledoent/farm-pack/tree/19.0/farm_water_source"><img alt="ledoent/farm-pack" src="https://img.shields.io/badge/github-ledoent%2Ffarm--pack-lightgray.png?logo=github" /></a></p>
+<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Alpha" src="https://img.shields.io/badge/maturity-Alpha-red.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/license-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/ledoent/farm-pack/tree/19.0/farm_water_source"><img alt="ledoent/farm-pack" src="https://img.shields.io/badge/github-ledoent%2Ffarm--pack-lightgray.png?logo=github" /></a></p>
 <p>Tracks water sources on the farm — wells, surface tanks, ponds, streams,
 troughs, springs, hydrants — with their location, capacity, last-tested
 date, and which fields they serve.</p>
@@ -391,6 +391,12 @@ a shape, documented in USAGE; an admin who wants strict per-type
 validation can layer a <tt class="docutils literal">_constraint</tt> on top later.</p>
 <p>The <tt class="docutils literal">field_ids</tt> many2many answers “which fields does this source
 serve?”, useful when planning rotational grazing or drought contingency.</p>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">This is an alpha version, the data model and design can change at any time without warning.
+Only for development or testing purpose, do not use in production.
+<a class="reference external" href="https://odoo-community.org/page/development-status">More details on development status</a></p>
+</div>
 <p><strong>Table of contents</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">

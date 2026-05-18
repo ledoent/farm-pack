@@ -1,3 +1,5 @@
+from shapely.geometry import LineString, Point, Polygon
+
 from odoo.tests.common import TransactionCase
 
 
@@ -8,7 +10,7 @@ class TestFarmWaterSource(TransactionCase):
         cls.farm = cls.env["res.partner"].create(
             {"name": "Test Farm", "is_company": True}
         )
-        cls.crop = cls.env["farm.crop"].create({"name": "Pasture", "code": "PAST"})
+        cls.crop = cls.env["farm.crop"].create({"name": "Pasture"})
         cls.field_north = cls.env["farm.field"].create(
             {
                 "name": "North 40",
@@ -30,7 +32,7 @@ class TestFarmWaterSource(TransactionCase):
             {
                 "name": "House Well",
                 "source_type": "well",
-                "geom": "SRID=4326;POINT(-79.245 40.242)",
+                "geom": Point(-79.245, 40.242),
             }
         )
         self.assertEqual(well.source_type, "well")
@@ -43,14 +45,14 @@ class TestFarmWaterSource(TransactionCase):
             {
                 "name": "Big Pond",
                 "source_type": "pond",
-                "geom": (
-                    "SRID=4326;POLYGON(("
-                    "-79.245 40.242, "
-                    "-79.244 40.242, "
-                    "-79.244 40.243, "
-                    "-79.245 40.243, "
-                    "-79.245 40.242"
-                    "))"
+                "geom": Polygon(
+                    [
+                        (-79.245, 40.242),
+                        (-79.244, 40.242),
+                        (-79.244, 40.243),
+                        (-79.245, 40.243),
+                        (-79.245, 40.242),
+                    ]
                 ),
             }
         )
@@ -63,10 +65,8 @@ class TestFarmWaterSource(TransactionCase):
             {
                 "name": "Burns Run",
                 "source_type": "stream",
-                "geom": (
-                    "SRID=4326;LINESTRING("
-                    "-79.245 40.242, -79.240 40.245, -79.235 40.250"
-                    ")"
+                "geom": LineString(
+                    [(-79.245, 40.242), (-79.240, 40.245), (-79.235, 40.250)]
                 ),
             }
         )
