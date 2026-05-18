@@ -33,6 +33,31 @@ class IntuitClient:
             self.connection.access_token and self.connection.realm_id
         )
 
+    def refresh_access_token(self):
+        """Exchange the stored refresh token for a fresh access token.
+
+        Returns a dict matching Intuit's token response shape:
+        ``{access_token, refresh_token, expires_in, x_refresh_token_expires_in}``.
+        Caller writes the values back onto the farm.qbo.connection record.
+        """
+        if not HAS_INTUIT_LIBS:
+            raise RuntimeError(
+                "intuit-oauth not installed; cannot refresh access token."
+            )
+        auth = AuthClient(
+            client_id="STUB",  # configured via ir.config_parameter in v1
+            client_secret="STUB",
+            environment=self.connection.environment,
+            redirect_uri="https://localhost/farm_qbo/oauth/callback",
+        )
+        auth.refresh_token = self.connection.refresh_token
+        auth.refresh()
+        return {
+            "access_token": auth.access_token,
+            "refresh_token": auth.refresh_token,
+            "expires_in": auth.expires_in,
+        }
+
     def _real_client(self):
         if not HAS_INTUIT_LIBS:
             raise RuntimeError(

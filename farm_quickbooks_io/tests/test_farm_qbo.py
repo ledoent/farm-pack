@@ -1,3 +1,6 @@
+from unittest.mock import patch
+
+from odoo.exceptions import UserError
 from odoo.tests.common import TransactionCase
 
 
@@ -73,6 +76,38 @@ class TestFarmQbo(TransactionCase):
         self.assertEqual(imp.state, "rolled_back")
         for m in imp.mapping_ids:
             self.assertFalse(m.committed_target_ref)
+
+    def test_action_refresh_token_without_refresh_token_raises(self):
+        # Connection with no refresh token can't refresh — must bail with a
+        # clear UserError rather than calling out to Intuit with None.
+        with self.assertRaises(UserError):
+            self.connection.action_refresh_token()
+
+    def test_action_refresh_token_writes_new_access_token(self):
+        # Stub IntuitClient.refresh_access_token so the test doesn't need the
+        # intuit-oauth wheel installed; verify the connection record is
+        # updated with the new tokens.
+        self.connection.write({"access_token": "old", "refresh_token": "rt"})
+        new_tokens = {
+            "access_token": "new-access",
+            "refresh_token": "new-refresh",
+            "expires_in": 3600,
+        }
+        with (
+            patch(
+                "odoo.addons.farm_quickbooks_io.services.intuit_client.HAS_INTUIT_LIBS",
+                True,
+            ),
+            patch(
+                "odoo.addons.farm_quickbooks_io.services."
+                "intuit_client.IntuitClient.refresh_access_token",
+                return_value=new_tokens,
+            ),
+        ):
+            self.connection.action_refresh_token()
+        self.assertEqual(self.connection.access_token, "new-access")
+        self.assertEqual(self.connection.refresh_token, "new-refresh")
+        self.assertTrue(self.connection.token_expires_at)
 
     def test_wizard_creates_and_starts_import(self):
         Wizard = self.env["farm.qbo.import.wizard"]
