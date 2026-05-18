@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <menuitem
+        id="farm_fence_menu"
+        name="Fences"
+        parent="farm_base.menu_farm_root"
+        action="farm_fence_action"
+        sequence="50"
+    />
+</odoo>
