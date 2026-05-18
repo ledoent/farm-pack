@@ -1,19 +1,30 @@
+from functools import lru_cache
+
+from pyproj import Transformer
+from shapely.ops import transform as shapely_transform
+
 from odoo import api, fields, models
 
 # US survey foot in meters. Used to convert EPSG:5070 length (m) to feet
 # for display — US farm fencing is universally specified in feet.
 M_PER_US_SURVEY_FOOT = 0.3048006096012192
 
-# Same Conus Albers projection farm_field_geo uses for acreage, applied to
-# fence linestrings for length. Reprojecting before measuring keeps the
-# number consistent with how NRCS reports rangeland improvements.
-ALBERS_CONUS_SRID = 5070
-
 # Selection keys are descriptive strings (good/fair/repair) for the UI, but
 # alpha-DESC would order "repair > good > fair" — fair-condition fences
 # would hide below good-condition ones. `condition_rank` mirrors the
 # selection so `_order` produces the actual urgency sort.
 _CONDITION_RANK = {"good": 0, "fair": 1, "repair": 2}
+
+
+@lru_cache(maxsize=1)
+def _wgs84_to_albers_conus():
+    """Build the EPSG:4326 → EPSG:5070 transformer once and reuse it.
+
+    Same approach farm_field_geo uses for acreage — Albers reprojection
+    gives a length number that matches what NRCS reports for the same
+    fence in a rangeland-improvement filing.
+    """
+    return Transformer.from_crs("EPSG:4326", "EPSG:5070", always_xy=True).transform
 
 
 class FarmFence(models.Model):
@@ -102,9 +113,14 @@ class FarmFence(models.Model):
 
     @api.depends("geom")
     def _compute_length_feet(self):
+        # base_geoengine returns the field as a plain shapely geometry on
+        # read; shapely has no .transform() method. Reproject via pyproj +
+        # shapely.ops.transform before measuring length. Mirrors the
+        # acreage compute in farm_field_geo.
+        transformer = _wgs84_to_albers_conus()
         for rec in self:
             if not rec.geom:
                 rec.length_feet = 0.0
                 continue
-            meters = rec.geom.transform(ALBERS_CONUS_SRID).length
-            rec.length_feet = meters / M_PER_US_SURVEY_FOOT
+            projected = shapely_transform(transformer, rec.geom)
+            rec.length_feet = projected.length / M_PER_US_SURVEY_FOOT

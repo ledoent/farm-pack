@@ -84,23 +84,27 @@
                     string="Archived"
                     domain="[('active', '=', False)]"
                 />
-                <group expand="0" string="Group By">
-                    <filter
-                        name="group_field"
-                        string="Field"
-                        context="{'group_by': 'field_id'}"
-                    />
-                    <filter
-                        name="group_type"
-                        string="Type"
-                        context="{'group_by': 'fence_type'}"
-                    />
-                    <filter
-                        name="group_condition"
-                        string="Condition"
-                        context="{'group_by': 'condition'}"
-                    />
-                </group>
+                <!--
+                    Odoo 19 dropped the <group string="Group By" expand="0">
+                    wrapper inside <search>; flat <filter> siblings with a
+                    group_by context drive the UI's Group By panel directly.
+                -->
+                <separator />
+                <filter
+                    name="group_field"
+                    string="Field"
+                    context="{'group_by': 'field_id'}"
+                />
+                <filter
+                    name="group_type"
+                    string="Type"
+                    context="{'group_by': 'fence_type'}"
+                />
+                <filter
+                    name="group_condition"
+                    string="Condition"
+                    context="{'group_by': 'condition'}"
+                />
             </search>
         </field>
     </record>
