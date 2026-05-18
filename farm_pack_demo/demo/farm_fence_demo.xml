@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Three demo fences:
+      - perimeter: closed linestring wrapping the demo farm cluster,
+        no field_id (perimeter-style, spans Alice + Bob);
+      - paddock_divider: separates North 40 from South Pasture, ties to
+        North 40 as primary field;
+      - garden_enclosure: tight loop around the East Garden veg plot.
+-->
+<odoo noupdate="1">
+    <!-- Perimeter fence — large rectangle around the whole demo farm. -->
+    <record id="farm_fence_demo_perimeter" model="farm.fence">
+        <field name="name">Perimeter (entire farm)</field>
+        <field name="fence_type">high_tensile</field>
+        <field name="height_inches">48</field>
+        <field name="condition">good</field>
+        <field
+            name="last_checked_date"
+            eval="(DateTime.now() - relativedelta(weeks=3)).date()"
+        />
+        <field
+            name="geom"
+        >SRID=4326;LINESTRING(-79.2415 40.2350, -79.2345 40.2350, -79.2345 40.2485, -79.2415 40.2485, -79.2415 40.2350)</field>
+        <field
+            name="notes"
+        >Replaced two corner braces during spring walk-through. Northeast corner stays an inspection priority — runoff erodes the bank there each spring.</field>
+    </record>
+
+    <!-- Paddock divider between North 40 and South Pasture. -->
+    <record id="farm_fence_demo_paddock_divider" model="farm.fence">
+        <field name="name">North 40 / South Pasture divider</field>
+        <field name="field_id" ref="farm_field_demo_north_40" />
+        <field name="fence_type">polywire</field>
+        <field name="height_inches">36</field>
+        <field name="condition">fair</field>
+        <field
+            name="last_checked_date"
+            eval="(DateTime.now() - relativedelta(months=2)).date()"
+        />
+        <field
+            name="geom"
+        >SRID=4326;LINESTRING(-79.2410 40.2410, -79.2370 40.2410)</field>
+        <field
+            name="notes"
+        >Polywire for rotational grazing. Energizer reads strong; insulator at the midpoint is cracked, swap before next rotation.</field>
+    </record>
+
+    <!-- Garden enclosure — woven wire around the veg plot. -->
+    <record id="farm_fence_demo_garden_enclosure" model="farm.fence">
+        <field name="name">East Garden deer fence</field>
+        <field name="field_id" ref="farm_field_demo_east_garden" />
+        <field name="fence_type">woven_wire</field>
+        <field name="height_inches">96</field>
+        <field name="condition">repair</field>
+        <field
+            name="last_checked_date"
+            eval="(DateTime.now() - relativedelta(weeks=1)).date()"
+        />
+        <field
+            name="geom"
+        >SRID=4326;LINESTRING(-79.2370 40.2425, -79.2361 40.2425, -79.2361 40.2434, -79.2370 40.2434, -79.2370 40.2425)</field>
+        <field
+            name="notes"
+        >Deer pushed under the south corner; needs an extra ground stake and a hot wire strand along the base before tomato plants go in next month.</field>
+    </record>
+</odoo>

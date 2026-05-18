@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Six demo observations spread across the four demo fields, mixing
+    types (pest, disease, water, photo, soil, weed) and urgency levels
+    so the kanban grouped-by-urgency view has color in every column.
+    Three carry GeoPoint locations inside their field polygons; the
+    other three leave geom null to exercise the manual-point-pick path.
+-->
+<odoo noupdate="1">
+    <!-- North 40 (corn): aphid pressure on the east edge, high urgency. -->
+    <record id="farm_observation_demo_north40_aphids" model="farm.observation">
+        <field name="field_id" ref="farm_field_demo_north_40" />
+        <field name="observation_type">pest</field>
+        <field name="urgency">high</field>
+        <field
+            name="notes"
+        >Aphid colony spreading along the east windbreak. Recommend scouting twice this week and consider a beneficial-insect release before the next nymph generation.</field>
+        <field name="geom">SRID=4326;POINT(-79.2375 40.2460)</field>
+    </record>
+
+    <!-- North 40: low-urgency photo survey. -->
+    <record id="farm_observation_demo_north40_photo" model="farm.observation">
+        <field name="field_id" ref="farm_field_demo_north_40" />
+        <field name="observation_type">photo</field>
+        <field name="urgency">low</field>
+        <field
+            name="notes"
+        >Routine canopy photo, V8 stage. Stand looks uniform; no obvious nutrient deficiency yet.</field>
+    </record>
+
+    <!-- South Pasture: drainage issue after the storm, medium urgency. -->
+    <record id="farm_observation_demo_south_drainage" model="farm.observation">
+        <field name="field_id" ref="farm_field_demo_south_pasture" />
+        <field name="observation_type">water</field>
+        <field name="urgency">med</field>
+        <field
+            name="notes"
+        >Water pooling in the southwest corner after Sunday's storm. Subsoil compaction suspected — schedule an aeration pass before fall regrowth.</field>
+        <field name="geom">SRID=4326;POINT(-79.2406 40.2355)</field>
+    </record>
+
+    <!-- East Garden: powdery mildew on summer squash, high urgency. -->
+    <record id="farm_observation_demo_garden_mildew" model="farm.observation">
+        <field name="field_id" ref="farm_field_demo_east_garden" />
+        <field name="observation_type">disease</field>
+        <field name="urgency">high</field>
+        <field
+            name="notes"
+        >Powdery mildew breaking out on the summer squash row near the gate. Pull infected leaves tonight, apply potassium bicarbonate spray tomorrow morning before sun.</field>
+        <field name="geom">SRID=4326;POINT(-79.2367 40.2430)</field>
+    </record>
+
+    <!-- East Garden: low-urgency soil note. -->
+    <record id="farm_observation_demo_garden_soil" model="farm.observation">
+        <field name="field_id" ref="farm_field_demo_east_garden" />
+        <field name="observation_type">soil</field>
+        <field name="urgency">low</field>
+        <field
+            name="notes"
+        >Soil-test kit pulled samples from rows 1, 4, and 7. Results due Friday.</field>
+    </record>
+
+    <!-- Berry Hill: pigweed escape, medium urgency. -->
+    <record id="farm_observation_demo_berry_weeds" model="farm.observation">
+        <field name="field_id" ref="farm_field_demo_berry_hill" />
+        <field name="observation_type">weed</field>
+        <field name="urgency">med</field>
+        <field
+            name="notes"
+        >Pigweed coming up between the strawberry rows on the upslope side. Hand-pull this weekend; mulch is thinning in that area.</field>
+    </record>
+</odoo>

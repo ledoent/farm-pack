@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Four demo farm fields with WGS84 polygon boundaries, centered around
+    Ligonier PA (40.2421°N, 79.2389°W) per
+    farm-pack/docs/farm-geo-implementation-plan.md line 145.
+
+    Polygon sizes are tuned so the Albers-Equal-Area acreage compute lands
+    near the conceptual "40 / 25 / 2 / 5 ac" headlines documented in the
+    field names. At 40°N a 0.01° degree of longitude is ~85 km and a
+    0.01° degree of latitude is ~111 km, so a 0.004° × 0.004° square is
+    roughly 37 acres.
+-->
+<odoo noupdate="1">
+    <!-- Alice's 40-acre corn plot, north of the farmhouse. -->
+    <record id="farm_field_demo_north_40" model="farm.field">
+        <field name="name">North 40</field>
+        <field name="code">N-40</field>
+        <field name="farm_partner_id" ref="farm_pack_demo.partner_demo_alice" />
+        <field name="crop_id" ref="farm_crop.crop_corn" />
+        <field
+            name="geom"
+        >SRID=4326;POLYGON((-79.2410 40.2440, -79.2370 40.2440, -79.2370 40.2480, -79.2410 40.2480, -79.2410 40.2440))</field>
+        <field name="organic_certified" eval="False" />
+    </record>
+
+    <!-- Alice's 25-acre pasture, south of the farmhouse. Alfalfa as the
+         closest seeded crop to "pasture" in the catalog. -->
+    <record id="farm_field_demo_south_pasture" model="farm.field">
+        <field name="name">South Pasture</field>
+        <field name="code">S-PAS</field>
+        <field name="farm_partner_id" ref="farm_pack_demo.partner_demo_alice" />
+        <field name="crop_id" ref="farm_crop.crop_alfalfa" />
+        <field
+            name="geom"
+        >SRID=4326;POLYGON((-79.2410 40.2350, -79.2380 40.2350, -79.2380 40.2380, -79.2410 40.2380, -79.2410 40.2350))</field>
+        <field name="organic_certified" eval="True" />
+    </record>
+
+    <!-- Bob's 2-acre mixed-vegetable garden, just east of the farmhouse. -->
+    <record id="farm_field_demo_east_garden" model="farm.field">
+        <field name="name">East Garden</field>
+        <field name="code">E-GAR</field>
+        <field name="farm_partner_id" ref="farm_pack_demo.partner_demo_bob" />
+        <field name="crop_id" ref="farm_crop.crop_lettuce" />
+        <field
+            name="geom"
+        >SRID=4326;POLYGON((-79.2370 40.2425, -79.2361 40.2425, -79.2361 40.2434, -79.2370 40.2434, -79.2370 40.2425))</field>
+        <field name="organic_certified" eval="True" />
+    </record>
+
+    <!-- Bob's 5-acre berry patch up on the hill. -->
+    <record id="farm_field_demo_berry_hill" model="farm.field">
+        <field name="name">Berry Hill</field>
+        <field name="code">B-HILL</field>
+        <field name="farm_partner_id" ref="farm_pack_demo.partner_demo_bob" />
+        <field name="crop_id" ref="farm_crop.crop_strawberry" />
+        <field
+            name="geom"
+        >SRID=4326;POLYGON((-79.2365 40.2420, -79.2350 40.2420, -79.2350 40.2435, -79.2365 40.2435, -79.2365 40.2420))</field>
+        <field name="organic_certified" eval="True" />
+    </record>
+</odoo>
