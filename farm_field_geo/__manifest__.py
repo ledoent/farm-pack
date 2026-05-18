@@ -14,6 +14,12 @@
         "farm_field",
         "base_geoengine",
     ],
+    "external_dependencies": {
+        # pyproj: reproject WGS84 polygon → EPSG:5070 Albers for acreage.
+        # shapely: base_geoengine already requires it; listed here to make
+        # the dep graph explicit (CI's oca_install_addons uses this list).
+        "python": ["pyproj", "shapely"],
+    },
     "data": [
         "views/farm_field_views.xml",
     ],
