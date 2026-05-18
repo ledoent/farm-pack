@@ -8,7 +8,7 @@ class TestFarmObservation(TransactionCase):
         cls.farm = cls.env["res.partner"].create(
             {"name": "Test Farm", "is_company": True}
         )
-        cls.crop = cls.env["farm.crop"].create({"name": "Corn", "code": "CORN"})
+        cls.crop = cls.env["farm.crop"].create({"name": "Corn"})
         cls.field = cls.env["farm.field"].create(
             {
                 "name": "North 40",
