@@ -14,9 +14,9 @@ Farm Observation
    !! source digest: sha256:be7b66847b88e6866c79d720e6ae4599461c9e9d60519bd7831dcded461eef31
    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-.. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
+.. |badge1| image:: https://img.shields.io/badge/maturity-Alpha-red.png
     :target: https://odoo-community.org/page/development-status
-    :alt: Beta
+    :alt: Alpha
 .. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
@@ -50,6 +50,11 @@ geoengine map view that drops pins on the field map.
 GPS tags is deferred — needs an OWL JS helper on the photo upload widget
 that parses the file client-side. Track in a follow-up if a field
 partner asks.
+
+.. IMPORTANT::
+   This is an alpha version, the data model and design can change at any time without warning.
+   Only for development or testing purpose, do not use in production.
+   `More details on development status <https://odoo-community.org/page/development-status>`_
 
 **Table of contents**
 

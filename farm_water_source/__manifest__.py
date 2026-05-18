@@ -7,9 +7,14 @@
     "website": "https://github.com/ledoent/farm-pack",
     "license": "AGPL-3",
     "category": "Vertical/Agriculture",
+    # Alpha matches farm_field_geo's chain — OCA check-dev-status gate.
+    "development_status": "Alpha",
     "depends": [
         "farm_field_geo",
     ],
+    "external_dependencies": {
+        "python": ["shapely"],
+    },
     "data": [
         "security/ir.model.access.csv",
         "views/farm_water_source_views.xml",

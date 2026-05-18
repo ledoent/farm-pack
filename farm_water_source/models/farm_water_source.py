@@ -19,12 +19,13 @@ class FarmWaterSource(models.Model):
         ],
         required=True,
     )
-    # GeoMultiGeometry holds Point, LineString, or Polygon — the right shape
-    # depends on the source type (well/trough/spring/hydrant = point,
-    # stream = linestring, pond/tank = polygon). One column keeps the model
-    # simple at the cost of looser validation; an admin who really wants the
-    # constraint can layer it on later.
-    geom = fields.GeoMultiGeometry(string="Location", srid=4326)
+    # All source types record a single point: the well-head, the tank tap,
+    # the centroid of the pond, the access point on the stream. We picked
+    # this in v1 because base_geoengine 19.0 (PR #446 head) doesn't ship a
+    # GeoAnyGeometry type — a future farm_water_source_polygon module can
+    # add an optional polygon footprint for ponds / streams when a customer
+    # asks for surface-area calculations.
+    geom = fields.GeoPoint(string="Location", srid=4326)
     field_ids = fields.Many2many(
         "farm.field",
         string="Fields Served",

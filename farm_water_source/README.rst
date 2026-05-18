@@ -14,9 +14,9 @@ Farm Water Source
    !! source digest: sha256:9d5ee627395550f366a82fe33508898dd73e25e55d39a5ce9a86027ddb10409c
    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-.. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
+.. |badge1| image:: https://img.shields.io/badge/maturity-Alpha-red.png
     :target: https://odoo-community.org/page/development-status
-    :alt: Beta
+    :alt: Alpha
 .. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
@@ -30,20 +30,21 @@ Tracks water sources on the farm — wells, surface tanks, ponds, streams,
 troughs, springs, hydrants — with their location, capacity, last-tested
 date, and which fields they serve.
 
-The ``geom`` column uses ``GeoMultiGeometry`` so one field can hold any
-of:
-
-- **Point** — well, trough, spring, hydrant (single coordinate)
-- **LineString** — stream / creek (multi-segment path)
-- **Polygon** — pond / surface tank (closed area)
-
-The trade-off is looser shape validation in exchange for not needing
-four separate models. Conventional usage matches each ``source_type`` to
-a shape, documented in USAGE; an admin who wants strict per-type
-validation can layer a ``_constraint`` on top later.
+The ``geom`` column is a ``GeoPoint``. All source types are represented
+as a single point: the well-head, the tank tap, the centroid of the
+pond, the access point on the stream. We picked this in v1 because
+base_geoengine 19.0 doesn't ship a "any geometry" type — adding a
+polygon footprint for ponds (surface-area, depth contours) or a
+linestring for streams would need a follow-up
+``farm_water_source_polygon`` extension model.
 
 The ``field_ids`` many2many answers "which fields does this source
 serve?", useful when planning rotational grazing or drought contingency.
+
+.. IMPORTANT::
+   This is an alpha version, the data model and design can change at any time without warning.
+   Only for development or testing purpose, do not use in production.
+   `More details on development status <https://odoo-community.org/page/development-status>`_
 
 **Table of contents**
 

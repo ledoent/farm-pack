@@ -13,6 +13,8 @@ class FarmObservation(models.Model):
     _inherit = ["mail.thread"]
     # High-urgency, recent items rise to the top of every list / kanban.
     _order = "urgency_rank desc, observation_date desc"
+    # Enforces field_id.company_id == observation.company_id at write time.
+    _check_company_auto = True
 
     field_id = fields.Many2one(
         "farm.field",
@@ -20,6 +22,7 @@ class FarmObservation(models.Model):
         required=True,
         index=True,
         ondelete="cascade",
+        check_company=True,
         help="Which field this observation was captured on.",
     )
     name = fields.Char(
