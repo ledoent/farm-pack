@@ -1,14 +1,24 @@
+from functools import lru_cache
+
+from pyproj import Transformer
+from shapely.ops import transform as shapely_transform
+
 from odoo import api, fields, models
 
-# Square meters in one US survey acre. Used to convert EPSG:5070 area
-# (Albers Equal Area, units = m^2) to acres.
+# Square meters in one US survey acre.
 M2_PER_ACRE = 4046.8564224
 
-# Conus Albers Equal Area — the projection NRCS and USDA use for area
-# calculations across the lower 48. We reproject the WGS84 polygon to 5070
-# before measuring area so the number matches what soil-survey and NASS
-# tooling would report for the same parcel.
-ALBERS_CONUS_SRID = 5070
+
+@lru_cache(maxsize=1)
+def _wgs84_to_albers_conus():
+    """Build the EPSG:4326 → EPSG:5070 transformer once and reuse it.
+
+    EPSG:5070 (Conus Albers Equal Area) is what NRCS and NASS use for
+    lower-48 acreage. Reprojecting the WGS84 polygon there before measuring
+    area gives a number that matches soil-survey + yield tooling for the
+    same parcel.
+    """
+    return Transformer.from_crs("EPSG:4326", "EPSG:5070", always_xy=True).transform
 
 
 class FarmField(models.Model):
@@ -31,7 +41,12 @@ class FarmField(models.Model):
 
     @api.depends("geom")
     def _compute_acres_from_geom(self):
+        # base_geoengine returns the field as a shapely geometry on read.
+        # shapely has no `.transform()` method — reproject explicitly via
+        # pyproj + shapely.ops.transform before measuring area.
+        transformer = _wgs84_to_albers_conus()
         for rec in self:
             if not rec.geom:
                 continue
-            rec.acres = rec.geom.transform(ALBERS_CONUS_SRID).area / M2_PER_ACRE
+            projected = shapely_transform(transformer, rec.geom)
+            rec.acres = projected.area / M2_PER_ACRE

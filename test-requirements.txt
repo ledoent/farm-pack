@@ -1,0 +1,11 @@
+# [DON'T MERGE STRAIGHT TO MAIN] Pin OCA/geospatial 19.0 MIG branches that
+# the farm_field_geo / farm_field_overlays modules depend on. Both modules
+# fail the OCA `Detect unreleased dependencies` check while these upstream
+# PRs are still open — accepted trade-off per the documented convention.
+#
+# Remove the pins once the upstream MIGs land:
+#   - base_geoengine: OCA/geospatial PR #446 (leNeo)
+#   - web_leaflet_lib + web_leaflet_draw_lib: ledoent/geospatial PR #1
+odoo-addon-base_geoengine @ git+https://github.com/leNeo/geospatial.git@19.0#subdirectory=base_geoengine
+odoo-addon-web_leaflet_lib @ git+https://github.com/ledoent/geospatial.git@19.0-mig-web_leaflet_lib#subdirectory=web_leaflet_lib
+odoo-addon-web_leaflet_draw_lib @ git+https://github.com/ledoent/geospatial.git@19.0-mig-web_leaflet_lib#subdirectory=web_leaflet_draw_lib

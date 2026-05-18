@@ -118,23 +118,27 @@
                     string="Last 7 Days"
                     domain="[('observation_date', '&gt;=', (context_today() - relativedelta(days=7)).strftime('%Y-%m-%d 00:00:00'))]"
                 />
-                <group expand="0" string="Group By">
-                    <filter
-                        name="group_field"
-                        string="Field"
-                        context="{'group_by': 'field_id'}"
-                    />
-                    <filter
-                        name="group_type"
-                        string="Type"
-                        context="{'group_by': 'observation_type'}"
-                    />
-                    <filter
-                        name="group_urgency"
-                        string="Urgency"
-                        context="{'group_by': 'urgency'}"
-                    />
-                </group>
+                <!--
+                    Odoo 19 dropped the <group string="Group By" expand="0">
+                    wrapper around group-by filters; the UI auto-builds the
+                    Group By panel from filters that carry a group_by context.
+                -->
+                <separator />
+                <filter
+                    name="group_field"
+                    string="Field"
+                    context="{'group_by': 'field_id'}"
+                />
+                <filter
+                    name="group_type"
+                    string="Type"
+                    context="{'group_by': 'observation_type'}"
+                />
+                <filter
+                    name="group_urgency"
+                    string="Urgency"
+                    context="{'group_by': 'urgency'}"
+                />
             </search>
         </field>
     </record>

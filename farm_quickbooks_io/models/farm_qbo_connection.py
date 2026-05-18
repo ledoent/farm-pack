@@ -1,4 +1,7 @@
+from datetime import timedelta
+
 from odoo import api, fields, models
+from odoo.exceptions import UserError
 
 
 class FarmQboConnection(models.Model):
@@ -94,3 +97,58 @@ class FarmQboConnection(models.Model):
                 "realm_id": False,
             }
         )
+
+    def action_refresh_token(self):
+        """Mint a fresh access token using the stored refresh token.
+
+        Called from the form-view header button when state ∈ {connected,
+        expired}. Delegates the actual round-trip to the intuit-oauth
+        library via `services.intuit_client.IntuitClient`; bails with a
+        clear UserError if either the refresh token is missing or the
+        intuit-oauth libs aren't installed (stub mode).
+        """
+        self.ensure_one()
+        if not self.refresh_token:
+            raise UserError(
+                self.env._(
+                    "No refresh token stored. Click Connect QuickBooks to "
+                    "complete the OAuth flow first."
+                )
+            )
+        # Lazy import keeps stub-mode installs (no intuit-oauth wheel) from
+        # crashing at module-load time.
+        from ..services.intuit_client import (  # noqa: PLC0415
+            HAS_INTUIT_LIBS,
+            IntuitClient,
+        )
+
+        if not HAS_INTUIT_LIBS:
+            raise UserError(
+                self.env._(
+                    "intuit-oauth library is not installed. Install "
+                    "`intuit-oauth` + `python-quickbooks` to refresh tokens."
+                )
+            )
+        client = IntuitClient(self)
+        new_tokens = client.refresh_access_token()
+        self.write(
+            {
+                "access_token": new_tokens["access_token"],
+                "refresh_token": new_tokens.get("refresh_token", self.refresh_token),
+                "token_expires_at": fields.Datetime.now()
+                + timedelta(seconds=new_tokens.get("expires_in", 3600)),
+            }
+        )
+        return {
+            "type": "ir.actions.client",
+            "tag": "display_notification",
+            "params": {
+                "type": "success",
+                "title": self.env._("Token refreshed"),
+                "message": self.env._(
+                    "New access token valid until %s.",
+                    self.token_expires_at,
+                ),
+                "next": {"type": "ir.actions.act_window_close"},
+            },
+        }
