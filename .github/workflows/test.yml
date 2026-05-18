@@ -41,7 +41,12 @@ jobs:
             name: test with OCB
     services:
       postgres:
-        image: postgres:13
+        # postgis/postgis carries the same Postgres major version as the
+        # upstream OCA template (13) but bundles PostGIS so base_geoengine
+        # (and any farm.field geometry module) can `CREATE EXTENSION postgis`.
+        # Drop back to `postgres:13` when farm-pack no longer ships geo
+        # modules that need PostGIS.
+        image: postgis/postgis:13-3.4-alpine
         env:
           POSTGRES_USER: odoo
           POSTGRES_PASSWORD: odoo
