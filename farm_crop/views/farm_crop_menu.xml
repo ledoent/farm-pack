@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <menuitem
+        id="menu_farm_crop"
+        name="Crops"
+        parent="farm_base.menu_farm_configuration"
+        action="farm_crop_action"
+        sequence="20"
+    />
+</odoo>

@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_farm_crop_user,farm.crop user,model_farm_crop,farm_base.group_farm_user,1,0,0,0
+access_farm_crop_manager,farm.crop manager,model_farm_crop,farm_base.group_farm_manager,1,1,1,1

@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="farm_field_view_list" model="ir.ui.view">
+        <field name="name">farm.field.list</field>
+        <field name="model">farm.field</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name" />
+                <field name="code" optional="show" />
+                <field name="acres" sum="Total Acres" />
+                <field name="crop_id" />
+                <field name="season_id" optional="hide" />
+                <field name="organic_certified" widget="boolean_toggle" />
+                <field name="farm_partner_id" optional="hide" />
+                <field
+                    name="company_id"
+                    groups="base.group_multi_company"
+                    optional="hide"
+                />
+            </list>
+        </field>
+    </record>
+
+    <record id="farm_field_view_kanban" model="ir.ui.view">
+        <field name="name">farm.field.kanban</field>
+        <field name="model">farm.field</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <templates>
+                    <t t-name="card">
+                        <div class="o_kanban_record_top">
+                            <strong>
+                                <field name="name" />
+                            </strong>
+                        </div>
+                        <div class="text-muted">
+                            <field name="code" />
+                        </div>
+                        <div>
+                            <field name="acres" /> acres
+                        </div>
+                        <div>
+                            <field name="crop_id" />
+                        </div>
+                        <div>
+                            <field name="organic_certified" widget="boolean_toggle" />
+                            Organic
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="farm_field_view_form" model="ir.ui.view">
+        <field name="name">farm.field.form</field>
+        <field name="model">farm.field</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field
+                                name="name"
+                                placeholder="Field name (e.g. North 12-acre)"
+                            />
+                        </h1>
+                        <field name="code" placeholder="Short code (e.g. N-12)" />
+                    </div>
+                    <group>
+                        <group>
+                            <field name="farm_partner_id" />
+                            <field name="acres" />
+                            <field name="season_id" />
+                            <field
+                                name="company_id"
+                                groups="base.group_multi_company"
+                            />
+                        </group>
+                        <group>
+                            <field name="crop_id" />
+                            <field name="organic_certified" />
+                            <field name="active" />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Notes" name="notes">
+                            <field name="notes" />
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter />
+            </form>
+        </field>
+    </record>
+
+    <record id="farm_field_view_search" model="ir.ui.view">
+        <field name="name">farm.field.search</field>
+        <field name="model">farm.field</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" />
+                <field name="code" />
+                <field name="crop_id" />
+                <separator />
+                <filter
+                    string="Organic"
+                    name="organic"
+                    domain="[('organic_certified','=',True)]"
+                />
+                <filter string="Active" name="active" domain="[('active','=',True)]" />
+                <filter
+                    string="Archived"
+                    name="archived"
+                    domain="[('active','=',False)]"
+                />
+                <group name="groupby">
+                    <filter
+                        string="Crop"
+                        name="groupby_crop"
+                        context="{'group_by':'crop_id'}"
+                    />
+                    <filter
+                        string="Season"
+                        name="groupby_season"
+                        context="{'group_by':'season_id'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="farm_field_action" model="ir.actions.act_window">
+        <field name="name">Fields</field>
+        <field name="res_model">farm.field</field>
+        <field name="view_mode">kanban,list,form</field>
+    </record>
+</odoo>
