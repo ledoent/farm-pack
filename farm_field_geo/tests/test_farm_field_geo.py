@@ -1,27 +1,29 @@
+from shapely.geometry import Polygon
+
 from odoo.tests.common import TransactionCase
 
 
-def _polygon_wkt(min_lon, min_lat, max_lon, max_lat):
-    """Build a WGS84 rectangular polygon as WKT.
-
-    Saves repeating the SRID prefix and the close-the-ring vertex across tests.
+def _polygon(min_lon, min_lat, max_lon, max_lat):
+    """Return a Shapely polygon — base_geoengine's GeoPolygon field accepts
+    shapely geometries via to_column_format(); EWKT strings raise hex-parse
+    errors because the field's serializer expects EWKB-hex on write paths.
     """
-    return (
-        "SRID=4326;POLYGON(("
-        f"{min_lon} {min_lat}, "
-        f"{max_lon} {min_lat}, "
-        f"{max_lon} {max_lat}, "
-        f"{min_lon} {max_lat}, "
-        f"{min_lon} {min_lat}"
-        "))"
+    return Polygon(
+        [
+            (min_lon, min_lat),
+            (max_lon, min_lat),
+            (max_lon, max_lat),
+            (min_lon, max_lat),
+            (min_lon, min_lat),
+        ]
     )
 
 
-# Reference polygon: ~0.01° square around Ligonier PA (40.242N, 79.245W).
-# Albers reprojection of this rectangle is ~233 acres — the assertion ranges
-# in the tests allow ±15% slack for projection edge cases.
-LIGONIER_BIG = _polygon_wkt(-79.245, 40.242, -79.235, 40.252)
-LIGONIER_SMALL = _polygon_wkt(-79.245, 40.242, -79.244, 40.243)
+# Reference rectangle: ~0.01° square around Ligonier PA (40.242N, 79.245W).
+# Albers reprojection of this size is ~233 acres — assertion ranges below
+# leave generous slack for projection edge cases.
+LIGONIER_BIG = _polygon(-79.245, 40.242, -79.235, 40.252)
+LIGONIER_SMALL = _polygon(-79.245, 40.242, -79.244, 40.243)
 
 
 class TestFarmFieldGeo(TransactionCase):
@@ -33,7 +35,7 @@ class TestFarmFieldGeo(TransactionCase):
         cls.farm = cls.env["res.partner"].create(
             {"name": "Test Farm", "is_company": True}
         )
-        cls.crop = cls.env["farm.crop"].create({"name": "Corn", "code": "CORN"})
+        cls.crop = cls.env["farm.crop"].create({"name": "Corn"})
 
     def _make_field(self, geom=None, acres=None):
         vals = {

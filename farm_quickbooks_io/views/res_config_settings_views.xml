@@ -36,7 +36,11 @@
         <field name="name">QuickBooks Settings</field>
         <field name="res_model">res.config.settings</field>
         <field name="view_mode">form</field>
-        <field name="target">inline</field>
+        <!--
+            target=inline was removed from ir.actions.act_window in Odoo 19;
+            the default (current) is what every other res.config.settings
+            action uses anyway.
+        -->
         <field name="context">{'module': 'farm_quickbooks_io'}</field>
     </record>
 </odoo>
