@@ -374,7 +374,7 @@ ul.auto-toc {
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 !! source digest: sha256:156d6ff91db3f7522e9501d6a413cbc2a2e29881632c0f19543ed5de002262fc
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
-<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Beta" src="https://img.shields.io/badge/maturity-Beta-yellow.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/license-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/ledoent/farm-pack/tree/19.0/farm_field_geo"><img alt="ledoent/farm-pack" src="https://img.shields.io/badge/github-ledoent%2Ffarm--pack-lightgray.png?logo=github" /></a></p>
+<p><a class="reference external image-reference" href="https://odoo-community.org/page/development-status"><img alt="Alpha" src="https://img.shields.io/badge/maturity-Alpha-red.png" /></a> <a class="reference external image-reference" href="http://www.gnu.org/licenses/agpl-3.0-standalone.html"><img alt="License: AGPL-3" src="https://img.shields.io/badge/license-AGPL--3-blue.png" /></a> <a class="reference external image-reference" href="https://github.com/ledoent/farm-pack/tree/19.0/farm_field_geo"><img alt="ledoent/farm-pack" src="https://img.shields.io/badge/github-ledoent%2Ffarm--pack-lightgray.png?logo=github" /></a></p>
 <p>Adds PostGIS polygon boundaries to <tt class="docutils literal">farm.field</tt> and auto-computes
 acreage from the geometry.</p>
 <p>Without this module, <tt class="docutils literal">farm.field.acres</tt> is a manual decimal entry.
@@ -397,6 +397,12 @@ enabled. <tt class="docutils literal">base_geoengine</tt> declares the extension
 cleanly if the extension is missing. The base <tt class="docutils literal">farm_field</tt> module
 stays usable without PostGIS — install this extension only when geometry
 support is wanted.</p>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p class="last">This is an alpha version, the data model and design can change at any time without warning.
+Only for development or testing purpose, do not use in production.
+<a class="reference external" href="https://odoo-community.org/page/development-status">More details on development status</a></p>
+</div>
 <p><strong>Table of contents</strong></p>
 <div class="contents local topic" id="contents">
 <ul class="simple">
