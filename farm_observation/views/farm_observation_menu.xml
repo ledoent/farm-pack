@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <menuitem
+        id="farm_observation_menu"
+        name="Observations"
+        parent="farm_base.menu_farm_root"
+        action="farm_observation_action"
+        sequence="30"
+    />
+</odoo>

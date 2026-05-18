@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="farm_observation_view_list" model="ir.ui.view">
+        <field name="name">farm.observation.list</field>
+        <field name="model">farm.observation</field>
+        <field name="arch" type="xml">
+            <list
+                decoration-danger="urgency == 'high'"
+                decoration-warning="urgency == 'med'"
+            >
+                <field name="observation_date" />
+                <field name="field_id" />
+                <field name="observation_type" />
+                <field name="urgency" />
+                <field name="notes" />
+            </list>
+        </field>
+    </record>
+
+    <record id="farm_observation_view_kanban" model="ir.ui.view">
+        <field name="name">farm.observation.kanban</field>
+        <field name="model">farm.observation</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="urgency" class="o_kanban_small_column">
+                <field name="name" />
+                <field name="observation_type" />
+                <field name="urgency" />
+                <field name="observation_date" />
+                <field name="field_id" />
+                <field name="photo_id" />
+                <field name="notes" />
+                <templates>
+                    <t t-name="card">
+                        <div class="oe_kanban_global_click o_kanban_record">
+                            <div class="o_kanban_record_top">
+                                <strong>
+                                    <field name="field_id" />
+                                </strong>
+                            </div>
+                            <div class="o_kanban_record_body">
+                                <field name="observation_type" />
+                                <br />
+                                <small>
+                                    <field name="observation_date" />
+                                </small>
+                                <p t-if="record.notes.raw_value">
+                                    <field name="notes" />
+                                </p>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="farm_observation_view_form" model="ir.ui.view">
+        <field name="name">farm.observation.form</field>
+        <field name="model">farm.observation</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1" />
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="field_id" />
+                            <field name="observation_date" />
+                            <field name="observation_type" />
+                            <field name="urgency" widget="priority" />
+                        </group>
+                        <group>
+                            <field name="photo_id" />
+                            <field
+                                name="company_id"
+                                groups="base.group_multi_company"
+                            />
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Notes" name="notes">
+                            <field name="notes" placeholder="What did you see?" />
+                        </page>
+                        <page string="Location" name="location">
+                            <field name="geom" widget="geo_edit_map" nolabel="1" />
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter />
+            </form>
+        </field>
+    </record>
+
+    <record id="farm_observation_view_search" model="ir.ui.view">
+        <field name="name">farm.observation.search</field>
+        <field name="model">farm.observation</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="field_id" />
+                <field name="observation_type" />
+                <field name="notes" />
+                <filter
+                    name="urgency_high"
+                    string="High Urgency"
+                    domain="[('urgency', '=', 'high')]"
+                />
+                <filter
+                    name="urgency_med"
+                    string="Medium+ Urgency"
+                    domain="[('urgency', 'in', ['high', 'med'])]"
+                />
+                <separator />
+                <filter
+                    name="last_7_days"
+                    string="Last 7 Days"
+                    domain="[('observation_date', '&gt;=', (context_today() - relativedelta(days=7)).strftime('%Y-%m-%d 00:00:00'))]"
+                />
+                <!--
+                    Odoo 19 dropped the <group string="Group By" expand="0">
+                    wrapper around group-by filters; the UI auto-builds the
+                    Group By panel from filters that carry a group_by context.
+                -->
+                <separator />
+                <filter
+                    name="group_field"
+                    string="Field"
+                    context="{'group_by': 'field_id'}"
+                />
+                <filter
+                    name="group_type"
+                    string="Type"
+                    context="{'group_by': 'observation_type'}"
+                />
+                <filter
+                    name="group_urgency"
+                    string="Urgency"
+                    context="{'group_by': 'urgency'}"
+                />
+            </search>
+        </field>
+    </record>
+
+    <!--
+        Geoengine view: drop pins on a map so a manager scanning the farm sees
+        every recent observation at a glance, colored by urgency.
+    -->
+    <record id="farm_observation_view_geoengine" model="ir.ui.view">
+        <field name="name">farm.observation.geoengine</field>
+        <field name="model">farm.observation</field>
+        <field name="arch" type="xml">
+            <geoengine geom_field="geom">
+                <field name="name" />
+                <field name="observation_type" />
+                <field name="urgency" />
+                <field name="observation_date" />
+            </geoengine>
+        </field>
+    </record>
+
+    <record id="farm_observation_action" model="ir.actions.act_window">
+        <field name="name">Field Observations</field>
+        <field name="res_model">farm.observation</field>
+        <field name="view_mode">kanban,list,form,geoengine</field>
+    </record>
+</odoo>
