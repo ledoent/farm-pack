@@ -39,6 +39,7 @@
                         <group>
                             <field name="condition" />
                             <field name="last_checked_date" />
+                            <field name="active" widget="boolean_toggle" />
                             <field
                                 name="company_id"
                                 groups="base.group_multi_company"
@@ -76,6 +77,12 @@
                     name="not_recently_checked"
                     string="Not Checked in 6 Months"
                     domain="[('last_checked_date', '&lt;', (context_today() - relativedelta(months=6)).strftime('%Y-%m-%d'))]"
+                />
+                <separator />
+                <filter
+                    name="archived"
+                    string="Archived"
+                    domain="[('active', '=', False)]"
                 />
                 <group expand="0" string="Group By">
                     <filter

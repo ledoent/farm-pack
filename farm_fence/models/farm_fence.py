@@ -22,14 +22,24 @@ class FarmFence(models.Model):
     _inherit = ["mail.thread"]
     # Repairs-needed bubble to the top.
     _order = "condition_rank desc, name"
+    # Enforces field_id.company_id == fence.company_id at write time (only
+    # checked when field_id is set; perimeter fences with a null field_id
+    # pass through).
+    _check_company_auto = True
 
     name = fields.Char(required=True, tracking=True)
+    active = fields.Boolean(
+        default=True,
+        help="Untick to archive fences that have been removed or replaced. "
+        "Their geometry and history stay on the field map's archived view.",
+    )
     field_id = fields.Many2one(
         "farm.field",
         string="Primary Field",
         help="Field this fence belongs to. Leave blank for perimeter fences "
         "that span multiple fields.",
         ondelete="set null",
+        check_company=True,
     )
     geom = fields.GeoLineString(
         string="Fence Line",

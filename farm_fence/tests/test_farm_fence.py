@@ -85,3 +85,22 @@ class TestFarmFence(TransactionCase):
         fence.condition = "repair"
         fence.flush_recordset()
         self.assertGreater(len(fence.message_ids), initial)
+
+    def test_field_unlink_sets_field_id_null_not_cascade(self):
+        # Perimeter fences span multiple fields — when one referenced field
+        # is deleted, the fence should survive with field_id=None, not
+        # cascade-delete. Verifies ondelete='set null'.
+        temp_field = self.env["farm.field"].create(
+            {
+                "name": "Doomed",
+                "farm_partner_id": self.farm.id,
+                "crop_id": self.crop.id,
+            }
+        )
+        fence = self._make_fence(field_id=temp_field.id)
+        fence_id = fence.id
+        temp_field.unlink()
+        survivor = self.env["farm.fence"].browse(fence_id)
+        survivor.invalidate_recordset()
+        self.assertTrue(survivor.exists(), "Fence must survive its field's deletion")
+        self.assertFalse(survivor.field_id, "field_id must be cleared, not retained")
