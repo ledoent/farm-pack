@@ -1,6 +1,6 @@
 {
     "name": "Farm Fence",
-    "version": "19.0.1.0.0",
+    "version": "19.0.1.1.0",
     "summary": "Fence lines + condition tracking + auto-computed length",
     "author": "Ledo Enterprises, Odoo Community Association (OCA)",
     "maintainers": ["dnplkndll"],

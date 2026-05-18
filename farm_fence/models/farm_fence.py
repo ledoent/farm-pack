@@ -9,12 +9,6 @@ from odoo import api, fields, models
 # for display — US farm fencing is universally specified in feet.
 M_PER_US_SURVEY_FOOT = 0.3048006096012192
 
-# Selection keys are descriptive strings (good/fair/repair) for the UI, but
-# alpha-DESC would order "repair > good > fair" — fair-condition fences
-# would hide below good-condition ones. `condition_rank` mirrors the
-# selection so `_order` produces the actual urgency sort.
-_CONDITION_RANK = {"good": 0, "fair": 1, "repair": 2}
-
 
 @lru_cache(maxsize=1)
 def _wgs84_to_albers_conus():
@@ -30,13 +24,18 @@ def _wgs84_to_albers_conus():
 class FarmFence(models.Model):
     _name = "farm.fence"
     _description = "Fence"
-    _inherit = ["mail.thread"]
-    # Repairs-needed bubble to the top.
-    _order = "condition_rank desc, name"
+    _inherit = ["mail.thread", "farm.rank.mixin"]
+    # Repairs-needed bubble to the top. `rank` comes from farm.rank.mixin
+    # (mirrors `condition` through the selection→int map below so DESC
+    # sort gives repair > fair > good instead of alpha-DESC's broken order).
+    _order = "rank desc, name"
     # Enforces field_id.company_id == fence.company_id at write time (only
     # checked when field_id is set; perimeter fences with a null field_id
     # pass through).
     _check_company_auto = True
+    # farm.rank.mixin wiring:
+    _rank_selection_field = "condition"
+    _rank_value_map = {"good": 0, "fair": 1, "repair": 2}
 
     name = fields.Char(required=True, tracking=True)
     active = fields.Boolean(
@@ -91,13 +90,6 @@ class FarmFence(models.Model):
         required=True,
         tracking=True,
     )
-    condition_rank = fields.Integer(
-        compute="_compute_condition_rank",
-        store=True,
-        index=True,
-        help="Numeric mirror of condition so _order produces an urgency sort "
-        "(string DESC on selection keys would put 'good' above 'fair').",
-    )
     last_checked_date = fields.Date(tracking=True)
     notes = fields.Text()
     company_id = fields.Many2one(
@@ -106,11 +98,6 @@ class FarmFence(models.Model):
         default=lambda self: self.env.company,
         index=True,
     )
-
-    @api.depends("condition")
-    def _compute_condition_rank(self):
-        for rec in self:
-            rec.condition_rank = _CONDITION_RANK.get(rec.condition, 0)
 
     @api.depends("geom")
     def _compute_length_feet(self):

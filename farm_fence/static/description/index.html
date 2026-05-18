@@ -385,9 +385,10 @@ and the geodesic length in meters is converted to US survey feet
 (0.3048006096012192 m/ft). The number matches what NRCS would report for
 the same fence line in a rangeland improvement filing.</p>
 <p>Repairs-needed bubble to the top of every list and grouped kanban
-because <tt class="docutils literal">_order</tt> uses a stored computed <tt class="docutils literal">condition_rank</tt> integer
-mirroring the selection — a naive string DESC would put “good” above
-“fair” (alpha order).</p>
+because <tt class="docutils literal">_order</tt> uses the stored <tt class="docutils literal">rank</tt> integer contributed by
+<tt class="docutils literal">farm.rank.mixin</tt> (from <tt class="docutils literal">farm_base</tt>), which mirrors the
+<tt class="docutils literal">condition</tt> selection through a priority map — a naive string DESC on
+the raw selection would put “good” above “fair” (alpha order).</p>
 <p>Field link is optional (<tt class="docutils literal"><span class="pre">ondelete=&quot;set</span> null&quot;</tt>) so a perimeter fence
 spanning multiple fields keeps its history even when one field is
 archived or deleted.</p>

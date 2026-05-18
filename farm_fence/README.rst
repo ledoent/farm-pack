@@ -38,9 +38,10 @@ and the geodesic length in meters is converted to US survey feet
 the same fence line in a rangeland improvement filing.
 
 Repairs-needed bubble to the top of every list and grouped kanban
-because ``_order`` uses a stored computed ``condition_rank`` integer
-mirroring the selection — a naive string DESC would put "good" above
-"fair" (alpha order).
+because ``_order`` uses the stored ``rank`` integer contributed by
+``farm.rank.mixin`` (from ``farm_base``), which mirrors the
+``condition`` selection through a priority map — a naive string DESC on
+the raw selection would put "good" above "fair" (alpha order).
 
 Field link is optional (``ondelete="set null"``) so a perimeter fence
 spanning multiple fields keeps its history even when one field is

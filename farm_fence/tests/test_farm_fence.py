@@ -77,7 +77,7 @@ class TestFarmFence(TransactionCase):
             ordered.mapped("condition"),
             ["repair", "fair", "good"],
             "Needs-repair must sort first; if you see good > fair > repair "
-            "condition_rank lost its compute",
+            "farm.rank.mixin's rank compute isn't wired to condition anymore",
         )
 
     def test_condition_tracking_declared_on_field(self):
