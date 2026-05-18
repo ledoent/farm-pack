@@ -33,7 +33,7 @@ class TestFarmFieldGeo(TransactionCase):
         cls.farm = cls.env["res.partner"].create(
             {"name": "Test Farm", "is_company": True}
         )
-        cls.crop = cls.env["farm.crop"].create({"name": "Corn", "code": "CORN"})
+        cls.crop = cls.env["farm.crop"].create({"name": "Corn"})
 
     def _make_field(self, geom=None, acres=None):
         vals = {
