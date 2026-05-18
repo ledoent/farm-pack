@@ -378,17 +378,13 @@ ul.auto-toc {
 <p>Tracks water sources on the farm — wells, surface tanks, ponds, streams,
 troughs, springs, hydrants — with their location, capacity, last-tested
 date, and which fields they serve.</p>
-<p>The <tt class="docutils literal">geom</tt> column uses <tt class="docutils literal">GeoMultiGeometry</tt> so one field can hold any
-of:</p>
-<ul class="simple">
-<li><strong>Point</strong> — well, trough, spring, hydrant (single coordinate)</li>
-<li><strong>LineString</strong> — stream / creek (multi-segment path)</li>
-<li><strong>Polygon</strong> — pond / surface tank (closed area)</li>
-</ul>
-<p>The trade-off is looser shape validation in exchange for not needing
-four separate models. Conventional usage matches each <tt class="docutils literal">source_type</tt> to
-a shape, documented in USAGE; an admin who wants strict per-type
-validation can layer a <tt class="docutils literal">_constraint</tt> on top later.</p>
+<p>The <tt class="docutils literal">geom</tt> column is a <tt class="docutils literal">GeoPoint</tt>. All source types are represented
+as a single point: the well-head, the tank tap, the centroid of the
+pond, the access point on the stream. We picked this in v1 because
+base_geoengine 19.0 doesn’t ship a “any geometry” type — adding a
+polygon footprint for ponds (surface-area, depth contours) or a
+linestring for streams would need a follow-up
+<tt class="docutils literal">farm_water_source_polygon</tt> extension model.</p>
 <p>The <tt class="docutils literal">field_ids</tt> many2many answers “which fields does this source
 serve?”, useful when planning rotational grazing or drought contingency.</p>
 <div class="admonition important">
