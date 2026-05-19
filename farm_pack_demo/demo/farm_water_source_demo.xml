@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+    Two demo water sources around the demo farmhouse. The geo field is a
+    GeoPoint (no GeoMultiGeometry in base_geoengine 19.0 — see
+    farm_water_source/readme/DESCRIPTION.md for the trade-off).
+-->
+<odoo noupdate="1">
+    <!-- The main farmhouse well, serves all of Alice's fields. -->
+    <record id="farm_water_source_demo_house_well" model="farm.water.source">
+        <field name="name">Farmhouse Well</field>
+        <field name="source_type">well</field>
+        <field
+            name="field_ids"
+            eval="[
+                (4, ref('farm_field_demo_north_40')),
+                (4, ref('farm_field_demo_south_pasture')),
+            ]"
+        />
+        <field name="capacity_gallons">2000</field>
+        <field
+            name="last_tested_date"
+            eval="(DateTime.now() - relativedelta(months=8)).date()"
+        />
+        <field name="geom">SRID=4326;POINT(-79.2390 40.2421)</field>
+        <field
+            name="quality_notes"
+        >Annual potability test passed last summer. Filter changed in February. Iron staining trending up slightly — recheck mid-season.</field>
+    </record>
+
+    <!-- Frost-free hydrant feeding the pasture trough. -->
+    <record id="farm_water_source_demo_pasture_trough" model="farm.water.source">
+        <field name="name">Pasture Trough</field>
+        <field name="source_type">trough</field>
+        <field name="field_ids" eval="[(4, ref('farm_field_demo_south_pasture'))]" />
+        <field name="capacity_gallons">120</field>
+        <field name="geom">SRID=4326;POINT(-79.2395 40.2365)</field>
+        <field
+            name="quality_notes"
+        >Frost-free hydrant. Trough float-valve serviced last spring; clean monthly during grazing season.</field>
+    </record>
+</odoo>
