@@ -1,7 +1,7 @@
 {
     "name": "Farm Pack",
     "summary": "Umbrella: website + ordering + delivery + accounting for small farms",
-    "version": "19.0.1.0.0",
+    "version": "19.0.1.1.0",
     "license": "AGPL-3",
     "author": "Ledo Enterprises, Odoo Community Association (OCA)",
     "website": "https://github.com/ledoent/farm-pack",
@@ -38,4 +38,7 @@
     "application": True,
     "development_status": "Alpha",
     "maintainers": ["dkendall"],
+    # Seeds an onboarding session per (user, company) for existing installs
+    # so the systray bell + first-run wizard show up immediately.
+    "post_init_hook": "post_init_hook",
 }

@@ -84,3 +84,20 @@ class TestFarmOnboardingSession(TransactionCase):
         veggies = self.env.ref("farm_onboarding.enterprise_vegetables")
         sess = self.Session.create({"enterprise_ids": [(6, 0, [eggs.id, veggies.id])]})
         self.assertEqual(len(sess.enterprise_ids), 2)
+
+    def test_count_pending_for_current_user(self):
+        # Drives the systray bell — must return 0 when nothing pending,
+        # > 0 when an active session exists. Don't count `done` sessions.
+        # Start from a clean slate: archive any sessions that exist for
+        # the test user from prior tests in this case.
+        self.Session.search([("user_id", "=", self.env.user.id)]).write(
+            {"state": "done", "finished_at": "2026-01-01"}
+        )
+        self.assertEqual(self.Session.count_pending_for_current_user(), 0)
+
+        self.Session.get_or_create_for_current_user()
+        self.assertEqual(self.Session.count_pending_for_current_user(), 1)
+
+        # Skipping completes the session — bell should go away.
+        self.Session.get_or_create_for_current_user().action_skip()
+        self.assertEqual(self.Session.count_pending_for_current_user(), 0)
