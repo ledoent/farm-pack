@@ -27,12 +27,21 @@ export class FarmOnboardingSystray extends Component {
         this.state = useState({pending: 0, loaded: false});
 
         onWillStart(async () => {
-            this.state.pending = await this.orm.call(
-                "farm.onboarding.session",
-                "count_pending_for_current_user",
-                []
-            );
-            this.state.loaded = true;
+            // The systray is registered globally; users without
+            // farm_base.group_farm_user will hit AccessError on the
+            // search_count. Swallow it so we don't spam the console —
+            // a user who can't access the wizard shouldn't see the bell.
+            try {
+                this.state.pending = await this.orm.call(
+                    "farm.onboarding.session",
+                    "count_pending_for_current_user",
+                    []
+                );
+            } catch {
+                this.state.pending = 0;
+            } finally {
+                this.state.loaded = true;
+            }
         });
     }
 
