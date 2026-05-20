@@ -32,19 +32,31 @@ enterprise types), how you keep books today (QBO / QBD / Excel / paper /
 nothing), done — with a state machine, progress bar, save-as-you-go, and
 back/next/skip/restart actions.
 
-This MVP uses a regular form view with state-conditional groups so
-sessions persist across browser closes. The original plan called for an
-OWL client action with full-screen modal; that polish is deferred to v1
-in favor of shipping the data model and flow first.
+The wizard surfaces itself two ways:
+
+- **Navbar bell.** A leaf icon with a red badge dot appears in the
+  systray when the current farm user has an unfinished session. Click it
+  to jump straight into the wizard. The bell is hidden for users outside
+  ``farm_base.group_farm_user`` and disappears once the session is
+  marked done.
+- **Farm → Setup Wizard menu item.** Same destination, accessible at any
+  time for a re-run.
+
+The form itself is a regular Odoo form view with state-conditional
+groups so sessions persist across browser closes. A richer custom-
+chrome design pass lives in a follow-on PR (Step 2 of the UX refinement
+plan).
 
 Adds 12 pre-loaded ``farm.enterprise.type`` records (eggs, vegetables,
 fruit, herbs, orchard, cattle, dairy, poultry, hogs, sheep/goats, value-
 added, workshops) with emoji icons — these drive product catalog and
 report pre-configuration in downstream modules.
 
-The "Setup Wizard" menu item routes each user to their own open session
-(creates one if none exists), so multiple farm-users on the same company
-each get an independent walkthrough.
+Each user gets their own session per company, so multiple farm-users on
+the same company each get an independent walkthrough. The umbrella
+``farm_pack`` module's ``post_init_hook`` seeds a session for every
+existing internal farm user on install; new users created later pick one
+up lazily on first wizard open.
 
 .. IMPORTANT::
    This is an alpha version, the data model and design can change at any time without warning.
@@ -59,14 +71,16 @@ each get an independent walkthrough.
 Usage
 =====
 
-1. **Farm → Setup Wizard** — opens (or resumes) your active session.
+1. **Look for the leaf icon + red dot in the navbar.** That's the
+   onboarding bell — click it to jump into the wizard. (Or use **Farm →
+   Setup Wizard** for the same destination.)
 2. Click **Next** to step through: Welcome → Your Farm → What You Grow →
    Books Today → All Set.
 3. Each screen saves on Next/Back so closing the browser doesn't lose
    progress. Skip jumps straight to Done.
-4. Once done, the Farm menu's other items (Eggs, CSA, Markets, Delivery,
-   QuickBooks) are where the actual work happens — the wizard pre-tells
-   the pack what to surface for your operation.
+4. Once done, the bell disappears and the Farm menu's other items (Eggs,
+   CSA, Markets, Delivery, QuickBooks) are where the actual work happens
+   — the wizard pre-tells the pack what to surface for your operation.
 
 Bug Tracker
 ===========

@@ -44,4 +44,8 @@ def post_init_hook(env):
                 }
             )
             seeded += 1
-    _logger.info("farm_pack post_init_hook seeded %d onboarding session(s)", seeded)
+    if seeded:
+        _logger.info("farm_pack post_init_hook seeded %d onboarding session(s)", seeded)
+    else:
+        # Idempotent re-run / fresh db with no farm users — quiet path.
+        _logger.debug("farm_pack post_init_hook: no new onboarding sessions to seed")

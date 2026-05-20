@@ -133,14 +133,11 @@ class FarmOnboardingSession(models.Model):
 
     @api.model
     def count_pending_for_current_user(self):
-        """Lightweight RPC endpoint for the systray bell.
+        """Pending-session count for the systray bell.
 
-        Returns the number of unfinished onboarding sessions for the
-        current (user, company). The bell uses this to decide whether
-        to render the pulsing dot. Kept separate from
-        `get_or_create_for_current_user` so the systray's mount path
-        is read-only — we do NOT want every page load creating session
-        rows.
+        Kept separate from `get_or_create_for_current_user` so the
+        bell's mount path is read-only — the systray must not create
+        session rows on every page load.
         """
         return self.search_count(
             [

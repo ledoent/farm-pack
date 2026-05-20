@@ -10,3 +10,9 @@ install the leaf modules individually (`farm_egg_production`, `farm_csa`,
 
 Composition rationale and the four-jobs plan: see
 [plans/2-farm-pack-composition.md](https://github.com/ledoent/farm-pack/blob/main/plans/2-farm-pack-composition.md).
+
+On install, a `post_init_hook` seeds one `farm.onboarding.session` per
+(internal farm user, company) pair so the navbar bell from
+`farm_onboarding` shows up immediately for every existing farm user.
+Portal users and tooling accounts are excluded. The hook is idempotent
+— re-running it (e.g., after an upgrade) does not duplicate sessions.
