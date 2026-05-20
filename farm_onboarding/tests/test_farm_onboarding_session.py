@@ -1,3 +1,4 @@
+from odoo import fields
 from odoo.tests.common import TransactionCase
 
 
@@ -91,7 +92,7 @@ class TestFarmOnboardingSession(TransactionCase):
         # Start from a clean slate: archive any sessions that exist for
         # the test user from prior tests in this case.
         self.Session.search([("user_id", "=", self.env.user.id)]).write(
-            {"state": "done", "finished_at": "2026-01-01"}
+            {"state": "done", "finished_at": fields.Datetime.now()}
         )
         self.assertEqual(self.Session.count_pending_for_current_user(), 0)
 
