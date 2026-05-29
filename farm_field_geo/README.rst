@@ -107,7 +107,7 @@ Authors
 Contributors
 ------------
 
-- Daniel Kendall <dkendall@ledoweb.com>
+- Don Kendall <dkendall@ledoweb.com>
 
 Maintainers
 -----------

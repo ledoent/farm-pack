@@ -1,1 +1,1 @@
-- Daniel Kendall &lt;dkendall@ledoweb.com&gt;
+- Don Kendall &lt;dkendall@ledoweb.com&gt;
