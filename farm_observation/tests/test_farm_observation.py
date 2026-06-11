@@ -82,5 +82,6 @@ class TestFarmObservation(TransactionCase):
             ordered.mapped("urgency"),
             ["high", "med", "low"],
             "high urgency must sort first; "
-            "if you see ['med', 'low', 'high'] urgency_rank lost its compute",
+            "if you see ['med', 'low', 'high'], farm.rank.mixin's rank "
+            "compute isn't wired to urgency anymore",
         )

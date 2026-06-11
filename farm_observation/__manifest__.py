@@ -1,6 +1,6 @@
 {
     "name": "Farm Observation",
-    "version": "19.0.1.0.0",
+    "version": "19.0.1.1.0",
     "summary": "Geotagged field observations (photos + notes, urgency-sorted)",
     "author": "Ledo Enterprises, Odoo Community Association (OCA)",
     "maintainers": ["dnplkndll"],

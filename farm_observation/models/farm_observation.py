@@ -1,20 +1,20 @@
 from odoo import api, fields, models
 
-# Selection keys are alphabetical strings (low/med/high) for readability in
-# the API + URLs, but a literal DESC sort would put "med" above "high"
-# (alpha order). `urgency_rank` is a stored computed int that mirrors the
-# selection so `_order` produces the actual priority sort.
-_URGENCY_RANK = {"low": 0, "med": 1, "high": 2}
-
 
 class FarmObservation(models.Model):
     _name = "farm.observation"
     _description = "Field Observation"
-    _inherit = ["mail.thread"]
+    _inherit = ["mail.thread", "farm.rank.mixin"]
     # High-urgency, recent items rise to the top of every list / kanban.
-    _order = "urgency_rank desc, observation_date desc"
+    # `rank` comes from farm.rank.mixin (mirrors `urgency` through the
+    # selection→int map below so DESC sort gives high→med→low instead of
+    # alpha-DESC's med→low→high).
+    _order = "rank desc, observation_date desc"
     # Enforces field_id.company_id == observation.company_id at write time.
     _check_company_auto = True
+    # farm.rank.mixin wiring:
+    _rank_selection_field = "urgency"
+    _rank_value_map = {"low": 0, "med": 1, "high": 2}
 
     field_id = fields.Many2one(
         "farm.field",
@@ -75,24 +75,11 @@ class FarmObservation(models.Model):
         required=True,
         tracking=True,
     )
-    urgency_rank = fields.Integer(
-        compute="_compute_urgency_rank",
-        store=True,
-        index=True,
-        help="Numeric mirror of urgency so _order produces a priority sort "
-        "(string DESC on selection keys would alphabetize, putting 'med' "
-        "above 'high').",
-    )
     company_id = fields.Many2one(
         related="field_id.company_id",
         store=True,
         index=True,
     )
-
-    @api.depends("urgency")
-    def _compute_urgency_rank(self):
-        for rec in self:
-            rec.urgency_rank = _URGENCY_RANK.get(rec.urgency, 0)
 
     @api.depends("field_id", "observation_type", "observation_date")
     def _compute_name(self):
