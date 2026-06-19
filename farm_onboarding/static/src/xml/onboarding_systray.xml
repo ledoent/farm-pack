@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates xml:space="preserve">
+
+    <t t-name="farm_onboarding.SystrayBell">
+        <div
+            t-if="state.loaded and state.pending > 0"
+            class="o-farm-onboarding-bell d-flex align-items-center"
+            role="button"
+            tabindex="0"
+            title="Finish setting up your farm"
+            t-on-click="openWizard"
+            t-on-keyup="(ev) => ev.key === 'Enter' &amp;&amp; openWizard()"
+        >
+            <button
+                class="btn btn-link p-0 d-flex align-items-center position-relative"
+                type="button"
+            >
+                <i class="fa fa-leaf" aria-hidden="true" />
+                <span
+                    class="position-absolute top-0 start-100 translate-middle p-1 bg-danger rounded-circle"
+                    aria-label="Onboarding pending"
+                />
+                <span class="d-none d-md-inline ms-2">Finish setup</span>
+            </button>
+        </div>
+    </t>
+
+</templates>

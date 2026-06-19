@@ -131,6 +131,22 @@ class FarmOnboardingSession(models.Model):
             )
         return session
 
+    @api.model
+    def count_pending_for_current_user(self):
+        """Pending-session count for the systray bell.
+
+        Kept separate from `get_or_create_for_current_user` so the
+        bell's mount path is read-only — the systray must not create
+        session rows on every page load.
+        """
+        return self.search_count(
+            [
+                ("company_id", "=", self.env.company.id),
+                ("user_id", "=", self.env.user.id),
+                ("state", "!=", "done"),
+            ]
+        )
+
     def action_open_for_current_user(self):
         session = self.get_or_create_for_current_user()
         return {

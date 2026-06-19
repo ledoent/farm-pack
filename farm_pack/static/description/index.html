@@ -385,6 +385,11 @@ also install the leaf modules individually (<tt class="docutils literal">farm_eg
 <tt class="docutils literal">farm_csa</tt>, <tt class="docutils literal">farm_delivery_routes</tt>) for narrower deployments.</p>
 <p>Composition rationale and the four-jobs plan: see
 <a class="reference external" href="https://github.com/ledoent/farm-pack/blob/main/plans/2-farm-pack-composition.md">plans/2-farm-pack-composition.md</a>.</p>
+<p>On install, a <tt class="docutils literal">post_init_hook</tt> seeds one <tt class="docutils literal">farm.onboarding.session</tt>
+per (internal farm user, company) pair so the navbar bell from
+<tt class="docutils literal">farm_onboarding</tt> shows up immediately for every existing farm user.
+Portal users and tooling accounts are excluded. The hook is idempotent —
+re-running it (e.g., after an upgrade) does not duplicate sessions.</p>
 <div class="admonition important">
 <p class="first admonition-title">Important</p>
 <p class="last">This is an alpha version, the data model and design can change at any time without warning.

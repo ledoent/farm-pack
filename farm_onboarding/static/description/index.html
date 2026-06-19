@@ -380,17 +380,29 @@ farm (name + acres + ZIP), what you grow or raise (multi-select from 12
 enterprise types), how you keep books today (QBO / QBD / Excel / paper /
 nothing), done — with a state machine, progress bar, save-as-you-go, and
 back/next/skip/restart actions.</p>
-<p>This MVP uses a regular form view with state-conditional groups so
-sessions persist across browser closes. The original plan called for an
-OWL client action with full-screen modal; that polish is deferred to v1
-in favor of shipping the data model and flow first.</p>
+<p>The wizard surfaces itself two ways:</p>
+<ul class="simple">
+<li><strong>Navbar bell.</strong> A leaf icon with a red badge dot appears in the
+systray when the current farm user has an unfinished session. Click it
+to jump straight into the wizard. The bell is hidden for users outside
+<tt class="docutils literal">farm_base.group_farm_user</tt> and disappears once the session is
+marked done.</li>
+<li><strong>Farm → Setup Wizard menu item.</strong> Same destination, accessible at any
+time for a re-run.</li>
+</ul>
+<p>The form itself is a regular Odoo form view with state-conditional
+groups so sessions persist across browser closes. A richer custom-
+chrome design pass lives in a follow-on PR (Step 2 of the UX refinement
+plan).</p>
 <p>Adds 12 pre-loaded <tt class="docutils literal">farm.enterprise.type</tt> records (eggs, vegetables,
 fruit, herbs, orchard, cattle, dairy, poultry, hogs, sheep/goats, value-
 added, workshops) with emoji icons — these drive product catalog and
 report pre-configuration in downstream modules.</p>
-<p>The “Setup Wizard” menu item routes each user to their own open session
-(creates one if none exists), so multiple farm-users on the same company
-each get an independent walkthrough.</p>
+<p>Each user gets their own session per company, so multiple farm-users on
+the same company each get an independent walkthrough. The umbrella
+<tt class="docutils literal">farm_pack</tt> module’s <tt class="docutils literal">post_init_hook</tt> seeds a session for every
+existing internal farm user on install; new users created later pick one
+up lazily on first wizard open.</p>
 <div class="admonition important">
 <p class="first admonition-title">Important</p>
 <p class="last">This is an alpha version, the data model and design can change at any time without warning.
@@ -413,14 +425,16 @@ Only for development or testing purpose, do not use in production.
 <div class="section" id="usage">
 <h2><a class="toc-backref" href="#toc-entry-1">Usage</a></h2>
 <ol class="arabic simple">
-<li><strong>Farm → Setup Wizard</strong> — opens (or resumes) your active session.</li>
+<li><strong>Look for the leaf icon + red dot in the navbar.</strong> That’s the
+onboarding bell — click it to jump into the wizard. (Or use <strong>Farm →
+Setup Wizard</strong> for the same destination.)</li>
 <li>Click <strong>Next</strong> to step through: Welcome → Your Farm → What You Grow →
 Books Today → All Set.</li>
 <li>Each screen saves on Next/Back so closing the browser doesn’t lose
 progress. Skip jumps straight to Done.</li>
-<li>Once done, the Farm menu’s other items (Eggs, CSA, Markets, Delivery,
-QuickBooks) are where the actual work happens — the wizard pre-tells
-the pack what to surface for your operation.</li>
+<li>Once done, the bell disappears and the Farm menu’s other items (Eggs,
+CSA, Markets, Delivery, QuickBooks) are where the actual work happens
+— the wizard pre-tells the pack what to surface for your operation.</li>
 </ol>
 </div>
 <div class="section" id="bug-tracker">
